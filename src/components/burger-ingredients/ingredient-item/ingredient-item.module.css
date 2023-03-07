@@ -1,0 +1,37 @@
+.item {
+    display: flex;
+    flex-wrap: wrap;
+    width: 46%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #f2f2f3;
+
+    border: 1px solid white;
+    padding: 16px 5px;
+    padding-top: 0;
+    margin-right: 16px;
+    margin-bottom: 32px;
+
+    cursor: pointer;
+}
+
+.price {
+    display: flex;
+    width: 100%;
+    padding-left: 10px;
+    margin-top: 4px;
+    font-weight: normal;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Iceland';
+    font-size: 28px;
+}
+
+.name {
+    font-weight: 400;
+    font-family: 'JetBrains Mono';
+    font-size: 16px;
+    letter-spacing: 2px;
+    margin-top: 4px;
+}
