@@ -1,7 +1,5 @@
 .burgerIngredients {
     position: relative;
-    display: flex;
-    flex-wrap: wrap;
     width: 50%;
     padding: 0 20px;
 }
@@ -14,4 +12,15 @@
     margin: 24px 0;
     margin-bottom: 8px;
     list-style: none;
+}
+
+.title {
+    width: 100%;
+    display: flex;
+    letter-spacing: 2px;
+    font-family: 'JetBrains Mono';
+    font-weight: 700;
+    line-height: 30px;
+    width: '100%';
+    margin-top: 10px;
 }

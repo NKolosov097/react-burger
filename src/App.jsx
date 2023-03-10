@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import AppHeader from './components/app-header/app-header'
-import BurgerIngredients from './components/burger-ingredients/burger-ingredients'
+import { BurgerConstructor } from './components/burger-constructor/burger-constructor'
+import { BurgerIngredients } from './components/burger-ingredients/burger-ingredients'
 
 const URL_INGREDIENTS = 'https://norma.nomoreparties.space/api/ingredients'
 
@@ -21,19 +22,23 @@ export function App() {
         getData()
     }, [])
 
-    console.log(data)
-
     return (
         <>
             <AppHeader />
             <main className="App">
                 <h1
-                    style={{ width: '100%' }}
+                    style={{
+                        width: '100%',
+                        fontFamily: 'JetBrains Mono',
+                        fontWeight: 700,
+                        letterSpacing: 2,
+                    }}
                     className="mt-5 mb-5 pl-5 pr-5 text text_type_main-large"
                 >
                     Соберите бургер
                 </h1>
                 <BurgerIngredients data={data} />
+                <BurgerConstructor data={data} />
             </main>
         </>
     )

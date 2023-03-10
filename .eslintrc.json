@@ -38,6 +38,10 @@
                 "functions": "defaultArguments" //Here
             }
         ],
-        "no-underscore-dangle": 0
+        "no-underscore-dangle": 0,
+        "import/no-extraneous-dependencies": [
+            "error",
+            { "includeInternal": true, "includeTypes": true }
+        ]
     }
 }
