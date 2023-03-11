@@ -1,5 +1,6 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
+import { Loader } from '../../../images/loader'
 import detailsStyles from './ingredient-details.module.css'
 
 export function IngredientDetails({ closeModal, infoOfIngredient }) {
@@ -42,7 +43,7 @@ export function IngredientDetails({ closeModal, infoOfIngredient }) {
                     src={imageLarge}
                     alt={name}
                 />
-            ) || 'Загрузка...'}
+            ) || <Loader />}
             <h2 className={detailsStyles.name}>{name}</h2>
             <u className={detailsStyles.list}>
                 {nutritionalValue.map(({ title, value }) => (

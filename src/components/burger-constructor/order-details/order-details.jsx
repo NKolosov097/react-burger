@@ -1,6 +1,7 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
 import img from '../../../images/done.png'
+import { Loader } from '../../../images/loader'
 import detailsStyles from './order-details.module.css'
 
 export function OrderDetails({ closeModal }) {
@@ -28,7 +29,7 @@ export function OrderDetails({ closeModal }) {
                 идентификатор заказа
             </h2>
 
-            {<img className="mb-15" src={img} alt="done" /> || 'Загрузка...'}
+            {<img className="mb-15" src={img} alt="done" /> || <Loader />}
             <p
                 style={{
                     fontFamily: 'JetBrains Mono',

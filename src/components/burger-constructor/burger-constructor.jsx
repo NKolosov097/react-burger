@@ -11,6 +11,7 @@ import { OrderDetails } from './order-details/order-details'
 import { ModalOverlay } from '../modal/modal-overlay/modal-overlay'
 import { MoneyLogo } from '../../images/money'
 import { Modal } from '../modal/modal'
+import { Loader } from '../../images/loader'
 
 export function BurgerConstructor({ data }) {
     const [totalPrice, setTotalPrice] = useState(0)
@@ -70,20 +71,7 @@ export function BurgerConstructor({ data }) {
                             />
                         </div>
                     </div>
-                    <h3
-                        style={{
-                            position: 'absolute',
-                            right: 50,
-                            display: 'flex',
-                            width: '100%',
-                            marginTop: 40,
-                            fontWeight: 'normal',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            fontFamily: 'Iceland',
-                            fontSize: 48,
-                        }}
-                    >
+                    <h3 className={burgerConstructorStyles.totalPrice}>
                         {totalPrice}
                         <span style={{ display: 'flex', marginLeft: '10px' }}>
                             <MoneyLogo />
@@ -107,13 +95,7 @@ export function BurgerConstructor({ data }) {
                         </Button>
                     </div>
                 </section>
-            )) || (
-                <section
-                    style={{ position: 'absolute', left: '70%', top: '50%' }}
-                >
-                    Загрузка...
-                </section>
-            )}
+            )) || <Loader />}
             {isOpened && (
                 <>
                     <Modal>
