@@ -12,8 +12,14 @@ export function App() {
         const getData = async () => {
             try {
                 const res = await fetch(URL_INGREDIENTS)
-                const incomingData = await res.json()
-                setData([...incomingData.data])
+                if (res.ok) {
+                    const incomingData = await res.json()
+                    setData([...incomingData.data])
+                } else {
+                    throw new Error(
+                        'Ой-ой, что-то пошло не так... Произошла ошибка, которую не отловит try catch'
+                    )
+                }
             } catch (e) {
                 throw new Error('Ой-ой, что-то пошло не так... Ошибка: ', e)
             }
