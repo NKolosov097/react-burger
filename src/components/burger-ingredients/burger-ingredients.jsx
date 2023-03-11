@@ -5,7 +5,8 @@ import ingredientsStyles from './burger-ingredients.module.css'
 import { ingredientPropTypes } from '../../utils/types'
 import { IngredientList } from './ingredient-list/ingredient-list'
 import { IngredientDetails } from './ingredient-details/ingredient-details'
-import { ModalOverlay } from '../modal-overlay/modal-overlay'
+import { ModalOverlay } from '../modal/modal-overlay/modal-overlay'
+import { Modal } from '../modal/modal'
 
 export function BurgerIngredients({ data }) {
     const [current, setCurrent] = useState('Булки')
@@ -93,11 +94,12 @@ export function BurgerIngredients({ data }) {
 
             {isOpened && (
                 <>
-                    <IngredientDetails
-                        isOpened={isOpened}
-                        closeModal={closeModal}
-                        infoOfIngredient={infoOfIngredient}
-                    />
+                    <Modal>
+                        <IngredientDetails
+                            closeModal={closeModal}
+                            infoOfIngredient={infoOfIngredient}
+                        />
+                    </Modal>
                     <ModalOverlay setIsOpened={setIsOpened} />
                 </>
             )}

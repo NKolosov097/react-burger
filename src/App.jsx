@@ -3,23 +3,16 @@ import './App.css'
 import AppHeader from './components/app-header/app-header'
 import { BurgerConstructor } from './components/burger-constructor/burger-constructor'
 import { BurgerIngredients } from './components/burger-ingredients/burger-ingredients'
-
-const URL_INGREDIENTS = 'https://norma.nomoreparties.space/api/ingredients'
+import { getIngredients } from './utils/burger-api'
 
 export function App() {
     const [data, setData] = useState([])
+
     useEffect(() => {
         const getData = async () => {
             try {
-                const res = await fetch(URL_INGREDIENTS)
-                if (res.ok) {
-                    const incomingData = await res.json()
-                    setData([...incomingData.data])
-                } else {
-                    throw new Error(
-                        'Ой-ой, что-то пошло не так... Произошла ошибка, которую не отловит try catch'
-                    )
-                }
+                const incomingData = await getIngredients()
+                setData([...incomingData.data])
             } catch (e) {
                 throw new Error('Ой-ой, что-то пошло не так... Ошибка: ', e)
             }
