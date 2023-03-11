@@ -1,0 +1,32 @@
+.container {
+    background-color: #1c1c21;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    --width-modal: 720px;
+    --height-modal: 718px;
+
+    width: var(--width-modal);
+    height: var(--height-modal);
+
+    border: none;
+    border-radius: 40px;
+    top: 50%;
+    left: calc(50% - var(--width-modal) / 2);
+    transform: translateY(-50%);
+    padding: 40px;
+    z-index: 10000;
+
+    color: #f2f2f3;
+}
+
+.closeButton {
+    position: absolute;
+    right: 40px;
+    top: 60px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
