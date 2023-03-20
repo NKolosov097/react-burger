@@ -20,12 +20,7 @@ export function IngredientItem({
     return (
         <li className={ingredientItemStyles.item}>
             <button
-                style={{
-                    border: 'none',
-                    backgroundColor: 'transparent',
-                    color: '#f2f2f3',
-                    cursor: 'pointer',
-                }}
+                className={ingredientItemStyles.button}
                 type="button"
                 onClick={open}
             >

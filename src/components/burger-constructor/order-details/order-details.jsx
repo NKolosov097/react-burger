@@ -1,5 +1,7 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import cn from 'classnames'
 import img from '../../../images/done.png'
 import { Loader } from '../../../images/loader'
 import detailsStyles from './order-details.module.css'
@@ -16,15 +18,10 @@ export function OrderDetails({ closeModal }) {
                 <CloseIcon type="primary" />
             </button>
             <h2
-                style={{
-                    fontFamily: 'JetBrains Mono',
-                    fontStyle: 'normal',
-                    fontWeight: 700,
-                    fontSize: '24px',
-                    lineHeight: '30px',
-                    letterSpacing: '2px',
-                }}
-                className="mb-15 mt-8 text text_type_main-default"
+                className={cn(
+                    'mb-15 mt-8 text text_type_main-default',
+                    detailsStyles.identity
+                )}
             >
                 идентификатор заказа
             </h2>

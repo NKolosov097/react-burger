@@ -24,3 +24,9 @@
     width: '100%';
     margin-top: 10px;
 }
+
+.listWrapper {
+    width: 100%;
+    max-height: 65vh;
+    overflow-y: scroll;
+}

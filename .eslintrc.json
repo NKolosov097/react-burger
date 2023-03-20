@@ -41,7 +41,13 @@
         "no-underscore-dangle": 0,
         "import/no-extraneous-dependencies": [
             "error",
-            { "includeInternal": true, "includeTypes": true }
+            {
+                "includeInternal": true,
+                "includeTypes": true,
+                "devDependencies": false,
+                "optionalDependencies": false,
+                "peerDependencies": true
+            }
         ]
     }
 }

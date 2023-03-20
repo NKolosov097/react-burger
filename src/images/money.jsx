@@ -1,6 +1,6 @@
-export function MoneyLogo() {
+export function MoneyLogo({ size = 26 }) {
     return (
-        <svg width="26" height="26" viewBox="0 0 22 22" fill="none">
+        <svg width={size} height={size} viewBox="0 0 22 22" fill="none">
             <path
                 d="M9.38488 1.65561C9.58175 1.18895 9.03973 0.758987 8.63011 1.05689L0.411836 7.03382C0.153092 7.222 8.63274e-06 7.52262 8.63274e-06 7.84256V12.4828C8.63274e-06 12.6932 0.131707 12.8811 0.32948 12.9529L3.15637 13.9785C3.65685 14.1601 4.21185 13.9177 4.41879 13.4271L9.38488 1.65561Z"
                 fill="#F2F2F3"

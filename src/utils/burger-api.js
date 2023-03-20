@@ -4,7 +4,10 @@ const checkResponse = (res) =>
     res.ok ? res.json() : res.json().then((err) => Promise.reject(err))
 
 export const getIngredients = async () => {
-    const res = await fetch(`${NORMA_API}/ingredients`)
-    const incomingData = checkResponse(res)
-    return incomingData
+    try {
+        const res = await fetch(`${NORMA_API}/ingredients`)
+        return await checkResponse(res)
+    } catch (e) {
+        throw new Error('Что-то пошло не так', e.message)
+    }
 }

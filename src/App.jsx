@@ -1,25 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
 import './App.css'
 import AppHeader from './components/app-header/app-header'
-import { BurgerConstructor } from './components/burger-constructor/burger-constructor'
+import { getBurgerIngredients } from './services/actions/ingredients-action'
 import { BurgerIngredients } from './components/burger-ingredients/burger-ingredients'
-import { getIngredients } from './utils/burger-api'
+import { BurgerConstructor } from './components/burger-constructor/burger-constructor'
 
 export function App() {
-    const [data, setData] = useState([])
+    const dispatch = useDispatch()
+    const { ingredients } = useSelector((store) => store.ingredientsReducer)
 
     useEffect(() => {
-        const getData = async () => {
-            try {
-                const incomingData = await getIngredients()
-                setData([...incomingData.data])
-            } catch (e) {
-                throw new Error('Ой-ой, что-то пошло не так... Ошибка: ', e)
-            }
-        }
-
-        getData()
-    }, [])
+        dispatch(getBurgerIngredients())
+    }, [dispatch])
 
     return (
         <>
@@ -36,8 +29,8 @@ export function App() {
                 >
                     Соберите бургер
                 </h1>
-                <BurgerIngredients data={data} />
-                <BurgerConstructor data={data} />
+                <BurgerIngredients data={ingredients} />
+                <BurgerConstructor data={ingredients} />
             </main>
         </>
     )

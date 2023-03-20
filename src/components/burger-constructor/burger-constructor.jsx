@@ -3,9 +3,10 @@ import {
     Button,
     ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
-import { ingredientPropTypes } from '../../utils/types'
-import { AssemblingBurger } from './assembling-burger/assembling-burger'
+// import PropTypes from 'prop-types'
+import cn from 'classnames'
+// import { ingredientPropTypes } from '../../utils/types'
+// import { AssemblingBurger } from './assembling-burger/assembling-burger'
 import burgerConstructorStyles from './burger-constructor.module.css'
 import { OrderDetails } from './order-details/order-details'
 import { ModalOverlay } from '../modal/modal-overlay/modal-overlay'
@@ -23,33 +24,25 @@ export function BurgerConstructor({ data }) {
     return (
         <>
             {(data.length > 0 && (
-                <section className={burgerConstructorStyles.container}>
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '10px',
-                            justifyContent: 'center',
-                        }}
-                    >
+                <section className={burgerConstructorStyles.wrapper}>
+                    <div className={burgerConstructorStyles.container}>
                         <div className="pl-20 ml-1">
                             <ConstructorElement
                                 type="top"
                                 isLocked
-                                text="Краторная булка N-200i (верх)"
-                                price={200}
-                                thumbnail={data[0]?.image}
+                                text="Выберите булки"
+                                // text="Краторная булка N-200i (верх)"
+                                // price={200}
+                                // thumbnail={data[0]?.image}
                             />
                         </div>
                         <ul
-                            className="m-2 custom-scroll"
-                            style={{
-                                listStyle: 'none',
-                                maxHeight: '45vh',
-                                overflowY: 'scroll',
-                            }}
+                            className={cn(
+                                'm-2 custom-scroll',
+                                burgerConstructorStyles.list
+                            )}
                         >
-                            {data.map(
+                            {/* {data.map(
                                 (item) =>
                                     item.type !== 'bun' && (
                                         <AssemblingBurger
@@ -59,15 +52,16 @@ export function BurgerConstructor({ data }) {
                                             name={item.name}
                                         />
                                     )
-                            )}
+                            )} */}
                         </ul>
                         <div className="pl-20 ml-1">
                             <ConstructorElement
                                 type="bottom"
                                 isLocked
-                                text="Краторная булка N-200i (низ)"
-                                price={200}
-                                thumbnail={data[0]?.image}
+                                text="Выберите булки"
+                                // text="Краторная булка N-200i (низ)"
+                                // price={200}
+                                // thumbnail={data[0]?.image}
                             />
                         </div>
                     </div>
@@ -77,14 +71,7 @@ export function BurgerConstructor({ data }) {
                             <MoneyLogo />
                         </span>
                     </h3>
-                    <div
-                        style={{
-                            position: 'absolute',
-                            right: 0,
-                            marginTop: 30,
-                            marginRight: 80,
-                        }}
-                    >
+                    <div className={burgerConstructorStyles.buttonWrapper}>
                         <Button
                             onClick={() => setIsOpened(true)}
                             htmlType="button"
@@ -108,6 +95,6 @@ export function BurgerConstructor({ data }) {
     )
 }
 
-BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-}
+// BurgerConstructor.propTypes = {
+//     data: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
+// }

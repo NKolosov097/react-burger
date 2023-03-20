@@ -5,6 +5,7 @@ import { ingredientPropTypes } from '../../../utils/types'
 
 export function IngredientList({
     title = 'Булки',
+    customRef,
     data,
     type,
     isOpened,
@@ -13,7 +14,9 @@ export function IngredientList({
 }) {
     return (
         <>
-            <h2 className={ingredientsStyles.title}>{title}</h2>
+            <h2 ref={customRef} className={ingredientsStyles.title}>
+                {title}
+            </h2>
             <ul className={ingredientsStyles.ingredientsList}>
                 {data.map(
                     (item) =>
