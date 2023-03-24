@@ -3,8 +3,10 @@ import {
     DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
 
-export function AssemblingBurger({ image, price, name }) {
+export function AssemblingBurger({ image, price, name, ID }) {
+    const dispatch = useDispatch()
     return (
         <li
             style={{
@@ -23,7 +25,17 @@ export function AssemblingBurger({ image, price, name }) {
             >
                 <DragIcon type="primary" />
             </button>
-            <ConstructorElement text={name} price={price} thumbnail={image} />
+            <ConstructorElement
+                handleClose={() => {
+                    dispatch({
+                        type: 'DELETE_INGREDIENT_FROM_CONSTRUCTOR',
+                        ID,
+                    })
+                }}
+                text={name}
+                price={price}
+                thumbnail={image}
+            />
         </li>
     )
 }

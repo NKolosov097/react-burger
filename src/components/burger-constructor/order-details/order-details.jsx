@@ -1,12 +1,15 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import cn from 'classnames'
+import { useDispatch } from 'react-redux'
 import img from '../../../images/done.png'
 import { Loader } from '../../../images/loader'
 import detailsStyles from './order-details.module.css'
 
-export function OrderDetails({ closeModal }) {
+export function OrderDetails() {
+    const dispatch = useDispatch()
+    const closeModal = () => dispatch({ type: 'ORDER_DETAILS_CLOSE' })
+
     return (
         <div className={detailsStyles.container}>
             <h1 className="mb-4 mt-20 text text_type_digits-large">034536</h1>
@@ -55,8 +58,4 @@ export function OrderDetails({ closeModal }) {
             </p>
         </div>
     )
-}
-
-OrderDetails.propTypes = {
-    closeModal: PropTypes.func.isRequired,
 }

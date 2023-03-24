@@ -1,41 +1,37 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
 import cn from 'classnames'
+import { useSelector } from 'react-redux'
 import ingredientsStyles from './burger-ingredients.module.css'
-import { ingredientPropTypes } from '../../utils/types'
 import { IngredientList } from './ingredient-list/ingredient-list'
 import { IngredientDetails } from './ingredient-details/ingredient-details'
 import { ModalOverlay } from '../modal/modal-overlay/modal-overlay'
 import { Modal } from '../modal/modal'
 
-export function BurgerIngredients({ data }) {
+export function BurgerIngredients() {
+    const isOpened = useSelector(
+        (state) => state.modalDetailsReducer.isOpenedIngredientsDetails
+    )
+
     const [current, setCurrent] = useState('Булки')
-    const [isOpened, setIsOpened] = useState(false)
-    const [infoOfIngredient, setInfoOfIngredient] = useState({})
 
     const bottomTabsRef = useRef()
     const topBunsRef = useRef()
     const topSaucesRef = useRef()
     const topMainsRef = useRef()
 
-    const toIngredientList = useCallback(
-        () =>
-            // const calculationDifferences = (ref) => {
-            //     Math.abs(
-            //         bottomTabsRef.current.getBoundingClientRect().bottom -
-            //             ref.current.getBoundingClientRect().top
-            //     )
-            // }
+    const toIngredientList = useCallback(() => {
+        const calculationDifferences = (ref) => {
+            Math.abs(
+                bottomTabsRef.current.getBoundingClientRect().bottom -
+                    ref.current.getBoundingClientRect().top
+            )
+        }
 
-            // if (calculationDifferences(topBunsRef) < 105) setCurrent('Булки')
-            // else if (calculationDifferences(topSaucesRef) < 105) setCurrent('Соусы')
-            // else if (calculationDifferences(topMainsRef) < 105)
-            //     setCurrent('Начинки')
-
-            null,
-        []
-    )
+        if (calculationDifferences(topBunsRef) < 15) setCurrent('Булки')
+        else if (calculationDifferences(topSaucesRef) < 15) setCurrent('Соусы')
+        else if (calculationDifferences(topMainsRef) < 15) setCurrent('Начинки')
+    }, [])
 
     useEffect(() => {
         toIngredientList()
@@ -46,29 +42,6 @@ export function BurgerIngredients({ data }) {
         ref.current.scrollIntoView({
             behavior: 'smooth',
         })
-    }
-
-    const openModal = (
-        imageLarge,
-        name,
-        calories,
-        proteins,
-        fat,
-        carbohydrates
-    ) => {
-        setInfoOfIngredient({
-            imageLarge,
-            name,
-            calories,
-            proteins,
-            fat,
-            carbohydrates,
-        })
-        setIsOpened(true)
-    }
-
-    const closeModal = () => {
-        setIsOpened(false)
     }
 
     const ingredientLists = [
@@ -119,12 +92,8 @@ export function BurgerIngredients({ data }) {
                     {ingredientLists.map(({ title, type, ref }) => (
                         <IngredientList
                             customRef={ref}
-                            isOpened={isOpened}
                             key={title}
-                            openModal={openModal}
-                            closeModal={closeModal}
                             title={title}
-                            data={data}
                             type={type}
                         />
                     ))}
@@ -134,18 +103,11 @@ export function BurgerIngredients({ data }) {
             {isOpened && (
                 <>
                     <Modal>
-                        <IngredientDetails
-                            closeModal={closeModal}
-                            infoOfIngredient={infoOfIngredient}
-                        />
+                        <IngredientDetails />
                     </Modal>
-                    <ModalOverlay setIsOpened={setIsOpened} />
+                    <ModalOverlay />
                 </>
             )}
         </>
     )
-}
-
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
 }

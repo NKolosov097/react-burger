@@ -1,22 +1,25 @@
 import { useEffect } from 'react'
-import PropTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
 import modalOverlayStyles from './modal-overlay.module.css'
 
-export function ModalOverlay({ setIsOpened }) {
+export function ModalOverlay() {
+    const dispatch = useDispatch()
     useEffect(() => {
         const handleEscClose = (event) => {
             if (event.key === 'Escape') {
-                setIsOpened(false)
+                dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
+                dispatch({ type: 'ORDER_DETAILS_CLOSE' })
             }
         }
 
         document.addEventListener('keydown', handleEscClose)
 
         return () => document.removeEventListener('keydown', handleEscClose)
-    }, [setIsOpened])
+    }, [dispatch])
 
     const closeModal = () => {
-        setIsOpened(false)
+        dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
+        dispatch({ type: 'ORDER_DETAILS_CLOSE' })
     }
 
     return (
@@ -29,8 +32,4 @@ export function ModalOverlay({ setIsOpened }) {
             className={modalOverlayStyles.modalOverlay__wrapper}
         />
     )
-}
-
-ModalOverlay.prototype = {
-    setIsOpened: PropTypes.func.isRequired,
 }

@@ -14,8 +14,12 @@
 .list {
     list-style: none;
     max-height: 45vh;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
+
+/* .listMore45vh {
+    overflow-y: scroll;
+} */
 
 .totalPrice {
     position: absolute;

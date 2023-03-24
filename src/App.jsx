@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import './App.css'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import AppHeader from './components/app-header/app-header'
 import { getBurgerIngredients } from './services/actions/ingredients-action'
 import { BurgerIngredients } from './components/burger-ingredients/burger-ingredients'
@@ -29,8 +31,10 @@ export function App() {
                 >
                     Соберите бургер
                 </h1>
-                <BurgerIngredients data={ingredients} />
-                <BurgerConstructor data={ingredients} />
+                <DndProvider backend={HTML5Backend}>
+                    <BurgerIngredients data={ingredients} />
+                    <BurgerConstructor data={ingredients} />
+                </DndProvider>
             </main>
         </>
     )
