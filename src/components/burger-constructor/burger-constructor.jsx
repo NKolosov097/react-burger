@@ -1,28 +1,17 @@
-import {
-    Button,
-    ConstructorElement,
-} from '@ya.praktikum/react-developer-burger-ui-components'
-import cn from 'classnames'
+import { useCallback, useMemo } from 'react'
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
-// import { useDrop } from 'react-dnd/dist/hooks'
 import burgerConstructorStyles from './burger-constructor.module.css'
 import { OrderDetails } from './order-details/order-details'
 import { ModalOverlay } from '../modal/modal-overlay/modal-overlay'
 import { MoneyLogo } from '../../images/money'
 import { Modal } from '../modal/modal'
-import { Loader } from '../../images/loader'
-import { AssemblingBurger } from './assembling-burger/assembling-burger'
+import { Bun } from './bun/bun'
+import { IngredientsList } from './ingredients-list-in-constructor/ingredients-list'
+import { getNumberOfOrder } from '../../services/actions/order-action'
 
-export function BurgerConstructor({ data }) {
+export function BurgerConstructor() {
     const dispatch = useDispatch()
-    // const onDropHandler = (itemId) =>
-    //     dispatch({ type: 'ADD_INGREDIENT_TO_CONSTRUCTOR', payload: { type: itemId }})
-    // const [, dropTarget] = useDrop({
-    //     accept: 'animal',
-    //     drop(itemId) {
-    //         onDropHandler(itemId)
-    //     },
-    // })
 
     const isOpened = useSelector(
         (state) => state.modalDetailsReducer.isOpenedOrderDetails
@@ -35,125 +24,64 @@ export function BurgerConstructor({ data }) {
         ingredients.reduce((acc, item) => acc + item.price, 0) +
         Number(bun ? bun?.price : 0) * 2
 
+    const moveIngredients = useCallback(
+        (dragIndex, hoverIndex) => {
+            const dragIngredient = ingredients[dragIndex]
+            const newIngredients = [...ingredients]
+            newIngredients.splice(dragIndex, 1)
+            newIngredients.splice(hoverIndex, 0, dragIngredient)
+
+            dispatch({
+                type: 'UPDATE_INGREDIENTS',
+                payload: newIngredients,
+            })
+        },
+        [dispatch, ingredients]
+    )
+
+    const orderIngredients = useMemo(() => {
+        const orderIngredientsArr = []
+
+        if (bun) orderIngredientsArr.push(bun._id, bun._id)
+        if (ingredients.length > 0)
+            ingredients.forEach((ingredient) => {
+                orderIngredientsArr.push(ingredient._id)
+            })
+        return orderIngredientsArr
+    }, [bun, ingredients])
+
+    const onClickOrder = () => {
+        dispatch(getNumberOfOrder(orderIngredients))
+        dispatch({ type: 'ORDER_DETAILS_OPEN' })
+    }
+
     return (
         <>
-            {(data.length > 0 && (
-                <section className={burgerConstructorStyles.wrapper}>
-                    <div className={burgerConstructorStyles.container}>
-                        <div className="pl-20 ml-1">
-                            {bun ? (
-                                <ConstructorElement
-                                    type="top"
-                                    isLocked
-                                    text={bun?.name}
-                                    price={bun?.price}
-                                    thumbnail={bun?.image}
-                                />
-                            ) : (
-                                <div
-                                    style={{
-                                        textAlign: 'center',
-                                    }}
-                                    className="constructor-element constructor-element_pos_top"
-                                >
-                                    <span
-                                        style={{
-                                            transform: 'translateY(50%)',
-                                        }}
-                                        className="constructor-element__text"
-                                    >
-                                        Выбери булку
-                                    </span>
-                                </div>
-                            )}
-                        </div>
-                        {ingredients.length > 0 ? (
-                            <ul
-                                className={cn(
-                                    'm-2 custom-scroll',
-                                    burgerConstructorStyles.list
-                                )}
-                            >
-                                {ingredients.map(
-                                    (item) =>
-                                        item.type !== 'bun' && (
-                                            <AssemblingBurger
-                                                key={item?.ID}
-                                                image={item?.image}
-                                                price={item?.price}
-                                                name={item?.name}
-                                                ID={item?.ID}
-                                            />
-                                        )
-                                )}
-                            </ul>
-                        ) : (
-                            <div className="pl-20 ml-1">
-                                <div
-                                    style={{
-                                        textAlign: 'center',
-                                    }}
-                                    className="constructor-element"
-                                >
-                                    <span
-                                        style={{
-                                            transform: 'translateY(50%)',
-                                        }}
-                                        className="constructor-element__text"
-                                    >
-                                        Выбери начинку
-                                    </span>
-                                </div>
-                            </div>
-                        )}
-                        <div className="pl-20 ml-1">
-                            {bun ? (
-                                <ConstructorElement
-                                    type="bottom"
-                                    isLocked
-                                    text={bun.name}
-                                    price={bun.price}
-                                    thumbnail={bun.image}
-                                />
-                            ) : (
-                                <div
-                                    style={{
-                                        textAlign: 'center',
-                                    }}
-                                    className="constructor-element constructor-element_pos_bottom"
-                                >
-                                    <span
-                                        style={{
-                                            transform: 'translateY(50%)',
-                                        }}
-                                        className="constructor-element__text"
-                                    >
-                                        Выбери булку
-                                    </span>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                    <h3 className={burgerConstructorStyles.totalPrice}>
-                        {totalPrice}
-                        <span style={{ display: 'flex', marginLeft: '10px' }}>
-                            <MoneyLogo />
-                        </span>
-                    </h3>
-                    <div className={burgerConstructorStyles.buttonWrapper}>
-                        <Button
-                            onClick={() =>
-                                dispatch({ type: 'ORDER_DETAILS_OPEN' })
-                            }
-                            htmlType="button"
-                            type="primary"
-                            size="large"
-                        >
-                            Оформить заказ
-                        </Button>
-                    </div>
-                </section>
-            )) || <Loader />}
+            <section className={burgerConstructorStyles.wrapper}>
+                <Bun bun={bun} coordinate="top" />
+                <IngredientsList
+                    moveIngredients={moveIngredients}
+                    ingredients={ingredients}
+                />
+                <Bun bun={bun} coordinate="bottom" />
+
+                <h3 className={burgerConstructorStyles.totalPrice}>
+                    {totalPrice}
+                    <span style={{ display: 'flex', marginLeft: '10px' }}>
+                        <MoneyLogo />
+                    </span>
+                </h3>
+                <div className={burgerConstructorStyles.buttonWrapper}>
+                    <Button
+                        onClick={onClickOrder}
+                        htmlType="button"
+                        type="primary"
+                        size="large"
+                    >
+                        Оформить заказ
+                    </Button>
+                </div>
+            </section>
             {isOpened && (
                 <>
                     <Modal>

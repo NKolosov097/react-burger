@@ -3,18 +3,62 @@ import {
     DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
+import { useRef } from 'react'
+import { useDrag, useDrop } from 'react-dnd'
 import { useDispatch } from 'react-redux'
 
-export function AssemblingBurger({ image, price, name, ID }) {
+export function AssemblingBurger({
+    image,
+    price,
+    name,
+    _id,
+    ID,
+    index,
+    moveIngredients,
+}) {
     const dispatch = useDispatch()
+    const ref = useRef(null)
+    const [, drop] = useDrop({
+        accept: 'ingredient',
+        hover: (item, monitor) => {
+            if (!ref.current) return
+            const dragIndex = item.index
+            const hoverIndex = index
+
+            if (dragIndex === hoverIndex) return
+
+            const hoverBoundingRect = ref.current?.getBoundingClientRect()
+            const hoverMiddleY =
+                (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+            const clientOffset = monitor.getClientOffset()
+            const hoverClientY = clientOffset.y - hoverBoundingRect.top
+            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return
+            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return
+
+            moveIngredients(dragIndex, hoverIndex)
+            // eslint-disable-next-line
+            item.index = hoverIndex
+        },
+    })
+    const [{ isDragging }, drag] = useDrag({
+        type: 'ingredient',
+        item: () => ({ ID, index }),
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    })
+
+    const liStyle = {
+        margin: '10px 0',
+        alignItems: 'center',
+        display: 'flex',
+        cursor: 'grab',
+    }
+    const opacity = isDragging ? 0 : 1
+    drag(drop(ref))
+
     return (
-        <li
-            style={{
-                margin: '10px 0',
-                alignItems: 'center',
-                display: 'flex',
-            }}
-        >
+        <li ref={ref} style={{ ...liStyle, opacity }}>
             <button
                 style={{
                     backgroundColor: 'transparent',
@@ -30,6 +74,11 @@ export function AssemblingBurger({ image, price, name, ID }) {
                     dispatch({
                         type: 'DELETE_INGREDIENT_FROM_CONSTRUCTOR',
                         ID,
+                    })
+
+                    dispatch({
+                        type: 'DECREMENT_INGREDIENT_COUNT',
+                        payload: { _id },
                     })
                 }}
                 text={name}

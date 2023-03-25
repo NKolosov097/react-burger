@@ -1,14 +1,21 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import ingredientsStyles from './burger-ingredients.module.css'
 import { IngredientList } from './ingredient-list/ingredient-list'
 import { IngredientDetails } from './ingredient-details/ingredient-details'
 import { ModalOverlay } from '../modal/modal-overlay/modal-overlay'
 import { Modal } from '../modal/modal'
+import { getBurgerIngredients } from '../../services/actions/ingredients-action'
 
 export function BurgerIngredients() {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getBurgerIngredients())
+    }, [])
+
     const isOpened = useSelector(
         (state) => state.modalDetailsReducer.isOpenedIngredientsDetails
     )
@@ -67,7 +74,12 @@ export function BurgerIngredients() {
             <section className={ingredientsStyles.burgerIngredients}>
                 <div
                     className="mb-10"
-                    style={{ width: '100%', display: 'flex' }}
+                    style={{
+                        width: '100%',
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        justifyContent: 'center',
+                    }}
                     ref={bottomTabsRef}
                 >
                     {ingredientLists.map(({ title, ref }) => (

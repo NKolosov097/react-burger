@@ -11,3 +11,16 @@ export const getIngredients = async () => {
         throw new Error('Что-то пошло не так', e.message)
     }
 }
+
+export const postOrder = async (ingredients) => {
+    try {
+        const res = await fetch(`${NORMA_API}/orders`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ingredients }),
+        })
+        return await checkResponse(res)
+    } catch (e) {
+        throw new Error('Что-то пошло не так', e.message)
+    }
+}

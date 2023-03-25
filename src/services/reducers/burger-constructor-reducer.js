@@ -2,6 +2,7 @@ import {
     ADD_INGREDIENT_TO_CONSTRUCTOR,
     DELETE_INGREDIENT_FROM_CONSTRUCTOR,
     UPDATE_BUN_IN_CONSTRUCTOR,
+    UPDATE_INGREDIENTS,
 } from '../actions/burger-constructor-action'
 
 const initialState = {
@@ -9,7 +10,6 @@ const initialState = {
     ingredients: [],
 }
 
-// eslint-disable-next-line
 export const constructorReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_INGREDIENT_TO_CONSTRUCTOR: {
@@ -35,6 +35,12 @@ export const constructorReducer = (state = initialState, action) => {
             return {
                 ...state,
                 bun: action.isBun ? action.payload : state.bun,
+            }
+        }
+        case UPDATE_INGREDIENTS: {
+            return {
+                ...state,
+                ingredients: action.payload,
             }
         }
         default:

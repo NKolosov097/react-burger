@@ -12,8 +12,10 @@
 
     margin-right: 16px;
     margin-bottom: 32px;
+}
 
-    cursor: pointer;
+.itemIsDragging {
+    opacity: 0%;
 }
 
 .name {
@@ -28,5 +30,5 @@
     border: none;
     background-color: transparent;
     color: #f2f2f3;
-    cursor: pointer;
+    cursor: grab;
 }

@@ -1,7 +1,6 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import cn from 'classnames'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import img from '../../../images/done.png'
 import { Loader } from '../../../images/loader'
 import detailsStyles from './order-details.module.css'
@@ -10,9 +9,13 @@ export function OrderDetails() {
     const dispatch = useDispatch()
     const closeModal = () => dispatch({ type: 'ORDER_DETAILS_CLOSE' })
 
+    const { numberOfOrder } = useSelector((store) => store.orderReducer)
+
     return (
         <div className={detailsStyles.container}>
-            <h1 className="mb-4 mt-20 text text_type_digits-large">034536</h1>
+            <h1 className="mb-4 mt-20 text text_type_digits-large">
+                {numberOfOrder}
+            </h1>
             <button
                 className={detailsStyles.closeButton}
                 type="button"
