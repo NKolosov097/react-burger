@@ -1,6 +1,7 @@
 import cn from 'classnames'
 import { useDrop } from 'react-dnd'
 import { useDispatch } from 'react-redux'
+import PropTypes from 'prop-types'
 import { AssemblingBurger } from '../assembling-burger/assembling-burger'
 import burgerConstructorStyles from '../burger-constructor.module.css'
 
@@ -72,4 +73,17 @@ export function IngredientsList({ ingredients, moveIngredients }) {
             )}
         </div>
     )
+}
+
+IngredientsList.prototype = {
+    ingredients: PropTypes.arrayOf(
+        PropTypes.shape({
+            ID: PropTypes.string.isRequired,
+            image: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+            type: PropTypes.string.isRequired,
+            _id: PropTypes.string.isRequired,
+        })
+    ).isRequired,
+    moveIngredients: PropTypes.func.isRequired,
 }

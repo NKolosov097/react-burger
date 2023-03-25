@@ -93,4 +93,8 @@ AssemblingBurger.prototype = {
     image: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+    ID: PropTypes.string.isRequired,
+    index: PropTypes.number.isRequired,
+    moveIngredients: PropTypes.func.isRequired,
 }

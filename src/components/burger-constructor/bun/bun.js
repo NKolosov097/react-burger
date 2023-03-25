@@ -2,6 +2,7 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import cn from 'classnames'
 import { useDrop } from 'react-dnd'
 import { useDispatch } from 'react-redux'
+import PropTypes from 'prop-types'
 
 export function Bun({ bun, coordinate }) {
     const dispatch = useDispatch()
@@ -57,4 +58,15 @@ export function Bun({ bun, coordinate }) {
             )}
         </div>
     )
+}
+
+Bun.prototype = {
+    bun: PropTypes.shape({
+        ID: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+        _id: PropTypes.string.isRequired,
+    }).isRequired,
+    coordinate: PropTypes.string.isRequired,
 }

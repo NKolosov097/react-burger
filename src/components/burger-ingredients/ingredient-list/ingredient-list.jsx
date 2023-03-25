@@ -29,4 +29,5 @@ export function IngredientList({ title = 'Булки', customRef, type }) {
 IngredientList.prototype = {
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
+    customRef: PropTypes.node.isRequired,
 }
