@@ -14,7 +14,7 @@ export function BurgerIngredients() {
 
     useEffect(() => {
         dispatch(getBurgerIngredients())
-    }, [])
+    }, [dispatch])
 
     const isOpened = useSelector(
         (state) => state.modalDetailsReducer.isOpenedIngredientsDetails
@@ -28,16 +28,16 @@ export function BurgerIngredients() {
     const topMainsRef = useRef()
 
     const toIngredientList = useCallback(() => {
-        const calculationDifferences = (ref) => {
+        const calculationDifferences = (ref) =>
             Math.abs(
                 bottomTabsRef.current.getBoundingClientRect().bottom -
                     ref.current.getBoundingClientRect().top
             )
-        }
 
-        if (calculationDifferences(topBunsRef) < 15) setCurrent('Булки')
-        else if (calculationDifferences(topSaucesRef) < 15) setCurrent('Соусы')
-        else if (calculationDifferences(topMainsRef) < 15) setCurrent('Начинки')
+        if (calculationDifferences(topBunsRef) < 105) setCurrent('Булки')
+        else if (calculationDifferences(topSaucesRef) < 105) setCurrent('Соусы')
+        else if (calculationDifferences(topMainsRef) < 105)
+            setCurrent('Начинки')
     }, [])
 
     useEffect(() => {
@@ -73,13 +73,7 @@ export function BurgerIngredients() {
         <>
             <section className={ingredientsStyles.burgerIngredients}>
                 <div
-                    className="mb-10"
-                    style={{
-                        width: '100%',
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        justifyContent: 'center',
-                    }}
+                    className={cn('mb-10', ingredientsStyles.tabs)}
                     ref={bottomTabsRef}
                 >
                     {ingredientLists.map(({ title, ref }) => (

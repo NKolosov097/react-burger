@@ -8,15 +8,8 @@ export function IngredientDetails() {
     const closeModal = () => {
         dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
     }
-    const {
-        // eslint-disable-next-line
-        image_large,
-        name,
-        calories,
-        proteins,
-        fat,
-        carbohydrates,
-    } = useSelector((store) => store.modalDetailsReducer.infoOfIngredient)
+    const { image_large, name, calories, proteins, fat, carbohydrates } =
+        useSelector((store) => store.modalDetailsReducer.infoOfIngredient)
     const nutritionalValue = [
         {
             title: 'Калории, ккал',
@@ -51,7 +44,6 @@ export function IngredientDetails() {
             {(
                 <img
                     className={detailsStyles.image}
-                    // eslint-disable-next-line
                     src={image_large}
                     alt={name}
                 />

@@ -33,30 +33,10 @@ export function OrderDetails() {
             </h2>
 
             {<img className="mb-15" src={img} alt="done" /> || <Loader />}
-            <p
-                style={{
-                    fontFamily: 'JetBrains Mono',
-                    fontStyle: 'normal',
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: '24px',
-                    letterSpacing: '1px',
-                }}
-                className="mb-2 text text_type_main-small"
-            >
+            <p className="mb-2 text text_type_main-small">
                 Ваш заказ начали готовить
             </p>
-            <p
-                style={{
-                    fontFamily: 'JetBrains Mono',
-                    fontStyle: 'normal',
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: '24px',
-                    letterSpacing: '1px',
-                }}
-                className="mb-2 text text_type_main-small text_color_inactive"
-            >
+            <p className="mb-2 text text_type_main-small text_color_inactive">
                 Дождитесь готовности на орбитальной станции
             </p>
         </div>

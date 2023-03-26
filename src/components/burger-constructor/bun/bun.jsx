@@ -3,6 +3,7 @@ import cn from 'classnames'
 import { useDrop } from 'react-dnd'
 import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
+import bunStyles from '../burger-constructor.module.css'
 
 export function Bun({ bun, coordinate }) {
     const dispatch = useDispatch()
@@ -37,20 +38,18 @@ export function Bun({ bun, coordinate }) {
                 />
             ) : (
                 <div
-                    style={{
-                        textAlign: 'center',
-                    }}
                     className={cn(
                         coordinate === 'top'
                             ? 'constructor-element constructor-element_pos_top'
-                            : 'constructor-element constructor-element_pos_bottom'
+                            : 'constructor-element constructor-element_pos_bottom',
+                        bunStyles.plugWrapper
                     )}
                 >
                     <span
-                        style={{
-                            transform: 'translateY(50%)',
-                        }}
-                        className="constructor-element__text"
+                        className={cn(
+                            'constructor-element__text',
+                            bunStyles.plugText
+                        )}
                     >
                         Выберите булку
                     </span>

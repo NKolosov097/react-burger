@@ -6,12 +6,11 @@ import {
 } from '../actions/modal-details'
 
 const initialState = {
-    infoOfIngredient: {},
+    infoOfIngredient: null,
     isOpenedIngredientsDetails: false,
     isOpenedOrderDetails: false,
 }
 
-// eslint-disable-next-line
 export const modalDetailsReducer = (state = initialState, action) => {
     switch (action.type) {
         case INGREDIENT_DETAILS_OPEN: {

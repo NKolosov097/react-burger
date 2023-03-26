@@ -50,6 +50,8 @@
             }
         ],
         "default-param-last": 0,
-        "no-return-assign": 2
+        "no-return-assign": 2,
+        "camelcase": ["error", { "allow": ["image_large", "image_mobile"] }],
+        "react/jsx-props-no-spreading": "off"
     }
 }

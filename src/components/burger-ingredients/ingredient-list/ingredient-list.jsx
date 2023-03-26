@@ -14,11 +14,7 @@ export function IngredientList({ title = 'Булки', customRef, type }) {
                 {ingredients.map(
                     (item) =>
                         item.type === type && (
-                            <IngredientItem
-                                key={item._id}
-                                // eslint-disable-next-line
-                                {...item}
-                            />
+                            <IngredientItem key={item._id} {...item} />
                         )
                 )}
             </ul>

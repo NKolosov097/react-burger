@@ -42,17 +42,25 @@ export function BurgerConstructor() {
     const orderIngredients = useMemo(() => {
         const orderIngredientsArr = []
 
-        if (bun) orderIngredientsArr.push(bun._id, bun._id)
+        if (bun) orderIngredientsArr.push(bun._id)
         if (ingredients.length > 0)
             ingredients.forEach((ingredient) => {
                 orderIngredientsArr.push(ingredient._id)
             })
+        if (bun) orderIngredientsArr.push(bun._id)
         return orderIngredientsArr
     }, [bun, ingredients])
 
-    const onClickOrder = () => {
+    const getOrder = () => {
         dispatch(getNumberOfOrder(orderIngredients))
         dispatch({ type: 'ORDER_DETAILS_OPEN' })
+    }
+
+    const checkOrder = () => {
+        if (bun && ingredients.length > 0) {
+            return getOrder()
+        }
+        return null
     }
 
     return (
@@ -73,7 +81,7 @@ export function BurgerConstructor() {
                 </h3>
                 <div className={burgerConstructorStyles.buttonWrapper}>
                     <Button
-                        onClick={onClickOrder}
+                        onClick={checkOrder}
                         htmlType="button"
                         type="primary"
                         size="large"

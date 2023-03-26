@@ -40,18 +40,18 @@ export const ingredientsReducer = (state = initialState, action) => {
                 ...state,
                 ingredients: [
                     ...state.ingredients,
-                    // eslint-disable-next-line no-return-assign
-                    state.ingredients.map((ingredient) =>
-                        // eslint-disable-next-line no-nested-ternary
-                        ingredient._id === action.payload._id
-                            ? // eslint-disable-next-line no-param-reassign, no-undef
-                              (ingredient.count = 2)
-                            : // eslint-disable-next-line no-param-reassign
-                            ingredient.type === 'bun'
-                            ? // eslint-disable-next-line no-param-reassign
-                              (ingredient.count = 0)
-                            : ingredient.count
-                    ),
+                    state.ingredients.map((item) => {
+                        const ingredient = item
+                        if (ingredient._id === action.payload._id) {
+                            ingredient.count = 2
+                            return ingredient.count
+                        }
+                        if (ingredient.type === 'bun') {
+                            ingredient.count = 0
+                            return ingredient.count
+                        }
+                        return ingredient.count
+                    }),
                 ],
             }
         }
@@ -60,18 +60,19 @@ export const ingredientsReducer = (state = initialState, action) => {
                 ...state,
                 ingredients: [
                     ...state.ingredients,
-                    // eslint-disable-next-line no-return-assign
-                    state.ingredients.map((ingredient) =>
-                        // eslint-disable-next-line no-nested-ternary
-                        ingredient._id === action.payload._id
-                            ? // eslint-disable-next-line no-param-reassign
-                              !ingredient.count
-                                ? // eslint-disable-next-line no-param-reassign
-                                  (ingredient.count = 1)
-                                : // eslint-disable-next-line no-param-reassign
-                                  (ingredient.count += 1)
-                            : ingredient.count
-                    ),
+                    state.ingredients.map((item) => {
+                        const ingredient = item
+                        if (ingredient._id === action.payload._id) {
+                            if (!ingredient.count) {
+                                ingredient.count = 1
+                                return ingredient.count
+                            }
+
+                            ingredient.count += 1
+                            return ingredient.count
+                        }
+                        return ingredient.count
+                    }),
                 ],
             }
         }
@@ -80,18 +81,19 @@ export const ingredientsReducer = (state = initialState, action) => {
                 ...state,
                 ingredients: [
                     ...state.ingredients,
-                    // eslint-disable-next-line no-return-assign
-                    state.ingredients.map((ingredient) =>
-                        // eslint-disable-next-line no-nested-ternary
-                        ingredient._id === action.payload._id
-                            ? // eslint-disable-next-line no-param-reassign
-                              !ingredient.count
-                                ? // eslint-disable-next-line no-param-reassign
-                                  (ingredient.count = 1)
-                                : // eslint-disable-next-line no-param-reassign
-                                  (ingredient.count -= 1)
-                            : ingredient.count
-                    ),
+                    state.ingredients.map((item) => {
+                        const ingredient = item
+                        if (ingredient._id === action.payload._id) {
+                            if (!ingredient.count) {
+                                ingredient.count = 1
+                                return ingredient.count
+                            }
+
+                            ingredient.count -= 1
+                            return ingredient.count
+                        }
+                        return ingredient.count
+                    }),
                 ],
             }
         }

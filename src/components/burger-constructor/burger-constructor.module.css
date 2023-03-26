@@ -36,3 +36,24 @@
     margin-top: 30px;
     margin-right: 80px;
 }
+
+.plugText {
+    transform: translateY(50%);
+}
+
+.plugWrapper {
+    text-align: center;
+}
+
+.assemblingBurgerLi {
+    margin: 10px 0;
+    align-items: center;
+    display: flex;
+    cursor: grab;
+}
+
+.assemblingBurgerButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}

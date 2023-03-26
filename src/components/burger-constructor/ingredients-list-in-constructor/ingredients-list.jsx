@@ -2,6 +2,7 @@ import cn from 'classnames'
 import { useDrop } from 'react-dnd'
 import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
+import { v4 as uuid } from 'uuid'
 import { AssemblingBurger } from '../assembling-burger/assembling-burger'
 import burgerConstructorStyles from '../burger-constructor.module.css'
 
@@ -36,35 +37,38 @@ export function IngredientsList({ ingredients, moveIngredients }) {
                         burgerConstructorStyles.list
                     )}
                 >
-                    {ingredients.map(
-                        (item, index) =>
+                    {ingredients.map((item, index) => {
+                        const ingredient = item
+                        ingredient.ID = uuid()
+                        return (
                             item.type !== 'bun' && (
                                 <AssemblingBurger
-                                    key={item?.ID}
+                                    key={item.ID}
+                                    ID={item.ID}
                                     image={item?.image}
                                     price={item?.price}
                                     name={item?.name}
-                                    ID={item?.ID}
                                     _id={item?._id}
                                     index={index}
                                     moveIngredients={moveIngredients}
                                 />
                             )
-                    )}
+                        )
+                    })}
                 </ul>
             ) : (
                 <div className="pl-20 ml-1 m-2">
                     <div
-                        style={{
-                            textAlign: 'center',
-                        }}
-                        className="constructor-element"
+                        className={cn(
+                            'constructor-element',
+                            burgerConstructorStyles.plugWrapper
+                        )}
                     >
                         <span
-                            style={{
-                                transform: 'translateY(50%)',
-                            }}
-                            className="constructor-element__text"
+                            className={cn(
+                                'constructor-element__text',
+                                burgerConstructorStyles.plugText
+                            )}
                         >
                             Выберите начинку
                         </span>

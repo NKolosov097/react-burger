@@ -6,6 +6,8 @@ import PropTypes from 'prop-types'
 import { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { useDispatch } from 'react-redux'
+import cn from 'classnames'
+import assemblingBurgerStyles from '../burger-constructor.module.css'
 
 export function AssemblingBurger({
     image,
@@ -36,8 +38,9 @@ export function AssemblingBurger({
             if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return
 
             moveIngredients(dragIndex, hoverIndex)
-            // eslint-disable-next-line
-            item.index = hoverIndex
+
+            const ingredient = item
+            ingredient.index = hoverIndex
         },
     })
     const [{ isDragging }, drag] = useDrag({
@@ -48,23 +51,16 @@ export function AssemblingBurger({
         }),
     })
 
-    const liStyle = {
-        margin: '10px 0',
-        alignItems: 'center',
-        display: 'flex',
-        cursor: 'grab',
-    }
     const opacity = isDragging ? 0 : 1
     drag(drop(ref))
 
     return (
-        <li ref={ref} style={{ ...liStyle, opacity }}>
+        <li
+            ref={ref}
+            className={cn(assemblingBurgerStyles.assemblingBurgerLi, opacity)}
+        >
             <button
-                style={{
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
-                }}
+                className={assemblingBurgerStyles.assemblingBurgerButton}
                 type="button"
             >
                 <DragIcon type="primary" />

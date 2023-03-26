@@ -1,22 +1,12 @@
 import PropTypes from 'prop-types'
 import { MoneyLogo } from '../../images/money'
+import priceStyles from './price-title.module.css'
 
 export function PriceTitle({ price }) {
     return (
-        <h3
-            style={{
-                display: 'flex',
-                width: '100%',
-                marginTop: 4,
-                fontWeight: 'normal',
-                justifyContent: 'center',
-                alignItems: 'center',
-                fontFamily: 'Iceland',
-                fontSize: 28,
-            }}
-        >
+        <h3 className={priceStyles.header}>
             {price}
-            <span style={{ display: 'flex', marginLeft: '10px' }}>
+            <span className={priceStyles.span}>
                 <MoneyLogo size={22} />
             </span>
         </h3>
