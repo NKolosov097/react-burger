@@ -9,6 +9,7 @@ export function ModalOverlay() {
             if (event.key === 'Escape') {
                 dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
                 dispatch({ type: 'ORDER_DETAILS_CLOSE' })
+                dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
             }
         }
 
@@ -20,6 +21,7 @@ export function ModalOverlay() {
     const closeModal = () => {
         dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
         dispatch({ type: 'ORDER_DETAILS_CLOSE' })
+        dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
     }
 
     return (

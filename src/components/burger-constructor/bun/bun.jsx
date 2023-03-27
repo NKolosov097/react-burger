@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import bunStyles from '../burger-constructor.module.css'
 
-export function Bun({ bun, coordinate }) {
+export function Bun({ bun = null, coordinate }) {
     const dispatch = useDispatch()
     const onDropHandlerBuns = (item) => {
         dispatch({
@@ -66,6 +66,6 @@ Bun.propTypes = {
         name: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired,
         _id: PropTypes.string.isRequired,
-    }).isRequired,
+    }),
     coordinate: PropTypes.string.isRequired,
 }

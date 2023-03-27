@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { IngredientItem } from '../ingredient-item/ingredient-item'
 import ingredientsStyles from '../burger-ingredients.module.css'
 
-export function IngredientList({ title = 'Булки', customRef, type }) {
+export function IngredientList({ title = 'Булки', customRef = null, type }) {
     const { ingredients } = useSelector((store) => store.ingredientsReducer)
     return (
         <>
@@ -25,5 +25,8 @@ export function IngredientList({ title = 'Булки', customRef, type }) {
 IngredientList.propTypes = {
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    customRef: PropTypes.node.isRequired,
+    customRef: PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+    ]),
 }
