@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
+import { v4 as uuid } from 'uuid'
 import { IngredientItem } from '../ingredient-item/ingredient-item'
 import ingredientsStyles from '../burger-ingredients.module.css'
 
@@ -11,12 +12,14 @@ export function IngredientList({ title = 'Булки', customRef = null, type })
                 {title}
             </h2>
             <ul className={ingredientsStyles.ingredientsList}>
-                {ingredients.map(
-                    (item) =>
+                {ingredients.map((item) => {
+                    const ID = uuid()
+                    return (
                         item.type === type && (
-                            <IngredientItem key={item._id} {...item} />
+                            <IngredientItem key={item._id} ID={ID} {...item} />
                         )
-                )}
+                    )
+                })}
             </ul>
         </>
     )

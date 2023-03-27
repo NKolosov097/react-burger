@@ -55,6 +55,7 @@ export const ingredientsReducer = (state = initialState, action) => {
                 ],
             }
         }
+        // сделать доп объект где ключ будет равен  _id, а значение количество count. Можно сделать с помощью new Map.
         case INCREMENT_INGREDIENT_COUNT: {
             return {
                 ...state,
