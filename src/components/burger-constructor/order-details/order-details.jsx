@@ -7,7 +7,9 @@ import detailsStyles from './order-details.module.css'
 
 export function OrderDetails() {
     const dispatch = useDispatch()
-    const closeModal = () => dispatch({ type: 'ORDER_DETAILS_CLOSE' })
+    const closeModal = () =>
+        dispatch({ type: 'ORDER_DETAILS_CLOSE' }) &&
+        dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
 
     const { numberOfOrder } = useSelector((store) => store.orderReducer)
 
@@ -33,7 +35,12 @@ export function OrderDetails() {
             </h2>
 
             {<img className="mb-15" src={img} alt="done" /> || <Loader />}
-            <p className="mb-2 text text_type_main-small">
+            <p
+                className={cn(
+                    'mb-2 text text_type_main-small',
+                    detailsStyles.startOrder
+                )}
+            >
                 Ваш заказ начали готовить
             </p>
             <p className="mb-2 text text_type_main-small text_color_inactive">

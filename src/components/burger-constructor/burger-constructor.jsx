@@ -75,7 +75,7 @@ export function BurgerConstructor() {
 
                 <h3 className={burgerConstructorStyles.totalPrice}>
                     {totalPrice}
-                    <span style={{ display: 'flex', marginLeft: '10px' }}>
+                    <span className={burgerConstructorStyles.moneyLogo}>
                         <MoneyLogo />
                     </span>
                 </h3>

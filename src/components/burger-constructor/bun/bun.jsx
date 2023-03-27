@@ -59,7 +59,7 @@ export function Bun({ bun, coordinate }) {
     )
 }
 
-Bun.prototype = {
+Bun.propTypes = {
     bun: PropTypes.shape({
         ID: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,

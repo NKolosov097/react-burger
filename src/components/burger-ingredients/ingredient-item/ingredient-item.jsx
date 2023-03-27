@@ -91,7 +91,7 @@ export function IngredientItem({
     )
 }
 
-IngredientItem.prototype = {
+IngredientItem.propTypes = {
     image: PropTypes.string.isRequired,
     image_large: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,

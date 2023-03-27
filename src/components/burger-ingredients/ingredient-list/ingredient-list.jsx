@@ -22,7 +22,7 @@ export function IngredientList({ title = 'Булки', customRef, type }) {
     )
 }
 
-IngredientList.prototype = {
+IngredientList.propTypes = {
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     customRef: PropTypes.node.isRequired,

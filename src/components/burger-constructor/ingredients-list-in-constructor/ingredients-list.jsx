@@ -79,7 +79,7 @@ export function IngredientsList({ ingredients, moveIngredients }) {
     )
 }
 
-IngredientsList.prototype = {
+IngredientsList.propTypes = {
     ingredients: PropTypes.arrayOf(
         PropTypes.shape({
             ID: PropTypes.string.isRequired,

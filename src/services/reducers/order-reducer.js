@@ -2,6 +2,7 @@ import {
     GET_ORDER_FAILED,
     GET_ORDER_REQUEST,
     GET_ORDER_SUCCESS,
+    RESET_NUMBER_OF_ORDER,
 } from '../actions/order-action'
 
 const initialState = {
@@ -30,6 +31,12 @@ export const orderReducer = (state = initialState, action) => {
                 ...state,
                 isError: true,
                 isLoading: false,
+            }
+        }
+        case RESET_NUMBER_OF_ORDER: {
+            return {
+                ...state,
+                numberOfOrder: null,
             }
         }
         default:

@@ -10,15 +10,7 @@ export function App() {
         <>
             <AppHeader />
             <main className="App">
-                <h1
-                    style={{
-                        width: '100%',
-                        fontFamily: 'JetBrains Mono',
-                        fontWeight: 700,
-                        letterSpacing: 2,
-                    }}
-                    className="mt-5 mb-5 pl-5 pr-5 text text_type_main-large"
-                >
+                <h1 className="mt-5 mb-5 pl-5 pr-5 text text_type_main-large AppHeader">
                     Соберите бургер
                 </h1>
                 <DndProvider backend={HTML5Backend}>

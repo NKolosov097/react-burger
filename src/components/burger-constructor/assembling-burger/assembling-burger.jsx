@@ -85,7 +85,7 @@ export function AssemblingBurger({
     )
 }
 
-AssemblingBurger.prototype = {
+AssemblingBurger.propTypes = {
     image: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,

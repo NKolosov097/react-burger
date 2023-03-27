@@ -30,6 +30,11 @@
     font-size: 48px;
 }
 
+.moneyLogo {
+    display: flex;
+    margin-left: 10px;
+}
+
 .buttonWrapper {
     position: absolute;
     right: 0;
