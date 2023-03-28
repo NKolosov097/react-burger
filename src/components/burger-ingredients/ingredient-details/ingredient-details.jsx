@@ -1,11 +1,15 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
+import { useDispatch, useSelector } from 'react-redux'
 import { Loader } from '../../../images/loader'
 import detailsStyles from './ingredient-details.module.css'
 
-export function IngredientDetails({ closeModal, infoOfIngredient }) {
-    const { imageLarge, name, calories, proteins, fat, carbohydrates } =
-        infoOfIngredient
+export function IngredientDetails() {
+    const dispatch = useDispatch()
+    const closeModal = () => {
+        dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
+    }
+    const { image_large, name, calories, proteins, fat, carbohydrates } =
+        useSelector((store) => store.modalDetailsReducer.infoOfIngredient)
     const nutritionalValue = [
         {
             title: 'Калории, ккал',
@@ -40,7 +44,7 @@ export function IngredientDetails({ closeModal, infoOfIngredient }) {
             {(
                 <img
                     className={detailsStyles.image}
-                    src={imageLarge}
+                    src={image_large}
                     alt={name}
                 />
             ) || <Loader />}
@@ -57,16 +61,4 @@ export function IngredientDetails({ closeModal, infoOfIngredient }) {
             </u>
         </div>
     )
-}
-
-IngredientDetails.propTypes = {
-    closeModal: PropTypes.func.isRequired,
-    infoOfIngredient: PropTypes.shape({
-        imageLarge: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        calories: PropTypes.number.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-    }).isRequired,
 }

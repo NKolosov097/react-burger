@@ -1,53 +1,71 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
+import cn from 'classnames'
+import { useDispatch, useSelector } from 'react-redux'
 import ingredientsStyles from './burger-ingredients.module.css'
-import { ingredientPropTypes } from '../../utils/types'
 import { IngredientList } from './ingredient-list/ingredient-list'
 import { IngredientDetails } from './ingredient-details/ingredient-details'
 import { ModalOverlay } from '../modal/modal-overlay/modal-overlay'
 import { Modal } from '../modal/modal'
+import { getBurgerIngredients } from '../../services/actions/ingredients-action'
 
-export function BurgerIngredients({ data }) {
+export function BurgerIngredients() {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getBurgerIngredients())
+    }, [dispatch])
+
+    const isOpened = useSelector(
+        (state) => state.modalDetailsReducer.isOpenedIngredientsDetails
+    )
+
     const [current, setCurrent] = useState('Булки')
-    const [isOpened, setIsOpened] = useState(false)
-    const [infoOfIngredient, setInfoOfIngredient] = useState({})
 
-    const openModal = (
-        imageLarge,
-        name,
-        calories,
-        proteins,
-        fat,
-        carbohydrates
-    ) => {
-        setInfoOfIngredient({
-            imageLarge,
-            name,
-            calories,
-            proteins,
-            fat,
-            carbohydrates,
+    const bottomTabsRef = useRef()
+    const topBunsRef = useRef()
+    const topSaucesRef = useRef()
+    const topMainsRef = useRef()
+
+    const toIngredientList = useCallback(() => {
+        const calculationDifferences = (ref) =>
+            Math.abs(
+                bottomTabsRef.current.getBoundingClientRect().bottom -
+                    ref.current.getBoundingClientRect().top
+            )
+
+        if (calculationDifferences(topBunsRef) < 105) setCurrent('Булки')
+        else if (calculationDifferences(topSaucesRef) < 105) setCurrent('Соусы')
+        else if (calculationDifferences(topMainsRef) < 105)
+            setCurrent('Начинки')
+    }, [])
+
+    useEffect(() => {
+        toIngredientList()
+    }, [toIngredientList])
+
+    const onClickTab = (title, ref) => {
+        setCurrent(title)
+        ref.current.scrollIntoView({
+            behavior: 'smooth',
         })
-        setIsOpened(true)
-    }
-
-    const closeModal = () => {
-        setIsOpened(false)
     }
 
     const ingredientLists = [
         {
             title: 'Булки',
             type: 'bun',
+            ref: topBunsRef,
         },
         {
             title: 'Соусы',
             type: 'sauce',
+            ref: topSaucesRef,
         },
         {
             title: 'Начинки',
             type: 'main',
+            ref: topMainsRef,
         },
     ]
 
@@ -55,15 +73,15 @@ export function BurgerIngredients({ data }) {
         <>
             <section className={ingredientsStyles.burgerIngredients}>
                 <div
-                    className="mb-10"
-                    style={{ width: '100%', display: 'flex' }}
+                    className={cn('mb-10', ingredientsStyles.tabs)}
+                    ref={bottomTabsRef}
                 >
-                    {ingredientLists.map(({ title }) => (
+                    {ingredientLists.map(({ title, ref }) => (
                         <Tab
                             key={title}
                             value={title}
                             active={current === title}
-                            onClick={setCurrent}
+                            onClick={() => onClickTab(title, ref)}
                         >
                             {title}
                         </Tab>
@@ -71,21 +89,17 @@ export function BurgerIngredients({ data }) {
                 </div>
 
                 <div
-                    className="m-2 custom-scroll"
-                    style={{
-                        width: '100%',
-                        maxHeight: '65vh',
-                        overflowY: 'scroll',
-                    }}
+                    className={cn(
+                        'm-2 custom-scroll',
+                        ingredientsStyles.listWrapper
+                    )}
+                    onScroll={() => toIngredientList()}
                 >
-                    {ingredientLists.map(({ title, type }) => (
+                    {ingredientLists.map(({ title, type, ref }) => (
                         <IngredientList
-                            isOpened={isOpened}
+                            customRef={ref}
                             key={title}
-                            openModal={openModal}
-                            closeModal={closeModal}
                             title={title}
-                            data={data}
                             type={type}
                         />
                     ))}
@@ -95,18 +109,11 @@ export function BurgerIngredients({ data }) {
             {isOpened && (
                 <>
                     <Modal>
-                        <IngredientDetails
-                            closeModal={closeModal}
-                            infoOfIngredient={infoOfIngredient}
-                        />
+                        <IngredientDetails />
                     </Modal>
-                    <ModalOverlay setIsOpened={setIsOpened} />
+                    <ModalOverlay />
                 </>
             )}
         </>
     )
-}
-
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
 }

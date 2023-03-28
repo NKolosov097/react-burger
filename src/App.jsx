@@ -1,43 +1,22 @@
-import { useState, useEffect } from 'react'
 import './App.css'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import AppHeader from './components/app-header/app-header'
-import { BurgerConstructor } from './components/burger-constructor/burger-constructor'
 import { BurgerIngredients } from './components/burger-ingredients/burger-ingredients'
-import { getIngredients } from './utils/burger-api'
+import { BurgerConstructor } from './components/burger-constructor/burger-constructor'
 
 export function App() {
-    const [data, setData] = useState([])
-
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                const incomingData = await getIngredients()
-                setData([...incomingData.data])
-            } catch (e) {
-                throw new Error('Ой-ой, что-то пошло не так... Ошибка: ', e)
-            }
-        }
-
-        getData()
-    }, [])
-
     return (
         <>
             <AppHeader />
             <main className="App">
-                <h1
-                    style={{
-                        width: '100%',
-                        fontFamily: 'JetBrains Mono',
-                        fontWeight: 700,
-                        letterSpacing: 2,
-                    }}
-                    className="mt-5 mb-5 pl-5 pr-5 text text_type_main-large"
-                >
+                <h1 className="mt-5 mb-5 pl-5 pr-5 text text_type_main-large AppHeader">
                     Соберите бургер
                 </h1>
-                <BurgerIngredients data={data} />
-                <BurgerConstructor data={data} />
+                <DndProvider backend={HTML5Backend}>
+                    <BurgerIngredients />
+                    <BurgerConstructor />
+                </DndProvider>
             </main>
         </>
     )

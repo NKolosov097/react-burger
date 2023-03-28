@@ -41,7 +41,17 @@
         "no-underscore-dangle": 0,
         "import/no-extraneous-dependencies": [
             "error",
-            { "includeInternal": true, "includeTypes": true }
-        ]
+            {
+                "includeInternal": true,
+                "includeTypes": true,
+                "devDependencies": false,
+                "optionalDependencies": false,
+                "peerDependencies": true
+            }
+        ],
+        "default-param-last": 0,
+        "no-return-assign": 2,
+        "camelcase": ["error", { "allow": ["image_large", "image_mobile"] }],
+        "react/jsx-props-no-spreading": "off"
     }
 }

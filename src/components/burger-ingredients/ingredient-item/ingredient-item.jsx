@@ -1,35 +1,88 @@
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
+import { useDrag } from 'react-dnd/dist/hooks'
+import { useDispatch } from 'react-redux'
+import cn from 'classnames'
 import { PriceTitle } from '../../price-title/price-title'
 import ingredientItemStyles from './ingredient-item.module.css'
 
 export function IngredientItem({
-    openModal,
     image,
-    imageLarge,
+    type,
+    _id,
+    ID,
+    image_large,
     price,
     name,
+    count,
     calories,
     proteins,
     fat,
     carbohydrates,
 }) {
-    const open = () =>
-        openModal(imageLarge, name, calories, proteins, fat, carbohydrates)
+    const dispatch = useDispatch()
+    const [{ isDrag }, dragRef] = useDrag({
+        type,
+        item: { _id, ID, image, type, name, price },
+        collect: (monitor) => ({
+            isDrag: monitor.isDragging(),
+        }),
+    })
 
+    const item = {
+        image,
+        type,
+        _id,
+        ID,
+        image_large,
+        price,
+        name,
+        count,
+        calories,
+        proteins,
+        fat,
+        carbohydrates,
+    }
+    const open = (typeOfIngredient) => {
+        dispatch({
+            type: 'INGREDIENT_DETAILS_OPEN',
+            payload: item,
+        })
+        if (typeOfIngredient === 'bun') {
+            dispatch({
+                type: 'UPDATE_BUN_IN_CONSTRUCTOR',
+                payload: item,
+                isBun: true,
+            })
+            dispatch({
+                type: 'UPDATE_BUN_COUNT',
+                payload: { _id },
+            })
+        } else {
+            dispatch({
+                type: 'ADD_INGREDIENT_TO_CONSTRUCTOR',
+                payload: item,
+            })
+            dispatch({
+                type: 'INCREMENT_INGREDIENT_COUNT',
+                payload: { _id },
+            })
+        }
+    }
     return (
-        <li className={ingredientItemStyles.item}>
+        <li
+            ref={dragRef}
+            className={cn(
+                isDrag ? ingredientItemStyles.itemIsDragging : '',
+                ingredientItemStyles.item
+            )}
+        >
             <button
-                style={{
-                    border: 'none',
-                    backgroundColor: 'transparent',
-                    color: '#f2f2f3',
-                    cursor: 'pointer',
-                }}
+                className={ingredientItemStyles.button}
                 type="button"
-                onClick={open}
+                onClick={() => open(type)}
             >
-                <Counter count={1} />
+                {count ? <Counter count={count} /> : null}
                 <img className="mb-1" src={image} alt={name} />
                 <PriceTitle price={price} />
                 <h2 className={ingredientItemStyles.name}>{name}</h2>
@@ -38,10 +91,10 @@ export function IngredientItem({
     )
 }
 
-IngredientItem.prototype = {
-    openModal: PropTypes.func.isRequired,
+IngredientItem.propTypes = {
     image: PropTypes.string.isRequired,
-    imageLarge: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     calories: PropTypes.number.isRequired,

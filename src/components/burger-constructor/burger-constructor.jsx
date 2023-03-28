@@ -1,113 +1,103 @@
-import { useEffect, useState } from 'react'
-import {
-    Button,
-    ConstructorElement,
-} from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
-import { ingredientPropTypes } from '../../utils/types'
-import { AssemblingBurger } from './assembling-burger/assembling-burger'
+import { useCallback, useMemo } from 'react'
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useDispatch, useSelector } from 'react-redux'
 import burgerConstructorStyles from './burger-constructor.module.css'
 import { OrderDetails } from './order-details/order-details'
 import { ModalOverlay } from '../modal/modal-overlay/modal-overlay'
 import { MoneyLogo } from '../../images/money'
 import { Modal } from '../modal/modal'
-import { Loader } from '../../images/loader'
+import { Bun } from './bun/bun'
+import { IngredientsList } from './ingredients-list-in-constructor/ingredients-list'
+import { getNumberOfOrder } from '../../services/actions/order-action'
 
-export function BurgerConstructor({ data }) {
-    const [totalPrice, setTotalPrice] = useState(0)
-    const [isOpened, setIsOpened] = useState(false)
-    useEffect(() => {
-        setTotalPrice(610)
-    }, [])
+export function BurgerConstructor() {
+    const dispatch = useDispatch()
+
+    const isOpened = useSelector(
+        (state) => state.modalDetailsReducer.isOpenedOrderDetails
+    )
+    const { bun, ingredients } = useSelector(
+        (store) => store.constructorReducer
+    )
+
+    const totalPrice =
+        ingredients.reduce((acc, item) => acc + item.price, 0) +
+        Number(bun ? bun?.price : 0) * 2
+
+    const moveIngredients = useCallback(
+        (dragIndex, hoverIndex) => {
+            const dragIngredient = ingredients[dragIndex]
+            const newIngredients = [...ingredients]
+            newIngredients.splice(dragIndex, 1)
+            newIngredients.splice(hoverIndex, 0, dragIngredient)
+
+            dispatch({
+                type: 'UPDATE_INGREDIENTS',
+                payload: newIngredients,
+            })
+        },
+        [dispatch, ingredients]
+    )
+
+    const orderIngredients = useMemo(() => {
+        const orderIngredientsArr = []
+
+        if (bun) orderIngredientsArr.push(bun._id)
+        if (ingredients.length > 0)
+            ingredients.forEach((ingredient) => {
+                orderIngredientsArr.push(ingredient._id)
+            })
+        if (bun) orderIngredientsArr.push(bun._id)
+        return orderIngredientsArr
+    }, [bun, ingredients])
+
+    const getOrder = () => {
+        dispatch(getNumberOfOrder(orderIngredients))
+        dispatch({ type: 'ORDER_DETAILS_OPEN' })
+    }
+
+    const checkOrder = () => {
+        if (bun && ingredients.length > 0) {
+            return getOrder()
+        }
+        return null
+    }
 
     return (
         <>
-            {(data.length > 0 && (
-                <section className={burgerConstructorStyles.container}>
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '10px',
-                            justifyContent: 'center',
-                        }}
+            <section className={burgerConstructorStyles.wrapper}>
+                <Bun bun={bun} coordinate="top" />
+                <IngredientsList
+                    moveIngredients={moveIngredients}
+                    ingredients={ingredients}
+                />
+                <Bun bun={bun} coordinate="bottom" />
+
+                <h3 className={burgerConstructorStyles.totalPrice}>
+                    {totalPrice}
+                    <span className={burgerConstructorStyles.moneyLogo}>
+                        <MoneyLogo />
+                    </span>
+                </h3>
+                <div className={burgerConstructorStyles.buttonWrapper}>
+                    <Button
+                        onClick={checkOrder}
+                        htmlType="button"
+                        type="primary"
+                        size="large"
                     >
-                        <div className="pl-20 ml-1">
-                            <ConstructorElement
-                                type="top"
-                                isLocked
-                                text="Краторная булка N-200i (верх)"
-                                price={200}
-                                thumbnail={data[0]?.image}
-                            />
-                        </div>
-                        <ul
-                            className="m-2 custom-scroll"
-                            style={{
-                                listStyle: 'none',
-                                maxHeight: '45vh',
-                                overflowY: 'scroll',
-                            }}
-                        >
-                            {data.map(
-                                (item) =>
-                                    item.type !== 'bun' && (
-                                        <AssemblingBurger
-                                            key={item._id}
-                                            image={item.image}
-                                            price={item.price}
-                                            name={item.name}
-                                        />
-                                    )
-                            )}
-                        </ul>
-                        <div className="pl-20 ml-1">
-                            <ConstructorElement
-                                type="bottom"
-                                isLocked
-                                text="Краторная булка N-200i (низ)"
-                                price={200}
-                                thumbnail={data[0]?.image}
-                            />
-                        </div>
-                    </div>
-                    <h3 className={burgerConstructorStyles.totalPrice}>
-                        {totalPrice}
-                        <span style={{ display: 'flex', marginLeft: '10px' }}>
-                            <MoneyLogo />
-                        </span>
-                    </h3>
-                    <div
-                        style={{
-                            position: 'absolute',
-                            right: 0,
-                            marginTop: 30,
-                            marginRight: 80,
-                        }}
-                    >
-                        <Button
-                            onClick={() => setIsOpened(true)}
-                            htmlType="button"
-                            type="primary"
-                            size="large"
-                        >
-                            Оформить заказ
-                        </Button>
-                    </div>
-                </section>
-            )) || <Loader />}
+                        Оформить заказ
+                    </Button>
+                </div>
+            </section>
             {isOpened && (
                 <>
                     <Modal>
-                        <OrderDetails closeModal={() => setIsOpened(false)} />
+                        <OrderDetails />
                     </Modal>
-                    <ModalOverlay setIsOpened={setIsOpened} />
+                    <ModalOverlay />
                 </>
             )}
         </>
     )
-}
-
-BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
 }
