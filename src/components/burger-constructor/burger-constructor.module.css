@@ -62,3 +62,11 @@
     border: none;
     cursor: pointer;
 }
+
+.isDragging {
+    opacity: 0;
+}
+
+.isNotDragging {
+    opacity: 1;
+}

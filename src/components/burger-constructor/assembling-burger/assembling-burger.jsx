@@ -51,13 +51,17 @@ export function AssemblingBurger({
         }),
     })
 
-    const opacity = isDragging ? 0 : 1
     drag(drop(ref))
 
     return (
         <li
             ref={ref}
-            className={cn(assemblingBurgerStyles.assemblingBurgerLi, opacity)}
+            className={cn(
+                assemblingBurgerStyles.assemblingBurgerLi,
+                isDragging
+                    ? assemblingBurgerStyles.isDragging
+                    : assemblingBurgerStyles.isNotDragging
+            )}
         >
             <button
                 className={assemblingBurgerStyles.assemblingBurgerButton}

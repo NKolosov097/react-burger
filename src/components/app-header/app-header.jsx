@@ -4,50 +4,71 @@ import {
     ListIcon,
     ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
+import { NavLink, useMatch } from 'react-router-dom'
+import cn from 'classnames'
 import headerStyles from './app-header.module.css'
 
 export default function AppHeader() {
+    const isHome = !!useMatch('/')
+    const isProfile = !!useMatch('/profile')
+    const isFeeds = !!useMatch('/orders')
+
     return (
         <header className="p-4 mb-4">
             <menu className={headerStyles.menu}>
                 <li className={headerStyles.menu_item}>
-                    <a
-                        onClick={(e) => e.preventDefault()}
-                        href="/"
-                        className={headerStyles.menu_item_content}
-                    >
-                        <BurgerIcon type="primary" />
-                        <span className="text text_type_main-default p-2 pt-3">
+                    <NavLink to="/" className={headerStyles.menu_item_content}>
+                        <BurgerIcon type={isHome ? 'primary' : 'secondary'} />
+                        <span
+                            className={cn(
+                                'text text_type_main-default p-2 pt-3',
+                                isHome
+                                    ? headerStyles.active
+                                    : 'text_color_inactive'
+                            )}
+                        >
                             Конструктор
                         </span>
-                    </a>
-                    <a
-                        onClick={(e) => e.preventDefault()}
-                        href="/"
+                    </NavLink>
+                    <NavLink
+                        to="/orders"
                         className={headerStyles.menu_item_content}
                     >
-                        <ListIcon type="secondary" />
-                        <span className="text text_type_main-default text_color_inactive p-2 pt-3">
+                        <ListIcon type={isFeeds ? 'primary' : 'secondary'} />
+                        <span
+                            className={cn(
+                                'text text_type_main-default p-2 pt-3',
+                                isFeeds
+                                    ? headerStyles.active
+                                    : 'text_color_inactive'
+                            )}
+                        >
                             Лента заказов
                         </span>
-                    </a>
+                    </NavLink>
                 </li>
                 <li className={headerStyles.logo}>
-                    <a onClick={(e) => e.preventDefault()} href="/">
-                        <Logo className="mt-2" />
-                    </a>
+                    <Logo className="mt-2" />
                 </li>
                 <li className={headerStyles.menu_item}>
-                    <a
-                        onClick={(e) => e.preventDefault()}
-                        href="/"
+                    <NavLink
+                        to="/profile"
                         className={headerStyles.menu_item_content}
                     >
-                        <ProfileIcon type="secondary" />
-                        <span className="text text_type_main-default text_color_inactive p-2 pt-3">
+                        <ProfileIcon
+                            type={isProfile ? 'primary' : 'secondary'}
+                        />
+                        <span
+                            className={cn(
+                                'text text_type_main-default p-2 pt-3',
+                                isProfile
+                                    ? headerStyles.active
+                                    : 'text_color_inactive'
+                            )}
+                        >
                             Личный кабинет
                         </span>
-                    </a>
+                    </NavLink>
                 </li>
             </menu>
         </header>

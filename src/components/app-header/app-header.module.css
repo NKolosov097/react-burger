@@ -6,6 +6,10 @@ header {
     background-color: #1c1c21;
 }
 
+a {
+    text-decoration: none;
+}
+
 .menu {
     display: flex;
     justify-content: space-between;
@@ -20,18 +24,23 @@ header {
 .menu_item,
 .menu_item_content {
     text-decoration: none;
-    color: #f2f2f3;
     display: flex;
     align-items: center;
-    padding: 0 10px;
+    padding: 0;
+    margin-bottom: 5px;
+}
+
+.active {
+    text-decoration: none;
+    color: #f2f2f3;
 }
 
 .menu_item_content {
+    text-decoration: none;
     margin-right: 8px;
     border-radius: 20px;
 }
 
 .logo {
     margin-right: 10%;
-    cursor: pointer;
 }
