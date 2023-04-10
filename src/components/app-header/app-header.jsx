@@ -11,7 +11,7 @@ import headerStyles from './app-header.module.css'
 export default function AppHeader() {
     const isHome = !!useMatch('/')
     const isProfile = !!useMatch('/profile')
-    const isFeeds = !!useMatch('/orders')
+    const isFeeds = !!useMatch('/profile/orders')
 
     return (
         <header className="p-4 mb-4">
@@ -31,7 +31,7 @@ export default function AppHeader() {
                         </span>
                     </NavLink>
                     <NavLink
-                        to="/orders"
+                        to="/profile/orders"
                         className={headerStyles.menu_item_content}
                     >
                         <ListIcon type={isFeeds ? 'primary' : 'secondary'} />

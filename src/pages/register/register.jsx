@@ -14,43 +14,44 @@ import { registerAction } from '../../services/actions/auth-action'
 export function Register() {
     const dispatch = useDispatch()
 
-    const [name, setName] = useState('')
-    const onChangeName = (e) => {
-        setName(e.target.value)
+    const [form, setForm] = useState({
+        name: '',
+        email: '',
+        password: '',
+    })
+
+    const onChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    const [email, setEmail] = useState('')
-    const onChangeEmail = (e) => {
-        setEmail(e.target.value)
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(registerAction(form.email, form.password, form.name))
     }
 
-    const [password, setPassword] = useState('')
-    const onChangePassword = (e) => {
-        setPassword(e.target.value)
-    }
     return (
         <section className={registerStyles.wrapper}>
-            <div className={registerStyles.container}>
+            <form onSubmit={handleSubmit} className={registerStyles.container}>
                 <h1 className={cn(registerStyles.header, 'mb-6')}>
                     Регистрация
                 </h1>
                 <Input
-                    onChange={onChangeName}
+                    onChange={onChange}
                     name="name"
                     placeholder="Имя"
                     type="text"
-                    value={name}
+                    value={form.name}
                     extraClass="mb-6"
                 />
                 <EmailInput
-                    onChange={onChangeEmail}
-                    value={email}
+                    onChange={onChange}
+                    value={form.email}
                     name="email"
                     extraClass="mb-6"
                 />
                 <PasswordInput
-                    onChange={onChangePassword}
-                    value={password}
+                    onChange={onChange}
+                    value={form.password}
                     name="password"
                     extraClass="mb-6"
                 />
@@ -60,7 +61,9 @@ export function Register() {
                     size="medium"
                     extraClass="mb-20"
                     onClick={() =>
-                        dispatch(registerAction(email, password, name))
+                        dispatch(
+                            registerAction(form.email, form.password, form.name)
+                        )
                     }
                 >
                     Зарегистрироваться
@@ -71,7 +74,7 @@ export function Register() {
                         Войти
                     </Link>
                 </h2>
-            </div>
+            </form>
         </section>
     )
 }

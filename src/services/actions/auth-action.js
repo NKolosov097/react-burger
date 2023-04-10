@@ -75,7 +75,7 @@ export const registerAction = (email, password, name) => async (dispatch) => {
                 }
                 dispatch({
                     type: REQUEST_SUCCESS,
-                    isAuth: true,
+                    isChecked: true,
                     payload: user,
                 })
             }
@@ -97,7 +97,7 @@ export const loginAction = (email, password) => async (dispatch) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
     }
-    fetchWithRefresh(`${NORMA_API}/auth/login`, options)
+    return fetchWithRefresh(`${NORMA_API}/auth/login`, options)
         .then((res) => {
             if (res && res.success) {
                 localStorage.setItem(
@@ -111,7 +111,7 @@ export const loginAction = (email, password) => async (dispatch) => {
                 }
                 dispatch({
                     type: REQUEST_SUCCESS,
-                    isAuth: true,
+                    isChecked: true,
                     payload: user,
                 })
             }
@@ -139,7 +139,7 @@ export const logoutRequest = () => async (dispatch) => {
         .then(() => {
             dispatch({
                 type: REQUEST_SUCCESS,
-                isAuth: true,
+                isChecked: true,
                 payload: null,
             })
         })
@@ -149,7 +149,7 @@ export const logoutRequest = () => async (dispatch) => {
                 payload: error.message,
             })
         )
-    // localStorage.removeItem('accessToken')
+    localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
 }
 
@@ -198,7 +198,7 @@ export const passwordReset = (password, token) => async (dispatch) => {
             })
             dispatch({
                 type: REQUEST_SUCCESS,
-                isAuth: true,
+                isChecked: true,
                 user: res.user,
             })
         })

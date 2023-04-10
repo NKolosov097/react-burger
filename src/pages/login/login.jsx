@@ -5,7 +5,7 @@ import {
     PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 // import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import loginStyles from './login.module.css'
@@ -13,40 +13,46 @@ import { loginAction } from '../../services/actions/auth-action'
 
 export function Login() {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
-    const [email, setEmail] = useState('')
-    const onChangeEmail = (e) => {
-        setEmail(e.target.value)
+    const [form, setForm] = useState({
+        email: '',
+        password: '',
+    })
+
+    const onChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    const [password, setPassword] = useState('')
-    const onChangePassword = (e) => {
-        setPassword(e.target.value)
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(loginAction(form.email, form.password)).then(() => {
+            navigate('/login')
+        })
     }
 
     return (
         <section className={loginStyles.wrapper}>
-            <div className={loginStyles.container}>
+            <form onSubmit={handleSubmit} className={loginStyles.container}>
                 <h1 className={cn(loginStyles.header, 'mb-6')}>Вход</h1>
                 <EmailInput
-                    onChange={onChangeEmail}
-                    value={email}
+                    onChange={onChange}
+                    value={form.email}
                     name="email"
                     isIcon={false}
                     extraClass="mb-6"
                 />
                 <PasswordInput
-                    onChange={onChangePassword}
-                    value={password}
+                    onChange={onChange}
+                    value={form.password}
                     name="password"
                     extraClass="mb-6"
                 />
                 <Button
-                    htmlType="button"
+                    htmlType="submit"
                     type="primary"
                     size="medium"
                     extraClass="mb-20"
-                    onClick={() => dispatch(loginAction(email, password))}
                 >
                     Войти
                 </Button>
@@ -62,7 +68,7 @@ export function Login() {
                         Восстановить пароль
                     </Link>
                 </h2>
-            </div>
+            </form>
         </section>
     )
 }

@@ -20,12 +20,10 @@ export function ForgotPassword() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(
-            passwordForgot(email).then(() => {
-                localStorage.setItem('correctEmail', true)
-                navigate('/reset-password')
-            })
-        )
+        dispatch(passwordForgot(email)).then(() => {
+            localStorage.setItem('correctEmail', true)
+            navigate('/reset-password')
+        })
     }
 
     return (

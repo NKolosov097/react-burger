@@ -43,16 +43,14 @@ export function App() {
                     path="/reset-password"
                     element={<OnlyUnAuth component={<ResetPassword />} />}
                 />
-                {/* <Route path="/info" > */}
                 <Route
                     path="/profile"
                     element={<OnlyAuth component={<Profile />} />}
                 />
                 <Route
-                    path="/orders"
+                    path="/profile/orders"
                     element={<OnlyAuth component={<Orders />} />}
                 />
-                {/* </Route> */}
                 <Route path="*" element={<HomePage />} />
             </Routes>
         </Router>

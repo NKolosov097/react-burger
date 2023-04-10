@@ -9,7 +9,7 @@ import {
 
 const initialState = {
     isLoading: false,
-    isAuth: false,
+    isChecked: false,
     isCorrectEmail: false,
     user: null,
     isError: false,
@@ -28,7 +28,7 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 isError: false,
-                isAuth: true,
+                isChecked: true,
                 user: action.payload,
             }
         }
@@ -44,7 +44,7 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.user,
-                isAuth: true,
+                isChecked: true,
             }
         }
         case SET_EMAIL_CORRECT_FLAG: {
@@ -56,7 +56,7 @@ export const authReducer = (state = initialState, action) => {
         case SET_IS_AUTH: {
             return {
                 ...state,
-                isAuth: true,
+                isChecked: true,
             }
         }
         default:

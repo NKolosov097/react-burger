@@ -71,7 +71,7 @@ export function Profile() {
                         <li className={profileStyles.asideItem}>
                             <Link
                                 className={profileStyles.asideItem}
-                                to="/orders"
+                                to="orders"
                             >
                                 История заказа
                             </Link>

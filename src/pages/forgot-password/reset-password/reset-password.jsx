@@ -14,23 +14,21 @@ export function ResetPassword() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [password, setPassword] = useState('')
-    const onChangePassword = (e) => {
-        setPassword(e.target.value)
+    const [form, setForm] = useState({
+        password: '',
+        form: '',
+    })
+
+    const onChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    const [token, setToken] = useState('')
-    const onChangeCode = (e) => {
-        setToken(e.target.value)
-    }
-
-    const handleSubmit = () => {
-        dispatch(
-            passwordReset(password, token).then(() => {
-                localStorage.removeItem('correctEmail')
-                navigate('/login')
-            })
-        )
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(passwordReset(form.password, form.token)).then(() => {
+            localStorage.removeItem('correctEmail')
+            navigate('/login')
+        })
     }
 
     if (!localStorage.getItem('correctEmail')) {
@@ -47,21 +45,22 @@ export function ResetPassword() {
                     Восстановление пароля
                 </h1>
                 <PasswordInput
-                    onChange={onChangePassword}
-                    value={password}
+                    onChange={onChange}
+                    value={form.password}
                     placeholder="Введите новый пароль"
-                    name=""
+                    name="password"
                     extraClass="mb-6"
                 />
                 <Input
-                    onChange={onChangeCode}
+                    onChange={onChange}
                     placeholder="Введите код из письма"
                     type="text"
-                    value={token}
+                    name="token"
+                    value={form.token}
                     extraClass="mb-6"
                 />
                 <Button
-                    htmlType="button"
+                    htmlType="submit"
                     type="primary"
                     size="medium"
                     extraClass="mb-20"
