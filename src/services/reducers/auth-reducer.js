@@ -37,7 +37,6 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 isError: true,
                 isLoading: false,
-                payload: action.payload,
             }
         }
         case SET_USER: {
@@ -50,7 +49,7 @@ export const authReducer = (state = initialState, action) => {
         case SET_EMAIL_CORRECT_FLAG: {
             return {
                 ...state,
-                isCorrectEmail: action.emailFlag,
+                isCorrectEmail: true,
             }
         }
         case SET_IS_AUTH: {

@@ -18,7 +18,7 @@ export const getUserData = () => async (dispatch) => {
             authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
     }
-    fetchWithRefresh(`${NORMA_API}/auth/user`, options)
+    await fetchWithRefresh(`${NORMA_API}/auth/user`, options)
         .then((res) => {
             if (res && res.success) {
                 dispatch({
@@ -75,7 +75,6 @@ export const registerAction = (email, password, name) => async (dispatch) => {
                 }
                 dispatch({
                     type: REQUEST_SUCCESS,
-                    isChecked: true,
                     payload: user,
                 })
             }
@@ -111,7 +110,6 @@ export const loginAction = (email, password) => async (dispatch) => {
                 }
                 dispatch({
                     type: REQUEST_SUCCESS,
-                    isChecked: true,
                     payload: user,
                 })
             }
@@ -136,12 +134,12 @@ export const logoutRequest = () => async (dispatch) => {
         }),
     }
     fetchWithRefresh(`${NORMA_API}/auth/logout`, options)
-        .then(() => {
-            dispatch({
-                type: REQUEST_SUCCESS,
-                isChecked: true,
-                payload: null,
-            })
+        .then((res) => {
+            if (res && res.success)
+                dispatch({
+                    type: REQUEST_SUCCESS,
+                    payload: null,
+                })
         })
         .catch((error) =>
             dispatch({
@@ -149,6 +147,7 @@ export const logoutRequest = () => async (dispatch) => {
                 payload: error.message,
             })
         )
+    // localStorage.clear()
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
 }
@@ -168,7 +167,6 @@ export const passwordForgot = (email) => async (dispatch) => {
         .then(() => {
             dispatch({
                 type: SET_EMAIL_CORRECT_FLAG,
-                emailFlag: true,
             })
         })
         .catch((error) =>
@@ -194,7 +192,6 @@ export const passwordReset = (password, token) => async (dispatch) => {
         .then((res) => {
             dispatch({
                 type: SET_EMAIL_CORRECT_FLAG,
-                emailFlag: true,
             })
             dispatch({
                 type: REQUEST_SUCCESS,
