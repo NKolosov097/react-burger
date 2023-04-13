@@ -6,12 +6,13 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink, useMatch } from 'react-router-dom'
 import cn from 'classnames'
+import React from 'react'
 import headerStyles from './app-header.module.css'
 
-export default function AppHeader() {
+export const AppHeader = React.memo(() => {
     const isHome = !!useMatch('/')
     const isProfile = !!useMatch('/profile')
-    const isFeeds = !!useMatch('/profile/orders')
+    const isOrders = !!useMatch('/profile/orders')
 
     return (
         <header className="p-4 mb-4">
@@ -34,11 +35,11 @@ export default function AppHeader() {
                         to="/profile/orders"
                         className={headerStyles.menu_item_content}
                     >
-                        <ListIcon type={isFeeds ? 'primary' : 'secondary'} />
+                        <ListIcon type={isOrders ? 'primary' : 'secondary'} />
                         <span
                             className={cn(
                                 'text text_type_main-default p-2 pt-3',
-                                isFeeds
+                                isOrders
                                     ? headerStyles.active
                                     : 'text_color_inactive'
                             )}
@@ -48,7 +49,9 @@ export default function AppHeader() {
                     </NavLink>
                 </li>
                 <li className={headerStyles.logo}>
-                    <Logo className="mt-2" />
+                    <NavLink to="/">
+                        <Logo className="mt-2" />
+                    </NavLink>
                 </li>
                 <li className={headerStyles.menu_item}>
                     <NavLink
@@ -73,4 +76,4 @@ export default function AppHeader() {
             </menu>
         </header>
     )
-}
+})

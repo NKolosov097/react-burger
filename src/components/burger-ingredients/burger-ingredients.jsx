@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import ingredientsStyles from './burger-ingredients.module.css'
 import { IngredientList } from './ingredient-list/ingredient-list'
 
-export function BurgerIngredients() {
+export const BurgerIngredients = React.memo(() => {
     const [current, setCurrent] = useState('Булки')
 
     const bottomTabsRef = useRef()
@@ -90,4 +90,4 @@ export function BurgerIngredients() {
             </div>
         </section>
     )
-}
+})

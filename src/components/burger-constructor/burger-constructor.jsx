@@ -1,17 +1,25 @@
-import { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
+import ReactDOM from 'react-dom'
 import burgerConstructorStyles from './burger-constructor.module.css'
 import { MoneyLogo } from '../../images/money'
 import { Bun } from './bun/bun'
 import { IngredientsList } from './ingredients-list-in-constructor/ingredients-list'
 import { getNumberOfOrder } from '../../services/actions/order-action'
+import { FailOrderDetails } from './order-details/fail-order-details'
+import { OrderDetails } from './order-details/order-details'
+import { Modal } from '../modal/modal'
 
-export function BurgerConstructor() {
+export const BurgerConstructor = React.memo(() => {
     const dispatch = useDispatch()
     const { bun, ingredients } = useSelector(
         (store) => store.constructorReducer
     )
+    const user = useSelector((store) => store.authReducer.user)
+    const { numberOfOrder } = useSelector((store) => store.orderReducer)
+
+    const modalRoot = document.querySelector('#modal')
 
     const totalPrice =
         ingredients.reduce((acc, item) => acc + item.price, 0) +
@@ -49,13 +57,6 @@ export function BurgerConstructor() {
         dispatch({ type: 'ORDER_DETAILS_OPEN' })
     }
 
-    const checkOrder = () => {
-        if (bun && ingredients.length > 0) {
-            return getOrder()
-        }
-        return null
-    }
-
     return (
         <section className={burgerConstructorStyles.wrapper}>
             <Bun bun={bun} coordinate="top" />
@@ -65,22 +66,36 @@ export function BurgerConstructor() {
             />
             <Bun bun={bun} coordinate="bottom" />
 
-            <h3 className={burgerConstructorStyles.totalPrice}>
-                {totalPrice}
-                <span className={burgerConstructorStyles.moneyLogo}>
-                    <MoneyLogo />
-                </span>
-            </h3>
-            <div className={burgerConstructorStyles.buttonWrapper}>
-                <Button
-                    onClick={checkOrder}
-                    htmlType="button"
-                    type="primary"
-                    size="large"
-                >
-                    Оформить заказ
-                </Button>
+            <div className={burgerConstructorStyles.orderWrapper}>
+                <h3 className={burgerConstructorStyles.totalPrice}>
+                    {totalPrice}
+                    <span className={burgerConstructorStyles.moneyLogo}>
+                        <MoneyLogo />
+                    </span>
+                </h3>
+                {bun && ingredients.length > 0 && user ? (
+                    <div className={burgerConstructorStyles.buttonWrapper}>
+                        <Button
+                            onClick={getOrder}
+                            htmlType="button"
+                            type="primary"
+                            size="large"
+                        >
+                            Оформить заказ
+                        </Button>
+                    </div>
+                ) : (
+                    bun &&
+                    ingredients.length > 0 &&
+                    !user &&
+                    ReactDOM.createPortal(<FailOrderDetails />, modalRoot)
+                )}
             </div>
+            {numberOfOrder && (
+                <Modal orderDetails>
+                    <OrderDetails />
+                </Modal>
+            )}
         </section>
     )
-}
+})

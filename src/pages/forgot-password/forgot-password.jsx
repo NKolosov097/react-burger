@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+
 import {
     Button,
     EmailInput,
@@ -9,7 +10,7 @@ import { useDispatch } from 'react-redux'
 import forgotPasswordStyles from './forgot-password.module.css'
 import { passwordForgot } from '../../services/actions/auth-action'
 
-export function ForgotPassword() {
+export const ForgotPassword = React.memo(() => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -60,4 +61,4 @@ export function ForgotPassword() {
             </form>
         </section>
     )
-}
+})

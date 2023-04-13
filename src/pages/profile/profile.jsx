@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+
 import {
     Button,
     EmailInput,
@@ -14,7 +15,7 @@ import {
     patchUserInfo,
 } from '../../services/actions/auth-action'
 
-export function Profile() {
+export const Profile = React.memo(() => {
     const dispatch = useDispatch()
     const { user } = useSelector((store) => store.authReducer)
     const [form, setForm] = useState({
@@ -152,4 +153,4 @@ export function Profile() {
             </div>
         </section>
     )
-}
+})

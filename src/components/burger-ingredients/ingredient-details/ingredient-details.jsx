@@ -1,13 +1,13 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
+import React from 'react'
 import { Loader } from '../../../images/loader'
 import detailsStyles from './ingredient-details.module.css'
 
-export function IngredientDetails({ newPage = false }) {
+export const IngredientDetails = React.memo(({ newPage = false }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const handleClose = () => navigate(-1)
     const { id } = useParams()
     const ingredients = useSelector(
         (store) => store.ingredientsReducer.ingredients
@@ -16,7 +16,13 @@ export function IngredientDetails({ newPage = false }) {
 
     const closeModal = () => {
         dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
-        handleClose()
+        dispatch({
+            type: 'UPDATE_BUN_IN_CONSTRUCTOR',
+            isBun: true,
+            payload: null,
+        })
+        dispatch({ type: 'UPDATE_INGREDIENTS', payload: [] })
+        navigate(-1)
     }
     const { image_large, name, calories, proteins, fat, carbohydrates } =
         ingredient || {
@@ -97,4 +103,4 @@ export function IngredientDetails({ newPage = false }) {
             )}
         </>
     )
-}
+})

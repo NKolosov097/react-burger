@@ -1,9 +1,9 @@
-import { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import modalOverlayStyles from './modal-overlay.module.css'
 
-export function ModalOverlay() {
+export const ModalOverlay = React.memo(({ orderDetails }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const handleClose = useCallback(() => {
@@ -16,6 +16,14 @@ export function ModalOverlay() {
                 dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
                 dispatch({ type: 'ORDER_DETAILS_CLOSE' })
                 dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
+                if (orderDetails) {
+                    dispatch({ type: 'UPDATE_INGREDIENTS', payload: [] })
+                    dispatch({
+                        type: 'UPDATE_BUN_IN_CONSTRUCTOR',
+                        isBun: true,
+                        payload: null,
+                    })
+                }
                 handleClose()
             }
         }
@@ -23,12 +31,20 @@ export function ModalOverlay() {
         document.addEventListener('keydown', handleEscClose)
 
         return () => document.removeEventListener('keydown', handleEscClose)
-    }, [dispatch, handleClose])
+    }, [dispatch, handleClose, orderDetails])
 
     const closeModal = () => {
         dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
         dispatch({ type: 'ORDER_DETAILS_CLOSE' })
         dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
+        if (orderDetails) {
+            dispatch({ type: 'UPDATE_INGREDIENTS', payload: [] })
+            dispatch({
+                type: 'UPDATE_BUN_IN_CONSTRUCTOR',
+                isBun: true,
+                payload: null,
+            })
+        }
         handleClose()
     }
 
@@ -42,4 +58,4 @@ export function ModalOverlay() {
             className={modalOverlayStyles.modalOverlay__wrapper}
         />
     )
-}
+})

@@ -8,7 +8,7 @@ import { ForgotPassword } from './pages/forgot-password/forgot-password'
 import { ResetPassword } from './pages/forgot-password/reset-password/reset-password'
 import { Profile } from './pages/profile/profile'
 import { Orders } from './pages/profile/orders/orders'
-import AppHeader from './components/app-header/app-header'
+import { AppHeader } from './components/app-header/app-header'
 import { checkUserAuth } from './services/actions/auth-action'
 import {
     OnlyAuth,

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import {
     Button,
     EmailInput,
@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux'
 import loginStyles from './login.module.css'
 import { loginAction } from '../../services/actions/auth-action'
 
-export function Login() {
+export const Login = React.memo(() => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -71,4 +71,4 @@ export function Login() {
             </form>
         </section>
     )
-}
+})

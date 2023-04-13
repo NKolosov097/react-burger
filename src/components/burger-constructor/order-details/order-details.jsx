@@ -1,11 +1,12 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
 import img from '../../../images/done.png'
 import { Loader } from '../../../images/loader'
 import detailsStyles from './order-details.module.css'
 
-export function OrderDetails() {
+export const OrderDetails = React.memo(() => {
     const dispatch = useDispatch()
     const closeModal = () =>
         dispatch({ type: 'ORDER_DETAILS_CLOSE' }) &&
@@ -48,4 +49,4 @@ export function OrderDetails() {
             </p>
         </div>
     )
-}
+})

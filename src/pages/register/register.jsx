@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+
 import {
     Button,
     EmailInput,
@@ -11,7 +12,7 @@ import { useDispatch } from 'react-redux'
 import registerStyles from './register.module.css'
 import { registerAction } from '../../services/actions/auth-action'
 
-export function Register() {
+export const Register = React.memo(() => {
     const dispatch = useDispatch()
 
     const [form, setForm] = useState({
@@ -77,4 +78,4 @@ export function Register() {
             </form>
         </section>
     )
-}
+})

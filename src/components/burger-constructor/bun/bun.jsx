@@ -3,9 +3,10 @@ import cn from 'classnames'
 import { useDrop } from 'react-dnd'
 import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
+import React from 'react'
 import bunStyles from '../burger-constructor.module.css'
 
-export function Bun({ bun = null, coordinate }) {
+export const Bun = React.memo(({ bun = null, coordinate }) => {
     const dispatch = useDispatch()
     const onDropHandlerBuns = (item) => {
         dispatch({
@@ -57,15 +58,8 @@ export function Bun({ bun = null, coordinate }) {
             )}
         </div>
     )
-}
+})
 
 Bun.propTypes = {
-    bun: PropTypes.shape({
-        ID: PropTypes.string.isRequired,
-        image: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        _id: PropTypes.string.isRequired,
-    }),
     coordinate: PropTypes.string.isRequired,
 }

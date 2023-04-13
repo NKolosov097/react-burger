@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import {
     Button,
     Input,
@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux'
 import resetPasswordStyles from './reset-password.module.css'
 import { passwordReset } from '../../../services/actions/auth-action'
 
-export function ResetPassword() {
+export const ResetPassword = React.memo(() => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -76,4 +76,4 @@ export function ResetPassword() {
             </form>
         </section>
     )
-}
+})
