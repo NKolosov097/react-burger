@@ -1,5 +1,10 @@
 import { useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import {
+    Routes,
+    Route,
+    useLocation,
+    // useResolvedPath,
+} from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { HomePage } from './pages/home-page/home-page'
 import { Login } from './pages/login/login'
@@ -14,19 +19,30 @@ import {
     OnlyAuth,
     OnlyUnAuth,
 } from './components/protected-route/protected-route'
+import { IngredientDetails } from './components/burger-ingredients/ingredient-details/ingredient-details'
+import { Modal } from './components/modal/modal'
+import { getBurgerIngredients } from './services/actions/ingredients-action'
 
 export function App() {
     const dispatch = useDispatch()
+    const location = useLocation()
+
+    const background = location.state && location.state.background
 
     useEffect(() => {
+        dispatch(getBurgerIngredients())
         dispatch(checkUserAuth())
     }, [])
 
     return (
-        <Router>
+        <>
             <AppHeader />
-            <Routes>
+            <Routes location={background || location}>
                 <Route path="/" element={<HomePage />} />
+                <Route
+                    path="/ingredients/:id"
+                    element={<IngredientDetails />}
+                />
                 <Route
                     path="/login"
                     element={<OnlyUnAuth component={<Login />} />}
@@ -53,7 +69,19 @@ export function App() {
                 />
                 <Route path="*" element={<HomePage />} />
             </Routes>
-        </Router>
+            {background && (
+                <Routes>
+                    <Route
+                        path="/ingredients/:id"
+                        element={
+                            <Modal>
+                                <IngredientDetails newPage />
+                            </Modal>
+                        }
+                    />
+                </Routes>
+            )}
+        </>
     )
 }
 

@@ -1,27 +1,35 @@
-import { useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import modalOverlayStyles from './modal-overlay.module.css'
 
 export function ModalOverlay() {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const handleClose = useCallback(() => {
+        navigate(-1)
+    }, [navigate])
+
     useEffect(() => {
         const handleEscClose = (event) => {
             if (event.key === 'Escape') {
                 dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
                 dispatch({ type: 'ORDER_DETAILS_CLOSE' })
                 dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
+                handleClose()
             }
         }
 
         document.addEventListener('keydown', handleEscClose)
 
         return () => document.removeEventListener('keydown', handleEscClose)
-    }, [dispatch])
+    }, [dispatch, handleClose])
 
     const closeModal = () => {
         dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
         dispatch({ type: 'ORDER_DETAILS_CLOSE' })
         dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
+        handleClose()
     }
 
     return (

@@ -17,6 +17,26 @@
     z-index: 10000;
 }
 
+.containerNewPage {
+    background-color: transparent;
+    position: fixed;
+    justify-content: center;
+    text-align: center;
+
+    --width-modal: 720px;
+    --height-modal: 540px;
+
+    width: var(--width-modal);
+    height: var(--height-modal);
+
+    border: none;
+    border-radius: 40px;
+    top: calc(50% - var(--height-modal) / 2);
+    left: calc(50% - var(--width-modal) / 2);
+    padding: 40px;
+    z-index: 10000;
+}
+
 .title {
     display: flex;
     font-family: 'JetBrains Mono';
@@ -25,6 +45,16 @@
     font-size: 36px;
     line-height: 40px;
     justify-content: space-between;
+    width: 100%;
+}
+
+.titleNewPage {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    justify-content: center;
     width: 100%;
 }
 

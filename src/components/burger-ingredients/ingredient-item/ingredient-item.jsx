@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { useDrag } from 'react-dnd/dist/hooks'
 import { useDispatch } from 'react-redux'
 import cn from 'classnames'
+import { Link, useLocation } from 'react-router-dom'
 import { PriceTitle } from '../../price-title/price-title'
 import ingredientItemStyles from './ingredient-item.module.css'
 
@@ -21,6 +22,8 @@ export function IngredientItem({
     carbohydrates,
 }) {
     const dispatch = useDispatch()
+    const location = useLocation()
+
     const [{ isDrag }, dragRef] = useDrag({
         type,
         item: { _id, ID, image, type, name, price },
@@ -77,16 +80,23 @@ export function IngredientItem({
                 ingredientItemStyles.item
             )}
         >
-            <button
-                className={ingredientItemStyles.button}
-                type="button"
-                onClick={() => open(type)}
+            <Link
+                to={{
+                    pathname: `/ingredients/${_id}`,
+                }}
+                state={{ background: location }}
             >
-                {count ? <Counter count={count} /> : null}
-                <img className="mb-1" src={image} alt={name} />
-                <PriceTitle price={price} />
-                <h2 className={ingredientItemStyles.name}>{name}</h2>
-            </button>
+                <button
+                    className={ingredientItemStyles.button}
+                    type="button"
+                    onClick={() => open(type)}
+                >
+                    {count ? <Counter count={count} /> : null}
+                    <img className="mb-1" src={image} alt={name} />
+                    <PriceTitle price={price} />
+                    <h2 className={ingredientItemStyles.name}>{name}</h2>
+                </button>
+            </Link>
         </li>
     )
 }

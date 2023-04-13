@@ -163,7 +163,7 @@ export const passwordForgot = (email) => async (dispatch) => {
             'Content-Type': 'application/json',
         },
     }
-    return fetch(`${NORMA_API}/password-reset`, options)
+    return fetchWithRefresh(`${NORMA_API}/password-reset`, options)
         .then(() => {
             dispatch({
                 type: SET_EMAIL_CORRECT_FLAG,
@@ -188,7 +188,7 @@ export const passwordReset = (password, token) => async (dispatch) => {
             'Content-Type': 'application/json',
         },
     }
-    return fetch(`${NORMA_API}/password-reset/reset`, options)
+    return fetchWithRefresh(`${NORMA_API}/password-reset/reset`, options)
         .then((res) => {
             dispatch({
                 type: SET_EMAIL_CORRECT_FLAG,

@@ -1,10 +1,17 @@
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import { ModalOverlay } from './modal-overlay/modal-overlay'
 
 const modalRoot = document.querySelector('#modal')
 
 export function Modal({ children }) {
-    return ReactDOM.createPortal(children, modalRoot)
+    return ReactDOM.createPortal(
+        <>
+            <ModalOverlay />
+            {children}
+        </>,
+        modalRoot
+    )
 }
 
 Modal.propTypes = {
