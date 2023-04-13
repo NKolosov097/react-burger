@@ -1,10 +1,5 @@
 import { useEffect } from 'react'
-import {
-    Routes,
-    Route,
-    useLocation,
-    // useResolvedPath,
-} from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { HomePage } from './pages/home-page/home-page'
 import { Login } from './pages/login/login'
@@ -32,7 +27,7 @@ export function App() {
     useEffect(() => {
         dispatch(getBurgerIngredients())
         dispatch(checkUserAuth())
-    }, [])
+    }, [dispatch])
 
     return (
         <>
@@ -84,9 +79,3 @@ export function App() {
         </>
     )
 }
-
-// как идет составление маршрутов в react router
-// сделать хук, который будет проверять авторизацию пользователя
-// redux thunk. в мидлварах организовать логику авторизацию и регистрации
-
-// переключения языка по шаблону
