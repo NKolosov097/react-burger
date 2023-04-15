@@ -1,24 +1,26 @@
-import { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
+import ReactDOM from 'react-dom'
 import burgerConstructorStyles from './burger-constructor.module.css'
-import { OrderDetails } from './order-details/order-details'
-import { ModalOverlay } from '../modal/modal-overlay/modal-overlay'
 import { MoneyLogo } from '../../images/money'
-import { Modal } from '../modal/modal'
 import { Bun } from './bun/bun'
 import { IngredientsList } from './ingredients-list-in-constructor/ingredients-list'
 import { getNumberOfOrder } from '../../services/actions/order-action'
+import { FailOrderDetails } from './order-details/fail-order-details'
+import { OrderDetails } from './order-details/order-details'
+import { Modal } from '../modal/modal'
 
-export function BurgerConstructor() {
+export const BurgerConstructor = React.memo(() => {
+    const [isAuthorized, setIsAuthorized] = useState(false)
     const dispatch = useDispatch()
-
-    const isOpened = useSelector(
-        (state) => state.modalDetailsReducer.isOpenedOrderDetails
-    )
     const { bun, ingredients } = useSelector(
         (store) => store.constructorReducer
     )
+    const { user } = useSelector((store) => store.authReducer)
+    const { numberOfOrder } = useSelector((store) => store.orderReducer)
+
+    const modalRoot = document.querySelector('#modal')
 
     const totalPrice =
         ingredients.reduce((acc, item) => acc + item.price, 0) +
@@ -52,52 +54,51 @@ export function BurgerConstructor() {
     }, [bun, ingredients])
 
     const getOrder = () => {
-        dispatch(getNumberOfOrder(orderIngredients))
-        dispatch({ type: 'ORDER_DETAILS_OPEN' })
-    }
-
-    const checkOrder = () => {
-        if (bun && ingredients.length > 0) {
-            return getOrder()
+        if (user) {
+            setIsAuthorized(false)
+            dispatch(getNumberOfOrder(orderIngredients))
+            dispatch({ type: 'ORDER_DETAILS_OPEN' })
+        } else {
+            setIsAuthorized(true)
         }
-        return null
     }
 
     return (
-        <>
-            <section className={burgerConstructorStyles.wrapper}>
-                <Bun bun={bun} coordinate="top" />
-                <IngredientsList
-                    moveIngredients={moveIngredients}
-                    ingredients={ingredients}
-                />
-                <Bun bun={bun} coordinate="bottom" />
+        <section className={burgerConstructorStyles.wrapper}>
+            <Bun bun={bun} coordinate="top" />
+            <IngredientsList
+                moveIngredients={moveIngredients}
+                ingredients={ingredients}
+            />
+            <Bun bun={bun} coordinate="bottom" />
 
+            <div className={burgerConstructorStyles.orderWrapper}>
                 <h3 className={burgerConstructorStyles.totalPrice}>
                     {totalPrice}
                     <span className={burgerConstructorStyles.moneyLogo}>
                         <MoneyLogo />
                     </span>
                 </h3>
-                <div className={burgerConstructorStyles.buttonWrapper}>
-                    <Button
-                        onClick={checkOrder}
-                        htmlType="button"
-                        type="primary"
-                        size="large"
-                    >
-                        Оформить заказ
-                    </Button>
-                </div>
-            </section>
-            {isOpened && (
-                <>
-                    <Modal>
-                        <OrderDetails />
-                    </Modal>
-                    <ModalOverlay />
-                </>
+                {bun && ingredients.length > 0 && (
+                    <div className={burgerConstructorStyles.buttonWrapper}>
+                        <Button
+                            onClick={getOrder}
+                            htmlType="button"
+                            type="primary"
+                            size="large"
+                        >
+                            Оформить заказ
+                        </Button>
+                    </div>
+                )}
+            </div>
+            {numberOfOrder && (
+                <Modal orderDetails>
+                    <OrderDetails />
+                </Modal>
             )}
-        </>
+            {isAuthorized &&
+                ReactDOM.createPortal(<FailOrderDetails />, modalRoot)}
+        </section>
     )
-}
+})

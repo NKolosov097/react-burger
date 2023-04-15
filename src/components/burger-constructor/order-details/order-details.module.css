@@ -29,12 +29,24 @@
     text-align: center;
     transform: translateY(50%);
 
-    background-color: rgba(167, 27, 27, 0.527);
-    width: 400px;
-    height: 50px;
-    left: calc(50% - 400px / 2);
-    top: 10%;
+    background-color: #1c1c21;
+    width: 500px;
+    height: auto;
+    left: calc(50% - 500px / 2);
+    top: 5%;
     border-radius: 10px;
+    padding: 20px 10px;
+}
+
+.header {
+    font-size: 18px;
+}
+
+.toLogin {
+    display: block;
+    margin-top: 20px;
+    color: #fff;
+    font-size: 18px;
 }
 
 .closeButton {

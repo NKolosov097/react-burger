@@ -1,0 +1,6 @@
+.container {
+    transform: translateY(50%);
+    font-size: 50px;
+    text-align: center;
+    justify-content: center;
+}

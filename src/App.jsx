@@ -1,23 +1,82 @@
-import './App.css'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import AppHeader from './components/app-header/app-header'
-import { BurgerIngredients } from './components/burger-ingredients/burger-ingredients'
-import { BurgerConstructor } from './components/burger-constructor/burger-constructor'
+import React, { useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { HomePage } from './pages/home-page/home-page'
+import { Login } from './pages/login/login'
+import { Register } from './pages/register/register'
+import { ForgotPassword } from './pages/forgot-password/forgot-password'
+import { ResetPassword } from './pages/forgot-password/reset-password/reset-password'
+import { Profile } from './pages/profile/profile'
+import { Orders } from './pages/profile/orders/orders'
+import { checkUserAuth } from './services/actions/auth-action'
+import {
+    OnlyAuth,
+    OnlyUnAuth,
+} from './components/protected-route/protected-route'
+import { IngredientDetails } from './components/burger-ingredients/ingredient-details/ingredient-details'
+import { Modal } from './components/modal/modal'
+import { getBurgerIngredients } from './services/actions/ingredients-action'
+import { AppHeader } from './components/app-header/app-header'
+import { paths } from './routes/routes.ts'
 
-export function App() {
+export const App = React.memo(() => {
+    const dispatch = useDispatch()
+    const location = useLocation()
+
+    const background = location.state && location.state.background
+
+    useEffect(() => {
+        dispatch(getBurgerIngredients())
+        dispatch(checkUserAuth())
+    }, [dispatch])
+
     return (
         <>
             <AppHeader />
-            <main className="App">
-                <h1 className="mt-5 mb-5 pl-5 pr-5 text text_type_main-large AppHeader">
-                    Соберите бургер
-                </h1>
-                <DndProvider backend={HTML5Backend}>
-                    <BurgerIngredients />
-                    <BurgerConstructor />
-                </DndProvider>
-            </main>
+            <Routes location={background || location}>
+                <Route path={paths.homePage} element={<HomePage />} />
+                <Route
+                    path={paths.ingredientDetails}
+                    element={<IngredientDetails />}
+                />
+                <Route
+                    path={paths.login}
+                    element={<OnlyUnAuth component={<Login />} />}
+                />
+                <Route
+                    path={paths.register}
+                    element={<OnlyUnAuth component={<Register />} />}
+                />
+                <Route
+                    path={paths.forgotPassword}
+                    element={<OnlyUnAuth component={<ForgotPassword />} />}
+                />
+                <Route
+                    path={paths.resetPassword}
+                    element={<OnlyUnAuth component={<ResetPassword />} />}
+                />
+                <Route
+                    path={paths.profile}
+                    element={<OnlyAuth component={<Profile />} />}
+                />
+                <Route
+                    path={paths.orders}
+                    element={<OnlyAuth component={<Orders />} />}
+                />
+                <Route path="*" element={<HomePage />} />
+            </Routes>
+            {background && (
+                <Routes>
+                    <Route
+                        path={paths.ingredientDetails}
+                        element={
+                            <Modal>
+                                <IngredientDetails newPage />
+                            </Modal>
+                        }
+                    />
+                </Routes>
+            )}
         </>
     )
-}
+})

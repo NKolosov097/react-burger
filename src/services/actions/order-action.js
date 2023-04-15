@@ -9,7 +9,7 @@ export const getNumberOfOrder = (orderIngredients) => (dispatch) => {
     dispatch({
         type: GET_ORDER_REQUEST,
     })
-    postOrder(orderIngredients)
+    return postOrder(orderIngredients)
         .then((res) => {
             if (res && res.success)
                 dispatch({ type: GET_ORDER_SUCCESS, payload: res.order.number })
