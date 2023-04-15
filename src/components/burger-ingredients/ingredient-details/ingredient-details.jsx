@@ -16,12 +16,6 @@ export const IngredientDetails = React.memo(({ newPage = false }) => {
 
     const closeModal = () => {
         dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
-        dispatch({
-            type: 'UPDATE_BUN_IN_CONSTRUCTOR',
-            isBun: true,
-            payload: null,
-        })
-        dispatch({ type: 'UPDATE_INGREDIENTS', payload: [] })
         navigate(-1)
     }
     const { image_large, name, calories, proteins, fat, carbohydrates } =

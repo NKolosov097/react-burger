@@ -13,9 +13,6 @@ export const ModalOverlay = React.memo(({ orderDetails }) => {
     useEffect(() => {
         const handleEscClose = (event) => {
             if (event.key === 'Escape') {
-                dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
-                dispatch({ type: 'ORDER_DETAILS_CLOSE' })
-                dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
                 if (orderDetails) {
                     dispatch({ type: 'UPDATE_INGREDIENTS', payload: [] })
                     dispatch({
@@ -23,7 +20,12 @@ export const ModalOverlay = React.memo(({ orderDetails }) => {
                         isBun: true,
                         payload: null,
                     })
+                    dispatch({ type: 'ORDER_DETAILS_CLOSE' })
+                    dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
+                    dispatch({ type: 'RESET_COUNTS_OF_INGREDIENTS' })
+                    return
                 }
+                dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
                 handleClose()
             }
         }
@@ -34,9 +36,6 @@ export const ModalOverlay = React.memo(({ orderDetails }) => {
     }, [dispatch, handleClose, orderDetails])
 
     const closeModal = () => {
-        dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
-        dispatch({ type: 'ORDER_DETAILS_CLOSE' })
-        dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
         if (orderDetails) {
             dispatch({ type: 'UPDATE_INGREDIENTS', payload: [] })
             dispatch({
@@ -44,7 +43,12 @@ export const ModalOverlay = React.memo(({ orderDetails }) => {
                 isBun: true,
                 payload: null,
             })
+            dispatch({ type: 'ORDER_DETAILS_CLOSE' })
+            dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
+            dispatch({ type: 'RESET_COUNTS_OF_INGREDIENTS' })
+            return
         }
+        dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
         handleClose()
     }
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactDOM from 'react-dom'
@@ -12,11 +12,12 @@ import { OrderDetails } from './order-details/order-details'
 import { Modal } from '../modal/modal'
 
 export const BurgerConstructor = React.memo(() => {
+    const [isAuthorized, setIsAuthorized] = useState(false)
     const dispatch = useDispatch()
     const { bun, ingredients } = useSelector(
         (store) => store.constructorReducer
     )
-    const user = useSelector((store) => store.authReducer.user)
+    const { user } = useSelector((store) => store.authReducer)
     const { numberOfOrder } = useSelector((store) => store.orderReducer)
 
     const modalRoot = document.querySelector('#modal')
@@ -53,8 +54,13 @@ export const BurgerConstructor = React.memo(() => {
     }, [bun, ingredients])
 
     const getOrder = () => {
-        dispatch(getNumberOfOrder(orderIngredients))
-        dispatch({ type: 'ORDER_DETAILS_OPEN' })
+        if (user) {
+            setIsAuthorized(false)
+            dispatch(getNumberOfOrder(orderIngredients))
+            dispatch({ type: 'ORDER_DETAILS_OPEN' })
+        } else {
+            setIsAuthorized(true)
+        }
     }
 
     return (
@@ -73,7 +79,7 @@ export const BurgerConstructor = React.memo(() => {
                         <MoneyLogo />
                     </span>
                 </h3>
-                {bun && ingredients.length > 0 && user ? (
+                {bun && ingredients.length > 0 && (
                     <div className={burgerConstructorStyles.buttonWrapper}>
                         <Button
                             onClick={getOrder}
@@ -84,11 +90,6 @@ export const BurgerConstructor = React.memo(() => {
                             Оформить заказ
                         </Button>
                     </div>
-                ) : (
-                    bun &&
-                    ingredients.length > 0 &&
-                    !user &&
-                    ReactDOM.createPortal(<FailOrderDetails />, modalRoot)
                 )}
             </div>
             {numberOfOrder && (
@@ -96,6 +97,8 @@ export const BurgerConstructor = React.memo(() => {
                     <OrderDetails />
                 </Modal>
             )}
+            {isAuthorized &&
+                ReactDOM.createPortal(<FailOrderDetails />, modalRoot)}
         </section>
     )
 })

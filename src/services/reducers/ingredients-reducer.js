@@ -5,6 +5,7 @@ import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
     UPDATE_BUN_COUNT,
+    RESET_COUNTS_OF_INGREDIENTS,
 } from '../actions/ingredients-action'
 
 const initialState = {
@@ -94,6 +95,19 @@ export const ingredientsReducer = (state = initialState, action) => {
                             return ingredient.count
                         }
                         return ingredient.count
+                    }),
+                ],
+            }
+        }
+        case RESET_COUNTS_OF_INGREDIENTS: {
+            return {
+                ...state,
+                ingredients: [
+                    ...state.ingredients,
+                    state.ingredients.map((ingredient) => {
+                        const item = ingredient
+                        item.count = 0
+                        return item.count
                     }),
                 ],
             }

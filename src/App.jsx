@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { HomePage } from './pages/home-page/home-page'
@@ -8,7 +8,6 @@ import { ForgotPassword } from './pages/forgot-password/forgot-password'
 import { ResetPassword } from './pages/forgot-password/reset-password/reset-password'
 import { Profile } from './pages/profile/profile'
 import { Orders } from './pages/profile/orders/orders'
-import { AppHeader } from './components/app-header/app-header'
 import { checkUserAuth } from './services/actions/auth-action'
 import {
     OnlyAuth,
@@ -17,8 +16,10 @@ import {
 import { IngredientDetails } from './components/burger-ingredients/ingredient-details/ingredient-details'
 import { Modal } from './components/modal/modal'
 import { getBurgerIngredients } from './services/actions/ingredients-action'
+import { AppHeader } from './components/app-header/app-header'
+import { paths } from './routes/routes.ts'
 
-export function App() {
+export const App = React.memo(() => {
     const dispatch = useDispatch()
     const location = useLocation()
 
@@ -33,33 +34,33 @@ export function App() {
         <>
             <AppHeader />
             <Routes location={background || location}>
-                <Route path="/" element={<HomePage />} />
+                <Route path={paths.homePage} element={<HomePage />} />
                 <Route
-                    path="/ingredients/:id"
+                    path={paths.ingredientDetails}
                     element={<IngredientDetails />}
                 />
                 <Route
-                    path="/login"
+                    path={paths.login}
                     element={<OnlyUnAuth component={<Login />} />}
                 />
                 <Route
-                    path="/register"
+                    path={paths.register}
                     element={<OnlyUnAuth component={<Register />} />}
                 />
                 <Route
-                    path="/forgot-password"
+                    path={paths.forgotPassword}
                     element={<OnlyUnAuth component={<ForgotPassword />} />}
                 />
                 <Route
-                    path="/reset-password"
+                    path={paths.resetPassword}
                     element={<OnlyUnAuth component={<ResetPassword />} />}
                 />
                 <Route
-                    path="/profile"
+                    path={paths.profile}
                     element={<OnlyAuth component={<Profile />} />}
                 />
                 <Route
-                    path="/profile/orders"
+                    path={paths.orders}
                     element={<OnlyAuth component={<Orders />} />}
                 />
                 <Route path="*" element={<HomePage />} />
@@ -67,7 +68,7 @@ export function App() {
             {background && (
                 <Routes>
                     <Route
-                        path="/ingredients/:id"
+                        path={paths.ingredientDetails}
                         element={
                             <Modal>
                                 <IngredientDetails newPage />
@@ -78,4 +79,4 @@ export function App() {
             )}
         </>
     )
-}
+})

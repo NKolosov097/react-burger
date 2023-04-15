@@ -8,17 +8,21 @@ import { NavLink, useMatch } from 'react-router-dom'
 import cn from 'classnames'
 import React from 'react'
 import headerStyles from './app-header.module.css'
+import { paths } from '../../routes/routes.ts'
 
 export const AppHeader = React.memo(() => {
-    const isHome = !!useMatch('/')
-    const isProfile = !!useMatch('/profile')
-    const isOrders = !!useMatch('/profile/orders')
+    const isHome = !!useMatch(paths.homePage)
+    const isProfile = !!useMatch(paths.profile)
+    const isOrders = !!useMatch(paths.orders)
 
     return (
         <header className="p-4 mb-4">
             <menu className={headerStyles.menu}>
                 <li className={headerStyles.menu_item}>
-                    <NavLink to="/" className={headerStyles.menu_item_content}>
+                    <NavLink
+                        to={paths.homePage}
+                        className={headerStyles.menu_item_content}
+                    >
                         <BurgerIcon type={isHome ? 'primary' : 'secondary'} />
                         <span
                             className={cn(
@@ -32,7 +36,7 @@ export const AppHeader = React.memo(() => {
                         </span>
                     </NavLink>
                     <NavLink
-                        to="/profile/orders"
+                        to={paths.orders}
                         className={headerStyles.menu_item_content}
                     >
                         <ListIcon type={isOrders ? 'primary' : 'secondary'} />
@@ -49,13 +53,13 @@ export const AppHeader = React.memo(() => {
                     </NavLink>
                 </li>
                 <li className={headerStyles.logo}>
-                    <NavLink to="/">
+                    <NavLink to={paths.homePage}>
                         <Logo className="mt-2" />
                     </NavLink>
                 </li>
                 <li className={headerStyles.menu_item}>
                     <NavLink
-                        to="/profile"
+                        to={paths.profile}
                         className={headerStyles.menu_item_content}
                     >
                         <ProfileIcon

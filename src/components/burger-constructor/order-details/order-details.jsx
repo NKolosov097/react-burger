@@ -8,9 +8,16 @@ import detailsStyles from './order-details.module.css'
 
 export const OrderDetails = React.memo(() => {
     const dispatch = useDispatch()
-    const closeModal = () =>
-        dispatch({ type: 'ORDER_DETAILS_CLOSE' }) &&
+    const closeModal = () => {
+        dispatch({ type: 'ORDER_DETAILS_CLOSE' })
         dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
+        dispatch({
+            type: 'UPDATE_BUN_IN_CONSTRUCTOR',
+            isBun: true,
+            payload: null,
+        })
+        dispatch({ type: 'UPDATE_INGREDIENTS', payload: [] })
+    }
 
     const { numberOfOrder } = useSelector((store) => store.orderReducer)
 
