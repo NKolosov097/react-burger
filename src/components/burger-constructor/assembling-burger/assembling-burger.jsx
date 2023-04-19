@@ -2,12 +2,17 @@ import {
     ConstructorElement,
     DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
 import React, { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { useDispatch } from 'react-redux'
 import cn from 'classnames'
 import assemblingBurgerStyles from '../burger-constructor.module.css'
+import { IIngredientWithNewId } from '../../../utils/types'
+
+// type TAssemblingBurgerProps = IIngredientWithNewId & {
+//     index: number
+//     moveIngredients: (dragIndex: number, hoverIndex: number) => void
+// }
 
 export const AssemblingBurger = React.memo(
     ({ image, price, name, _id, ID, index, moveIngredients }) => {
@@ -48,6 +53,18 @@ export const AssemblingBurger = React.memo(
 
         drag(drop(ref))
 
+        const handleClose = () => {
+            dispatch({
+                type: 'DELETE_INGREDIENT_FROM_CONSTRUCTOR',
+                ID,
+            })
+
+            dispatch({
+                type: 'DECREMENT_INGREDIENT_COUNT',
+                payload: { _id },
+            })
+        }
+
         return (
             <li
                 ref={ref}
@@ -65,17 +82,7 @@ export const AssemblingBurger = React.memo(
                     <DragIcon type="primary" />
                 </button>
                 <ConstructorElement
-                    handleClose={() => {
-                        dispatch({
-                            type: 'DELETE_INGREDIENT_FROM_CONSTRUCTOR',
-                            ID,
-                        })
-
-                        dispatch({
-                            type: 'DECREMENT_INGREDIENT_COUNT',
-                            payload: { _id },
-                        })
-                    }}
+                    handleClose={handleClose}
                     text={name}
                     price={price}
                     thumbnail={image}
@@ -84,13 +91,3 @@ export const AssemblingBurger = React.memo(
         )
     }
 )
-
-AssemblingBurger.propTypes = {
-    image: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    _id: PropTypes.string.isRequired,
-    ID: PropTypes.string.isRequired,
-    index: PropTypes.number.isRequired,
-    moveIngredients: PropTypes.func.isRequired,
-}

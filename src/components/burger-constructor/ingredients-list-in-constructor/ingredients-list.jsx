@@ -6,6 +6,12 @@ import { v4 as uuid } from 'uuid'
 import React from 'react'
 import { AssemblingBurger } from '../assembling-burger/assembling-burger'
 import burgerConstructorStyles from '../burger-constructor.module.css'
+// import { IIngredient, IIngredientWithNewId } from '../../../utils/types'
+
+// type TIngredientsListProps = {
+//     ingredients: Array<IIngredient>
+//     moveIngredients: (dragIndex: number, hoverIndex: number) => void
+// }
 
 export const IngredientsList = React.memo(
     ({ ingredients, moveIngredients }) => {
@@ -45,14 +51,22 @@ export const IngredientsList = React.memo(
                             return (
                                 item.type !== 'bun' && (
                                     <AssemblingBurger
-                                        key={item.ID}
-                                        ID={item.ID}
-                                        image={item?.image}
-                                        price={item?.price}
-                                        name={item?.name}
-                                        _id={item?._id}
+                                        key={ingredient.ID}
+                                        ID={ingredient.ID}
+                                        image={ingredient?.image}
+                                        price={ingredient?.price}
+                                        name={ingredient?.name}
+                                        _id={ingredient?._id}
                                         index={index}
                                         moveIngredients={moveIngredients}
+                                        type={''}
+                                        proteins={0}
+                                        fat={0}
+                                        carbohydrates={0}
+                                        calories={0}
+                                        image_mobile={''}
+                                        image_large={''}
+                                        __v={0}
                                     />
                                 )
                             )

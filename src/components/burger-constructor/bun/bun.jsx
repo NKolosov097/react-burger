@@ -2,9 +2,14 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import cn from 'classnames'
 import { useDrop } from 'react-dnd'
 import { useDispatch } from 'react-redux'
-import PropTypes from 'prop-types'
 import React from 'react'
 import bunStyles from '../burger-constructor.module.css'
+// import { IIngredient, IIngredientWithNewId } from '../../../utils/types'
+
+// type TBunProps = {
+//     bun: IIngredient | null
+//     coordinate: 'top' | 'bottom' | undefined
+// }
 
 export const Bun = React.memo(({ bun = null, coordinate }) => {
     const dispatch = useDispatch()
@@ -59,7 +64,3 @@ export const Bun = React.memo(({ bun = null, coordinate }) => {
         </div>
     )
 })
-
-Bun.propTypes = {
-    coordinate: PropTypes.string.isRequired,
-}

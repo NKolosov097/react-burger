@@ -6,14 +6,14 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink, useMatch } from 'react-router-dom'
 import cn from 'classnames'
-import React from 'react'
+import React, { ReactElement } from 'react'
 import headerStyles from './app-header.module.css'
-import { paths } from '../../routes/routes.ts'
+import { paths } from '../../utils/routes/routes'
 
-export const AppHeader = React.memo(() => {
-    const isHome = !!useMatch(paths.homePage)
-    const isProfile = !!useMatch(paths.profile)
-    const isOrders = !!useMatch(paths.orders)
+export const AppHeader = React.memo((): ReactElement => {
+    const isHome = !!useMatch<string, string>(paths.homePage)
+    const isProfile = !!useMatch<string, string>(paths.profile)
+    const isOrders = !!useMatch<string, string>(paths.orders)
 
     return (
         <header className="p-4 mb-4">
@@ -53,8 +53,8 @@ export const AppHeader = React.memo(() => {
                     </NavLink>
                 </li>
                 <li className={headerStyles.logo}>
-                    <NavLink to={paths.homePage}>
-                        <Logo className="mt-2" />
+                    <NavLink className="mt-2" to={paths.homePage}>
+                        <Logo />
                     </NavLink>
                 </li>
                 <li className={headerStyles.menu_item}>

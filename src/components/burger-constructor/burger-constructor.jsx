@@ -9,15 +9,20 @@ import { IngredientsList } from './ingredients-list-in-constructor/ingredients-l
 import { getNumberOfOrder } from '../../services/actions/order-action'
 import { FailOrderDetails } from './order-details/fail-order-details'
 import { OrderDetails } from './order-details/order-details'
-import { Modal } from '../modal/modal'
+import { Modal } from '../modal/modal.tsx'
+// import { IIngredient } from '../../utils/types'
 
 export const BurgerConstructor = React.memo(() => {
     const [isAuthorized, setIsAuthorized] = useState(false)
     const dispatch = useDispatch()
     const { bun, ingredients } = useSelector(
+        // @ts-ignore
         (store) => store.constructorReducer
     )
+
+    // @ts-ignore
     const { user } = useSelector((store) => store.authReducer)
+    // @ts-ignore
     const { numberOfOrder } = useSelector((store) => store.orderReducer)
 
     const modalRoot = document.querySelector('#modal')
@@ -56,6 +61,7 @@ export const BurgerConstructor = React.memo(() => {
     const getOrder = () => {
         if (user) {
             setIsAuthorized(false)
+            // @ts-ignore
             dispatch(getNumberOfOrder(orderIngredients))
             dispatch({ type: 'ORDER_DETAILS_OPEN' })
         } else {
@@ -97,8 +103,9 @@ export const BurgerConstructor = React.memo(() => {
                     <OrderDetails />
                 </Modal>
             )}
-            {isAuthorized &&
-                ReactDOM.createPortal(<FailOrderDetails />, modalRoot)}
+            {isAuthorized && modalRoot
+                ? ReactDOM.createPortal(<FailOrderDetails />, modalRoot)
+                : null}
         </section>
     )
 })

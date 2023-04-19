@@ -14,14 +14,16 @@ import {
     OnlyUnAuth,
 } from './components/protected-route/protected-route'
 import { IngredientDetails } from './components/burger-ingredients/ingredient-details/ingredient-details'
-import { Modal } from './components/modal/modal'
+import { Modal } from './components/modal/modal.tsx'
 import { getBurgerIngredients } from './services/actions/ingredients-action'
-import { AppHeader } from './components/app-header/app-header'
-import { paths } from './routes/routes.ts'
+import { AppHeader } from './components/app-header/app-header.tsx'
+import { paths } from './utils/routes/routes.ts'
 
 export const App = React.memo(() => {
     const dispatch = useDispatch()
     const location = useLocation()
+
+    // const state = location.state as { background?:  }
 
     const background = location.state && location.state.background
 
