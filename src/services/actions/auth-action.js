@@ -1,4 +1,4 @@
-import { NORMA_API, fetchWithRefresh } from '../../utils/burger-api'
+import { NORMA_API, fetchWithRefresh } from '../../utils/burger-api.ts'
 
 export const REQUEST = 'REQUEST'
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS'

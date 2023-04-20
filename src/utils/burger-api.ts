@@ -1,6 +1,13 @@
-export const NORMA_API = 'https://norma.nomoreparties.space/api'
+import {
+    IIngredientResponse,
+    IUser,
+    IUserLogoutResponse,
+    IUserResponse,
+} from './types.ts'
 
-const checkResponse = async (res) =>
+export const NORMA_API: string = 'https://norma.nomoreparties.space/api'
+
+const checkResponse = async <T>(res: Response): Promise<T> =>
     (await res.ok) ? res.json() : res.json().then((err) => Promise.reject(err))
 
 export const getIngredients = async () => {
@@ -8,11 +15,11 @@ export const getIngredients = async () => {
         const res = await fetch(`${NORMA_API}/ingredients`)
         return await checkResponse(res)
     } catch (e) {
-        throw new Error('Что-то пошло не так', e.message)
+        throw new Error('Что-то пошло не так')
     }
 }
 
-export const postOrder = async (ingredients) => {
+export const postOrder = async (ingredients: Array<string>) => {
     try {
         const res = await fetch(`${NORMA_API}/orders`, {
             method: 'POST',
@@ -21,11 +28,11 @@ export const postOrder = async (ingredients) => {
         })
         return await checkResponse(res)
     } catch (e) {
-        throw new Error('Что-то пошло не так', e.message)
+        throw new Error('Что-то пошло не так')
     }
 }
 
-export const forgotPassword = async (email) => {
+export const forgotPassword = async (email: string) => {
     try {
         const res = await fetch(`${NORMA_API}/password-reset`, {
             method: 'POST',
@@ -34,7 +41,7 @@ export const forgotPassword = async (email) => {
         })
         return await checkResponse(res)
     } catch (e) {
-        throw new Error('Что-то пошло не так', e.message)
+        throw new Error('Что-то пошло не так')
     }
 }
 
@@ -49,7 +56,16 @@ export const refreshToken = () =>
         }),
     }).then(checkResponse)
 
-export const fetchWithRefresh = async (url, options) => {
+type TOptions = {
+    method: string
+    headers: {
+        [key: string]: string
+        authorization?: string
+    }
+    body: IUser | IIngredientResponse | IUserResponse | IUserLogoutResponse
+}
+
+export const fetchWithRefresh = async (url: string, options: TOptions) => {
     try {
         const res = await fetch(url, options)
         return await checkResponse(res)

@@ -16,38 +16,36 @@ export const ingredientPropTypes = PropTypes.shape({
 })
 
 export interface TLocation {
-    background: {
-        pathname: string
-        search: string
-        hash: string
-        state: null
-        key: string
+    background?: {
+        pathname?: string
+        search?: string
+        hash?: string
+        state?: null
+        key?: string
     }
     from: string
     state?: object
 }
 export interface IIngredient {
-    _id: string
+    _id?: string
     ID?: string
     count?: number
-    name: string
-    type: string
-    proteins: number
-    fat: number
-    carbohydrates: number
-    calories: number
-    price: number
-    image: string
-    image_mobile: string
-    image_large: string
-    __v: number
+    name?: string
+    type?: string
+    proteins?: number
+    fat?: number
+    carbohydrates?: number
+    calories?: number
+    price?: number
+    image?: string
+    image_mobile?: string
+    image_large?: string
+    __v?: number
 }
 
 export interface IUser {
     email: string
     name: string
-    createdAt?: string
-    updatedAt?: string
 }
 
 export interface IIngredientResponse {

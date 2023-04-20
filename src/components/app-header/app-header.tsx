@@ -8,7 +8,7 @@ import { NavLink, useMatch } from 'react-router-dom'
 import cn from 'classnames'
 import React, { ReactElement } from 'react'
 import headerStyles from './app-header.module.css'
-import { paths } from '../../utils/routes/routes'
+import { paths } from '../../utils/routes/routes.ts'
 
 export const AppHeader = React.memo((): ReactElement => {
     const isHome = !!useMatch<string, string>(paths.homePage)
