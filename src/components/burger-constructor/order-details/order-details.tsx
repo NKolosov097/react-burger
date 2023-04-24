@@ -1,14 +1,14 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
-import React from 'react'
+import React, { ReactElement } from 'react'
 import img from '../../../images/done.png'
 import { Loader } from '../../../images/loader'
 import detailsStyles from './order-details.module.css'
 
-export const OrderDetails = React.memo(() => {
+export const OrderDetails = React.memo((): ReactElement => {
     const dispatch = useDispatch()
-    const closeModal = () => {
+    const closeModal = (): void => {
         dispatch({ type: 'ORDER_DETAILS_CLOSE' })
         dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
         dispatch({
@@ -17,8 +17,11 @@ export const OrderDetails = React.memo(() => {
             payload: null,
         })
         dispatch({ type: 'UPDATE_INGREDIENTS', payload: [] })
+        dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
+        dispatch({ type: 'RESET_COUNTS_OF_INGREDIENTS' })
     }
 
+    // @ts-ignore
     const { numberOfOrder } = useSelector((store) => store.orderReducer)
 
     return (

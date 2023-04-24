@@ -1,4 +1,5 @@
-import { NORMA_API, fetchWithRefresh } from '../../utils/burger-api.ts'
+// eslint-disable-next-line import/extensions
+import { NORMA_API, fetchWithRefresh } from '../../utils/burger-api'
 
 export const REQUEST = 'REQUEST'
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS'

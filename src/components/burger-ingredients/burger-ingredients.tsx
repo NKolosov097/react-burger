@@ -1,23 +1,40 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react'
+import React, {
+    useState,
+    useRef,
+    useEffect,
+    useCallback,
+    ReactElement,
+} from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import ingredientsStyles from './burger-ingredients.module.css'
 import { IngredientList } from './ingredient-list/ingredient-list'
 
-export const BurgerIngredients = React.memo(() => {
-    const [current, setCurrent] = useState('Булки')
+type TIngredientLists = {
+    title: string
+    type: string
+    ref: React.MutableRefObject<HTMLHeadingElement | null>
+}
 
-    const bottomTabsRef = useRef()
-    const topBunsRef = useRef()
-    const topSaucesRef = useRef()
-    const topMainsRef = useRef()
+export const BurgerIngredients = React.memo((): ReactElement => {
+    const [current, setCurrent] = useState<string>('Булки')
+
+    const bottomTabsRef = useRef<HTMLHeadingElement>(null)
+    const topBunsRef = useRef<HTMLHeadingElement>(null)
+    const topSaucesRef = useRef<HTMLHeadingElement>(null)
+    const topMainsRef = useRef<HTMLHeadingElement>(null)
 
     const toIngredientList = useCallback(() => {
-        const calculationDifferences = (ref) =>
-            Math.abs(
-                bottomTabsRef.current.getBoundingClientRect().bottom -
-                    ref.current.getBoundingClientRect().top
-            )
+        const calculationDifferences = (
+            ref: React.RefObject<HTMLHeadingElement>
+        ): number => {
+            if (bottomTabsRef.current && ref.current)
+                return Math.abs(
+                    bottomTabsRef.current.getBoundingClientRect().bottom -
+                        ref.current.getBoundingClientRect().top
+                )
+            return 0
+        }
 
         if (calculationDifferences(topBunsRef) < 105) setCurrent('Булки')
         else if (calculationDifferences(topSaucesRef) < 105) setCurrent('Соусы')
@@ -29,14 +46,19 @@ export const BurgerIngredients = React.memo(() => {
         toIngredientList()
     }, [toIngredientList])
 
-    const onClickTab = (title, ref) => {
+    const onClickTab = (
+        title: string,
+        ref: React.RefObject<HTMLHeadingElement>
+    ): void => {
         setCurrent(title)
-        ref.current.scrollIntoView({
-            behavior: 'smooth',
-        })
+        if (ref.current) {
+            ref.current.scrollIntoView({
+                behavior: 'smooth',
+            })
+        }
     }
 
-    const ingredientLists = [
+    const ingredientLists: Array<TIngredientLists> = [
         {
             title: 'Булки',
             type: 'bun',

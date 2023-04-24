@@ -1,9 +1,22 @@
 import { Navigate, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { ReactElement } from 'react'
+import { IUser } from '../../utils/types'
 
-function Protected({ onlyUnAuth = false, component }) {
-    const isChecked = useSelector((store) => store.authReducer.isChecked)
-    const user = useSelector((store) => store.authReducer.user)
+type TProtected = {
+    onlyUnAuth?: boolean
+    component: ReactElement
+}
+
+function Protected({ onlyUnAuth = false, component }: TProtected) {
+    const isChecked: boolean = useSelector(
+        // @ts-ignore
+        (store) => store.authReducer.isChecked
+    )
+    const user: IUser = useSelector(
+        // @ts-ignore
+        (store) => store.authReducer.user
+    )
     const location = useLocation()
 
     if (!isChecked) {
@@ -29,6 +42,10 @@ function Protected({ onlyUnAuth = false, component }) {
 }
 
 export const OnlyAuth = Protected
-export function OnlyUnAuth({ component }) {
+export function OnlyUnAuth({
+    component,
+}: {
+    component: ReactElement
+}): ReactElement {
     return <Protected onlyUnAuth component={component} />
 }

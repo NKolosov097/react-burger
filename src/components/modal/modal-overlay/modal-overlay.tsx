@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import modalOverlayStyles from './modal-overlay.module.css'
 
 export const ModalOverlay = React.memo(
-    ({ orderDetails }: { orderDetails: boolean }): ReactElement => {
+    ({ orderDetails = false }: { orderDetails: boolean }): ReactElement => {
         const dispatch = useDispatch()
         const navigate = useNavigate()
         const handleClose = useCallback((): void => {

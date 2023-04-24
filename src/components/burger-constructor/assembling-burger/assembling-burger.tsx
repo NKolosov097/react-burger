@@ -2,36 +2,50 @@ import {
     ConstructorElement,
     DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import React, { useRef } from 'react'
-import { useDrag, useDrop } from 'react-dnd'
+import React, { ReactElement, useRef } from 'react'
+import { XYCoord, useDrag, useDrop } from 'react-dnd'
 import { useDispatch } from 'react-redux'
 import cn from 'classnames'
 import assemblingBurgerStyles from '../burger-constructor.module.css'
-import { IIngredientWithNewId } from '../../../utils/types'
+import { IIngredient } from '../../../utils/types'
 
-// type TAssemblingBurgerProps = IIngredientWithNewId & {
-//     index: number
-//     moveIngredients: (dragIndex: number, hoverIndex: number) => void
-// }
+type TAssemblingBurgerProps = Pick<
+    IIngredient,
+    'image' | 'price' | 'name' | '_id' | 'ID'
+> & {
+    index: number
+    moveIngredients: (dragIndex: number, hoverIndex: number) => void
+}
 
 export const AssemblingBurger = React.memo(
-    ({ image, price, name, _id, ID, index, moveIngredients }) => {
+    ({
+        image,
+        price,
+        name,
+        _id,
+        ID,
+        index,
+        moveIngredients,
+    }: TAssemblingBurgerProps): ReactElement => {
         const dispatch = useDispatch()
-        const ref = useRef(null)
+        const ref = useRef<HTMLLIElement | null>(null)
         const [, drop] = useDrop({
             accept: 'ingredient',
-            hover: (item, monitor) => {
+            hover: (item: TAssemblingBurgerProps, monitor): void => {
                 if (!ref.current) return
-                const dragIndex = item.index
-                const hoverIndex = index
+                const dragIndex: number = item.index
+                const hoverIndex: number = index
 
                 if (dragIndex === hoverIndex) return
 
-                const hoverBoundingRect = ref.current?.getBoundingClientRect()
-                const hoverMiddleY =
+                const hoverBoundingRect: DOMRect =
+                    ref.current?.getBoundingClientRect()
+                const hoverMiddleY: number =
                     (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-                const clientOffset = monitor.getClientOffset()
-                const hoverClientY = clientOffset.y - hoverBoundingRect.top
+                const clientOffset: XYCoord | null = monitor.getClientOffset()
+                const hoverClientY: number = clientOffset
+                    ? clientOffset.y - hoverBoundingRect.top
+                    : 0
                 if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY)
                     return
                 if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY)
@@ -39,7 +53,7 @@ export const AssemblingBurger = React.memo(
 
                 moveIngredients(dragIndex, hoverIndex)
 
-                const ingredient = item
+                const ingredient = item as TAssemblingBurgerProps
                 ingredient.index = hoverIndex
             },
         })
@@ -53,7 +67,7 @@ export const AssemblingBurger = React.memo(
 
         drag(drop(ref))
 
-        const handleClose = () => {
+        const handleClose = (): void => {
             dispatch({
                 type: 'DELETE_INGREDIENT_FROM_CONSTRUCTOR',
                 ID,

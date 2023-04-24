@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, ReactElement, ChangeEvent, FormEvent } from 'react'
 
 import {
     Button,
@@ -12,21 +12,28 @@ import { useDispatch } from 'react-redux'
 import registerStyles from './register.module.css'
 import { registerAction } from '../../services/actions/auth-action'
 
-export const Register = React.memo(() => {
+type TForm = {
+    name: string
+    email: string
+    password: string
+}
+
+export const Register = React.memo((): ReactElement => {
     const dispatch = useDispatch()
 
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<TForm>({
         name: '',
         email: '',
         password: '',
     })
 
-    const onChange = (e) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
+        // @ts-ignore
         dispatch(registerAction(form.email, form.password, form.name))
     }
 
@@ -63,6 +70,7 @@ export const Register = React.memo(() => {
                     extraClass="mb-20"
                     onClick={() =>
                         dispatch(
+                            // @ts-ignore
                             registerAction(form.email, form.password, form.name)
                         )
                     }

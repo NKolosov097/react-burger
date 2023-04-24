@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, FormEvent, ChangeEvent, ReactElement } from 'react'
 
 import {
     Button,
@@ -10,18 +10,20 @@ import { useDispatch } from 'react-redux'
 import forgotPasswordStyles from './forgot-password.module.css'
 import { passwordForgot } from '../../services/actions/auth-action'
 
-export const ForgotPassword = React.memo(() => {
+export const ForgotPassword = React.memo((): ReactElement => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [email, setEmail] = useState('')
-    const onChangeEmail = (e) => {
+    const [email, setEmail] = useState<string>('')
+    const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
+        // @ts-ignore
         dispatch(passwordForgot(email)).then(() => {
+            // @ts-ignore
             localStorage.setItem('correctEmail', true)
             navigate('/reset-password')
         })

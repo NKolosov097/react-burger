@@ -1,19 +1,21 @@
 import {
     IIngredientResponse,
-    IUser,
-    IUserLogoutResponse,
     IUserResponse,
-} from './types.ts'
+    IOptions,
+    IRefreshTokenResponse,
+} from './types'
 
 export const NORMA_API: string = 'https://norma.nomoreparties.space/api'
 
 const checkResponse = async <T>(res: Response): Promise<T> =>
-    (await res.ok) ? res.json() : res.json().then((err) => Promise.reject(err))
+    (await res.ok)
+        ? res.json()
+        : res.json().then((err: Error) => Promise.reject(err))
 
 export const getIngredients = async () => {
     try {
         const res = await fetch(`${NORMA_API}/ingredients`)
-        return await checkResponse(res)
+        return await checkResponse<IIngredientResponse>(res)
     } catch (e) {
         throw new Error('Что-то пошло не так')
     }
@@ -26,7 +28,7 @@ export const postOrder = async (ingredients: Array<string>) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ ingredients }),
         })
-        return await checkResponse(res)
+        return await checkResponse<IIngredientResponse>(res)
     } catch (e) {
         throw new Error('Что-то пошло не так')
     }
@@ -39,13 +41,13 @@ export const forgotPassword = async (email: string) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email }),
         })
-        return await checkResponse(res)
+        return await checkResponse<IUserResponse>(res)
     } catch (e) {
         throw new Error('Что-то пошло не так')
     }
 }
 
-export const refreshToken = () =>
+export const refreshToken = <T>(): Promise<T> =>
     fetch(`${NORMA_API}/auth/token`, {
         method: 'POST',
         headers: {
@@ -54,33 +56,29 @@ export const refreshToken = () =>
         body: JSON.stringify({
             token: localStorage.getItem('refreshToken'),
         }),
-    }).then(checkResponse)
+    }).then(checkResponse<T>)
 
-type TOptions = {
-    method: string
-    headers: {
-        [key: string]: string
-        authorization?: string
-    }
-    body: IUser | IIngredientResponse | IUserResponse | IUserLogoutResponse
-}
-
-export const fetchWithRefresh = async (url: string, options: TOptions) => {
+export const fetchWithRefresh = async (
+    url: string,
+    options: IOptions
+): Promise<IUserResponse | IRefreshTokenResponse> => {
     try {
         const res = await fetch(url, options)
         return await checkResponse(res)
-    } catch (err) {
+    } catch (error) {
+        const err = error as Error
         if (err.message === 'jwt expired') {
-            const refreshData = await refreshToken()
+            const refreshData = await refreshToken<IUserResponse>()
             if (!refreshData.success) {
                 return Promise.reject(refreshData)
             }
             localStorage.setItem('refreshToken', refreshData.refreshToken)
             localStorage.setItem('accessToken', refreshData.accessToken)
+
             // eslint-disable-next-line no-param-reassign
             options.headers.authorization = refreshData.accessToken
             const res = await fetch(url, options)
-            return checkResponse(res)
+            return checkResponse<IRefreshTokenResponse>(res)
         }
         return Promise.reject(err)
     }

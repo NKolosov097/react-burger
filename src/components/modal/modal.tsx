@@ -6,11 +6,12 @@ const modalRoot: HTMLDivElement | null = document.querySelector('#modal')
 
 type TModalProps = {
     children: ReactElement
-    orderDetails: boolean
+    // eslint-disable-next-line react/require-default-props
+    orderDetails?: boolean
 }
 
 export const Modal = React.memo(
-    ({ children, orderDetails }: TModalProps): ReactElement =>
+    ({ children, orderDetails = false }: TModalProps): JSX.Element =>
         modalRoot ? (
             ReactDOM.createPortal(
                 <>
@@ -20,6 +21,7 @@ export const Modal = React.memo(
                 modalRoot
             )
         ) : (
+            // eslint-disable-next-line react/jsx-no-useless-fragment
             <></>
         )
 )

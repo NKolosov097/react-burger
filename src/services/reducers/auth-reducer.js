@@ -15,6 +15,7 @@ const initialState = {
     isError: false,
 }
 
+// eslint-disable-next-line @typescript-eslint/default-param-last
 export const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case REQUEST: {
