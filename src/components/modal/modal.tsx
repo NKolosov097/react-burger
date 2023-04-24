@@ -11,17 +11,14 @@ type TModalProps = {
 }
 
 export const Modal = React.memo(
-    ({ children, orderDetails = false }: TModalProps): JSX.Element =>
-        modalRoot ? (
-            ReactDOM.createPortal(
-                <>
-                    <ModalOverlay orderDetails={orderDetails} />
-                    {children}
-                </>,
-                modalRoot
-            )
-        ) : (
-            // eslint-disable-next-line react/jsx-no-useless-fragment
-            <></>
-        )
+    ({ children, orderDetails = false }: TModalProps): JSX.Element | null =>
+        modalRoot
+            ? ReactDOM.createPortal(
+                  <>
+                      <ModalOverlay orderDetails={orderDetails} />
+                      {children}
+                  </>,
+                  modalRoot
+              )
+            : null
 )

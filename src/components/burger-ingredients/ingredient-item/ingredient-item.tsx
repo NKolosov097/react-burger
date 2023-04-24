@@ -3,12 +3,12 @@ import { useDrag } from 'react-dnd/dist/hooks'
 import { useDispatch } from 'react-redux'
 import cn from 'classnames'
 import { Link, useLocation } from 'react-router-dom'
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { PriceTitle } from '../../price-title/price-title'
 import ingredientItemStyles from './ingredient-item.module.css'
 import { IIngredient } from '../../../utils/types'
 
-export const IngredientItem = React.memo((props: IIngredient) => {
+export const IngredientItem = React.memo((props: IIngredient): ReactElement => {
     const dispatch = useDispatch()
     const location = useLocation()
 

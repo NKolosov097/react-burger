@@ -2,7 +2,7 @@ import cn from 'classnames'
 import { useDrop } from 'react-dnd'
 import { useDispatch } from 'react-redux'
 import { v4 as uuid } from 'uuid'
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { AssemblingBurger } from '../assembling-burger/assembling-burger'
 import burgerConstructorStyles from '../burger-constructor.module.css'
 import { IIngredient } from '../../../utils/types'
@@ -13,7 +13,7 @@ type TIngredientsListProps = {
 }
 
 export const IngredientsList = React.memo(
-    ({ ingredients, moveIngredients }: TIngredientsListProps) => {
+    ({ ingredients, moveIngredients }: TIngredientsListProps): ReactElement => {
         const dispatch = useDispatch()
 
         const onDropHandlerMains = (item: IIngredient): void => {
