@@ -1,14 +1,3 @@
-export interface TLocation {
-    background?: {
-        pathname?: string
-        search?: string
-        hash?: string
-        state?: null
-        key?: string
-    }
-    from: string
-    state?: object
-}
 export interface IIngredient {
     _id: string
     ID?: string

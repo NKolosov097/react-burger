@@ -12,7 +12,7 @@ const checkResponse = async <T>(res: Response): Promise<T> =>
         ? res.json()
         : res.json().then((err: Error) => Promise.reject(err))
 
-export const getIngredients = async () => {
+export const getIngredients = async (): Promise<IIngredientResponse> => {
     try {
         const res = await fetch(`${NORMA_API}/ingredients`)
         return await checkResponse<IIngredientResponse>(res)
