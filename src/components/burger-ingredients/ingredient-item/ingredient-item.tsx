@@ -48,7 +48,7 @@ export const IngredientItem = React.memo((props: IIngredient) => {
             })
             dispatch({
                 type: 'UPDATE_BUN_COUNT',
-                payload: item._id,
+                payload: { _id: item._id },
             })
         } else {
             dispatch({
@@ -57,7 +57,7 @@ export const IngredientItem = React.memo((props: IIngredient) => {
             })
             dispatch({
                 type: 'INCREMENT_INGREDIENT_COUNT',
-                payload: item._id,
+                payload: { _id: item._id },
             })
         }
     }
