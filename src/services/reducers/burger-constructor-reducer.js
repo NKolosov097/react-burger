@@ -10,6 +10,7 @@ const initialState = {
     ingredients: [],
 }
 
+// eslint-disable-next-line @typescript-eslint/default-param-last
 export const constructorReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_INGREDIENT_TO_CONSTRUCTOR: {

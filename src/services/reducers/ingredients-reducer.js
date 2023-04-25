@@ -14,6 +14,7 @@ const initialState = {
     isError: false,
 }
 
+// eslint-disable-next-line @typescript-eslint/default-param-last
 export const ingredientsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { ReactElement, useCallback, useMemo, useState } from 'react'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactDOM from 'react-dom'
@@ -10,26 +10,37 @@ import { getNumberOfOrder } from '../../services/actions/order-action'
 import { FailOrderDetails } from './order-details/fail-order-details'
 import { OrderDetails } from './order-details/order-details'
 import { Modal } from '../modal/modal'
+import { IIngredient } from '../../utils/types'
 
-export const BurgerConstructor = React.memo(() => {
-    const [isAuthorized, setIsAuthorized] = useState(false)
+export const BurgerConstructor = React.memo((): ReactElement => {
+    const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
     const dispatch = useDispatch()
-    const { bun, ingredients } = useSelector(
+    const {
+        bun,
+        ingredients,
+    }: { bun: IIngredient; ingredients: Array<IIngredient> } = useSelector(
+        // @ts-ignore
         (store) => store.constructorReducer
     )
+
+    // @ts-ignore
     const { user } = useSelector((store) => store.authReducer)
+    // @ts-ignore
     const { numberOfOrder } = useSelector((store) => store.orderReducer)
 
-    const modalRoot = document.querySelector('#modal')
+    const modalRoot: HTMLDivElement | null = document.querySelector('#modal')
 
-    const totalPrice =
-        ingredients.reduce((acc, item) => acc + item.price, 0) +
+    const totalPrice: number =
+        ingredients.reduce(
+            (acc: number, item: IIngredient) => acc + item.price,
+            0
+        ) +
         Number(bun ? bun?.price : 0) * 2
 
     const moveIngredients = useCallback(
-        (dragIndex, hoverIndex) => {
-            const dragIngredient = ingredients[dragIndex]
-            const newIngredients = [...ingredients]
+        (dragIndex: number, hoverIndex: number) => {
+            const dragIngredient: IIngredient = ingredients[dragIndex]
+            const newIngredients: Array<IIngredient> = [...ingredients]
             newIngredients.splice(dragIndex, 1)
             newIngredients.splice(hoverIndex, 0, dragIngredient)
 
@@ -41,21 +52,22 @@ export const BurgerConstructor = React.memo(() => {
         [dispatch, ingredients]
     )
 
-    const orderIngredients = useMemo(() => {
+    const orderIngredients: Array<string> = useMemo(() => {
         const orderIngredientsArr = []
 
         if (bun) orderIngredientsArr.push(bun._id)
         if (ingredients.length > 0)
-            ingredients.forEach((ingredient) => {
+            ingredients.forEach((ingredient: IIngredient) => {
                 orderIngredientsArr.push(ingredient._id)
             })
         if (bun) orderIngredientsArr.push(bun._id)
         return orderIngredientsArr
     }, [bun, ingredients])
 
-    const getOrder = () => {
+    const getOrder = (): void => {
         if (user) {
             setIsAuthorized(false)
+            // @ts-ignore
             dispatch(getNumberOfOrder(orderIngredients))
             dispatch({ type: 'ORDER_DETAILS_OPEN' })
         } else {
@@ -97,8 +109,9 @@ export const BurgerConstructor = React.memo(() => {
                     <OrderDetails />
                 </Modal>
             )}
-            {isAuthorized &&
-                ReactDOM.createPortal(<FailOrderDetails />, modalRoot)}
+            {isAuthorized && modalRoot
+                ? ReactDOM.createPortal(<FailOrderDetails />, modalRoot)
+                : null}
         </section>
     )
 })

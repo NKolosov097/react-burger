@@ -1,4 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, {
+    useState,
+    useEffect,
+    ReactElement,
+    ChangeEvent,
+    FormEvent,
+} from 'react'
 
 import {
     Button,
@@ -15,10 +21,17 @@ import {
     patchUserInfo,
 } from '../../services/actions/auth-action'
 
-export const Profile = React.memo(() => {
+type TForm = {
+    name: string
+    email: string
+    password: string
+}
+
+export const Profile = React.memo((): ReactElement => {
     const dispatch = useDispatch()
+    // @ts-ignore
     const { user } = useSelector((store) => store.authReducer)
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<TForm>({
         name: '',
         email: '',
         password: '',
@@ -40,13 +53,14 @@ export const Profile = React.memo(() => {
         })
     }
 
-    const onChange = (e) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: FormEvent) => {
         e.preventDefault()
-        // dispatch(patchUserInfo(form.email, form.password, form.name))
+        // @ts-ignore
+        dispatch(patchUserInfo(form.email, form.password, form.name))
     }
     return (
         <section className={profileStyles.wrapper}>
@@ -81,6 +95,7 @@ export const Profile = React.memo(() => {
                             <Link
                                 className={profileStyles.asideItem}
                                 to="/login"
+                                // @ts-ignore
                                 onClick={() => dispatch(logoutRequest())}
                             >
                                 Выход
@@ -137,6 +152,7 @@ export const Profile = React.memo(() => {
                                 size="medium"
                                 onClick={() =>
                                     dispatch(
+                                        // @ts-ignore
                                         patchUserInfo(
                                             form.email,
                                             form.password,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, FormEvent, ChangeEvent, ReactElement } from 'react'
 import {
     Button,
     Input,
@@ -10,21 +10,27 @@ import { useDispatch } from 'react-redux'
 import resetPasswordStyles from './reset-password.module.css'
 import { passwordReset } from '../../../services/actions/auth-action'
 
-export const ResetPassword = React.memo(() => {
+type TForm = {
+    password: string
+    token: string
+}
+
+export const ResetPassword = React.memo((): ReactElement => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<TForm>({
         password: '',
-        form: '',
+        token: '',
     })
 
-    const onChange = (e) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
+        // @ts-ignore
         dispatch(passwordReset(form.password, form.token)).then(() => {
             localStorage.removeItem('correctEmail')
             navigate('/login')

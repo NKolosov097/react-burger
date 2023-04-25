@@ -10,6 +10,7 @@
         "plugin:jsx-a11y/recommended",
         "plugin:import/recommended",
         "airbnb",
+        "airbnb-typescript",
         "plugin:react/jsx-runtime",
         "prettier"
     ],
@@ -19,15 +20,26 @@
         "sourceType": "module",
         "ecmaFeatures": {
             "jsx": true
-        }
+        },
+        "project": "./tsconfig.json"
     },
     "plugins": ["react"],
     "rules": {
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ],
         "import/prefer-default-export": ["off", { "target": "single" }],
         "react/jsx-filename-extension": [
             1,
             {
-                "extensions": [".js", ".jsx", ".tsx"]
+                "extensions": [".js", ".ts", ".jsx", ".tsx"]
             }
         ],
         "react/prop-types": "off",
@@ -35,7 +47,7 @@
             "error",
             {
                 "forbidDefaultForRequired": true,
-                "functions": "defaultArguments" //Here
+                "functions": "defaultArguments"
             }
         ],
         "no-underscore-dangle": 0,

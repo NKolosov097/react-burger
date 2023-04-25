@@ -1,17 +1,22 @@
 import cn from 'classnames'
 import { useDrop } from 'react-dnd'
 import { useDispatch } from 'react-redux'
-import PropTypes from 'prop-types'
 import { v4 as uuid } from 'uuid'
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { AssemblingBurger } from '../assembling-burger/assembling-burger'
 import burgerConstructorStyles from '../burger-constructor.module.css'
+import { IIngredient } from '../../../utils/types'
+
+type TIngredientsListProps = {
+    ingredients: Array<IIngredient>
+    moveIngredients: (dragIndex: number, hoverIndex: number) => void
+}
 
 export const IngredientsList = React.memo(
-    ({ ingredients, moveIngredients }) => {
+    ({ ingredients, moveIngredients }: TIngredientsListProps): ReactElement => {
         const dispatch = useDispatch()
 
-        const onDropHandlerMains = (item) => {
+        const onDropHandlerMains = (item: IIngredient): void => {
             dispatch({
                 type: 'ADD_INGREDIENT_TO_CONSTRUCTOR',
                 payload: { ...item },
@@ -26,7 +31,7 @@ export const IngredientsList = React.memo(
         const [, dropMains] = useDrop({
             accept: ['main', 'sauce'],
             drop(item) {
-                onDropHandlerMains(item)
+                onDropHandlerMains(item as IIngredient)
             },
         })
 
@@ -45,12 +50,12 @@ export const IngredientsList = React.memo(
                             return (
                                 item.type !== 'bun' && (
                                     <AssemblingBurger
-                                        key={item.ID}
-                                        ID={item.ID}
-                                        image={item?.image}
-                                        price={item?.price}
-                                        name={item?.name}
-                                        _id={item?._id}
+                                        key={ingredient.ID}
+                                        ID={ingredient.ID}
+                                        image={ingredient?.image}
+                                        price={ingredient?.price}
+                                        name={ingredient?.name}
+                                        _id={ingredient?._id}
                                         index={index}
                                         moveIngredients={moveIngredients}
                                     />
@@ -81,16 +86,3 @@ export const IngredientsList = React.memo(
         )
     }
 )
-
-IngredientsList.propTypes = {
-    ingredients: PropTypes.arrayOf(
-        PropTypes.shape({
-            ID: PropTypes.string.isRequired,
-            image: PropTypes.string.isRequired,
-            name: PropTypes.string.isRequired,
-            type: PropTypes.string.isRequired,
-            _id: PropTypes.string.isRequired,
-        })
-    ).isRequired,
-    moveIngredients: PropTypes.func.isRequired,
-}

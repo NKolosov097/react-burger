@@ -1,10 +1,22 @@
-import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { v4 as uuid } from 'uuid'
+import { ReactElement } from 'react'
 import { IngredientItem } from '../ingredient-item/ingredient-item'
 import ingredientsStyles from '../burger-ingredients.module.css'
+import { IIngredient } from '../../../utils/types'
 
-export function IngredientList({ title = 'Булки', customRef = null, type }) {
+type TIngredientList = {
+    title: string
+    customRef: React.MutableRefObject<HTMLHeadingElement | null> | null
+    type: string
+}
+
+export function IngredientList({
+    title = 'Булки',
+    customRef = null,
+    type,
+}: TIngredientList): ReactElement {
+    // @ts-ignore
     const { ingredients } = useSelector((store) => store.ingredientsReducer)
     return (
         <>
@@ -12,7 +24,7 @@ export function IngredientList({ title = 'Булки', customRef = null, type })
                 {title}
             </h2>
             <ul className={ingredientsStyles.ingredientsList}>
-                {ingredients.map((item) => {
+                {ingredients.map((item: IIngredient) => {
                     const ID = uuid()
                     return (
                         item.type === type && (
@@ -23,13 +35,4 @@ export function IngredientList({ title = 'Булки', customRef = null, type })
             </ul>
         </>
     )
-}
-
-IngredientList.propTypes = {
-    title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    customRef: PropTypes.oneOfType([
-        PropTypes.func,
-        PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-    ]),
 }

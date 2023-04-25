@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, FormEvent, ChangeEvent, ReactElement } from 'react'
 import {
     Button,
     EmailInput,
@@ -11,21 +11,27 @@ import { useDispatch } from 'react-redux'
 import loginStyles from './login.module.css'
 import { loginAction } from '../../services/actions/auth-action'
 
-export const Login = React.memo(() => {
+type TForm = {
+    email: string
+    password: string
+}
+
+export const Login = React.memo((): ReactElement => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<TForm>({
         email: '',
         password: '',
     })
 
-    const onChange = (e) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
+        // @ts-ignore
         dispatch(loginAction(form.email, form.password)).then(() => {
             navigate('/login')
         })

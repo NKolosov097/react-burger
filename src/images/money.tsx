@@ -1,4 +1,6 @@
-export function MoneyLogo({ size = 26 }) {
+import { ReactElement } from 'react'
+
+export function MoneyLogo({ size = 26 }): ReactElement {
     return (
         <svg width={size} height={size} viewBox="0 0 22 22" fill="none">
             <path

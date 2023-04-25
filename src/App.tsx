@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import * as H from 'history'
 import { HomePage } from './pages/home-page/home-page'
 import { Login } from './pages/login/login'
 import { Register } from './pages/register/register'
@@ -17,16 +18,20 @@ import { IngredientDetails } from './components/burger-ingredients/ingredient-de
 import { Modal } from './components/modal/modal'
 import { getBurgerIngredients } from './services/actions/ingredients-action'
 import { AppHeader } from './components/app-header/app-header'
-import { paths } from './routes/routes.ts'
+import { paths } from './utils/routes/routes'
 
-export const App = React.memo(() => {
+export const App = React.memo((): ReactElement => {
     const dispatch = useDispatch()
     const location = useLocation()
 
-    const background = location.state && location.state.background
+    const state = location.state as { background?: H.Location }
+
+    const background = state && state.background
 
     useEffect(() => {
+        // @ts-ignore
         dispatch(getBurgerIngredients())
+        // @ts-ignore
         dispatch(checkUserAuth())
     }, [dispatch])
 
@@ -37,7 +42,7 @@ export const App = React.memo(() => {
                 <Route path={paths.homePage} element={<HomePage />} />
                 <Route
                     path={paths.ingredientDetails}
-                    element={<IngredientDetails />}
+                    element={<IngredientDetails newPage={false} />}
                 />
                 <Route
                     path={paths.login}
