@@ -2,6 +2,16 @@ import React, { useEffect, useCallback, ReactElement } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import modalOverlayStyles from './modal-overlay.module.css'
+import {
+    UPDATE_BUN_IN_CONSTRUCTOR,
+    UPDATE_INGREDIENTS,
+} from '../../../services/actions/burger-constructor-action'
+import {
+    INGREDIENT_DETAILS_CLOSE,
+    ORDER_DETAILS_CLOSE,
+} from '../../../services/actions/modal-details'
+import { RESET_NUMBER_OF_ORDER } from '../../../services/actions/order-action'
+import { RESET_COUNTS_OF_INGREDIENTS } from '../../../services/actions/ingredients-action'
 
 export const ModalOverlay = React.memo(
     ({ orderDetails = false }: { orderDetails: boolean }): ReactElement => {
@@ -15,18 +25,18 @@ export const ModalOverlay = React.memo(
             const handleEscClose = (event: KeyboardEvent): void => {
                 if (event.key === 'Escape') {
                     if (orderDetails) {
-                        dispatch({ type: 'UPDATE_INGREDIENTS', payload: [] })
+                        dispatch({ type: UPDATE_INGREDIENTS, payload: [] })
                         dispatch({
-                            type: 'UPDATE_BUN_IN_CONSTRUCTOR',
+                            type: UPDATE_BUN_IN_CONSTRUCTOR,
                             isBun: true,
                             payload: null,
                         })
-                        dispatch({ type: 'ORDER_DETAILS_CLOSE' })
-                        dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
-                        dispatch({ type: 'RESET_COUNTS_OF_INGREDIENTS' })
+                        dispatch({ type: ORDER_DETAILS_CLOSE })
+                        dispatch({ type: RESET_NUMBER_OF_ORDER })
+                        dispatch({ type: RESET_COUNTS_OF_INGREDIENTS })
                         return
                     }
-                    dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
+                    dispatch({ type: INGREDIENT_DETAILS_CLOSE })
                     handleClose()
                 }
             }
@@ -38,18 +48,18 @@ export const ModalOverlay = React.memo(
 
         const closeModal = (): void => {
             if (orderDetails) {
-                dispatch({ type: 'UPDATE_INGREDIENTS', payload: [] })
+                dispatch({ type: UPDATE_INGREDIENTS, payload: [] })
                 dispatch({
-                    type: 'UPDATE_BUN_IN_CONSTRUCTOR',
+                    type: UPDATE_BUN_IN_CONSTRUCTOR,
                     isBun: true,
                     payload: null,
                 })
-                dispatch({ type: 'ORDER_DETAILS_CLOSE' })
-                dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
-                dispatch({ type: 'RESET_COUNTS_OF_INGREDIENTS' })
+                dispatch({ type: ORDER_DETAILS_CLOSE })
+                dispatch({ type: RESET_NUMBER_OF_ORDER })
+                dispatch({ type: RESET_COUNTS_OF_INGREDIENTS })
                 return
             }
-            dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
+            dispatch({ type: INGREDIENT_DETAILS_CLOSE })
             handleClose()
         }
 

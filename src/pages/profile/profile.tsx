@@ -5,7 +5,6 @@ import React, {
     ChangeEvent,
     FormEvent,
 } from 'react'
-
 import {
     Button,
     EmailInput,
@@ -13,13 +12,11 @@ import {
     PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import profileStyles from './profile.module.css'
-import {
-    logoutRequest,
-    patchUserInfo,
-} from '../../services/actions/auth-action'
+import { patchUserInfo } from '../../services/actions/auth-action'
+import { ProfileAsideMenu } from './aside-menu/aside-menu'
+import { useDispatch } from '../../store'
 
 type TForm = {
     name: string
@@ -59,54 +56,17 @@ export const Profile = React.memo((): ReactElement => {
 
     const onSubmit = (e: FormEvent) => {
         e.preventDefault()
-        // @ts-ignore
-        dispatch(patchUserInfo(form.email, form.password, form.name))
+        const userData = {
+            email: form.email,
+            password: form.password,
+            name: form.name,
+        }
+        patchUserInfo(userData)(dispatch)
     }
     return (
         <section className={profileStyles.wrapper}>
+            <ProfileAsideMenu />
             <div className={profileStyles.container}>
-                <aside className={profileStyles.asideWrapper}>
-                    <ul className={cn(profileStyles.asideList, 'mb-20')}>
-                        <li
-                            className={cn(
-                                profileStyles.asideItem,
-                                profileStyles.active
-                            )}
-                        >
-                            <Link
-                                className={cn(
-                                    profileStyles.asideItem,
-                                    profileStyles.active
-                                )}
-                                to="/profile"
-                            >
-                                Профиль
-                            </Link>
-                        </li>
-                        <li className={profileStyles.asideItem}>
-                            <Link
-                                className={profileStyles.asideItem}
-                                to="orders"
-                            >
-                                История заказа
-                            </Link>
-                        </li>
-                        <li className={profileStyles.asideItem}>
-                            <Link
-                                className={profileStyles.asideItem}
-                                to="/login"
-                                // @ts-ignore
-                                onClick={() => dispatch(logoutRequest())}
-                            >
-                                Выход
-                            </Link>
-                        </li>
-                    </ul>
-                    <p className={profileStyles.p}>
-                        В этом разделе вы можете изменить свои персональные
-                        данные
-                    </p>
-                </aside>
                 <form onSubmit={onSubmit}>
                     <Input
                         onChange={onChange}
@@ -151,14 +111,11 @@ export const Profile = React.memo((): ReactElement => {
                                 type="primary"
                                 size="medium"
                                 onClick={() =>
-                                    dispatch(
-                                        // @ts-ignore
-                                        patchUserInfo(
-                                            form.email,
-                                            form.password,
-                                            form.name
-                                        )
-                                    )
+                                    patchUserInfo({
+                                        email: form.email,
+                                        password: form.password,
+                                        name: form.name,
+                                    })(dispatch)
                                 }
                             >
                                 Сохранить

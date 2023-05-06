@@ -1,3 +1,4 @@
+import { IUser } from '../../utils/types'
 import {
     REQUEST_FAILED,
     REQUEST,
@@ -5,9 +6,18 @@ import {
     SET_EMAIL_CORRECT_FLAG,
     SET_IS_AUTH,
     SET_USER,
+    TAuthActions,
 } from '../actions/auth-action'
 
-const initialState = {
+type TInitialState = {
+    isLoading: Boolean
+    isChecked: Boolean
+    isCorrectEmail: Boolean
+    user: IUser | null
+    isError: Boolean
+}
+
+const initialState: TInitialState = {
     isLoading: false,
     isChecked: false,
     isCorrectEmail: false,
@@ -15,8 +25,8 @@ const initialState = {
     isError: false,
 }
 
-// eslint-disable-next-line @typescript-eslint/default-param-last
-export const authReducer = (state = initialState, action) => {
+// eslint-disable-next-line
+export const authReducer = (state = initialState, action: TAuthActions) => {
     switch (action.type) {
         case REQUEST: {
             return {
@@ -30,7 +40,7 @@ export const authReducer = (state = initialState, action) => {
                 isLoading: false,
                 isError: false,
                 isChecked: true,
-                user: action.payload,
+                user: action.user,
             }
         }
         case REQUEST_FAILED: {

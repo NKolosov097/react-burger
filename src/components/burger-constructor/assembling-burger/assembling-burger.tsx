@@ -8,6 +8,8 @@ import { useDispatch } from 'react-redux'
 import cn from 'classnames'
 import assemblingBurgerStyles from '../burger-constructor.module.css'
 import { IIngredient } from '../../../utils/types'
+import { DELETE_INGREDIENT_FROM_CONSTRUCTOR } from '../../../services/actions/burger-constructor-action'
+import { DECREMENT_INGREDIENT_COUNT } from '../../../services/actions/ingredients-action'
 
 type TAssemblingBurgerProps = Pick<
     IIngredient,
@@ -69,13 +71,13 @@ export const AssemblingBurger = React.memo(
 
         const handleClose = (): void => {
             dispatch({
-                type: 'DELETE_INGREDIENT_FROM_CONSTRUCTOR',
+                type: DELETE_INGREDIENT_FROM_CONSTRUCTOR,
                 ID,
             })
 
             dispatch({
-                type: 'DECREMENT_INGREDIENT_COUNT',
-                payload: { _id },
+                type: DECREMENT_INGREDIENT_COUNT,
+                idForCount: { _id },
             })
         }
 

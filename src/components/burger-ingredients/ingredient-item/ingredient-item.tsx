@@ -7,6 +7,15 @@ import React, { ReactElement } from 'react'
 import { PriceTitle } from '../../price-title/price-title'
 import ingredientItemStyles from './ingredient-item.module.css'
 import { IIngredient } from '../../../utils/types'
+import { INGREDIENT_DETAILS_OPEN } from '../../../services/actions/modal-details'
+import {
+    ADD_INGREDIENT_TO_CONSTRUCTOR,
+    UPDATE_BUN_IN_CONSTRUCTOR,
+} from '../../../services/actions/burger-constructor-action'
+import {
+    INCREMENT_INGREDIENT_COUNT,
+    UPDATE_BUN_COUNT,
+} from '../../../services/actions/ingredients-action'
 
 export const IngredientItem = React.memo((props: IIngredient): ReactElement => {
     const dispatch = useDispatch()
@@ -37,27 +46,27 @@ export const IngredientItem = React.memo((props: IIngredient): ReactElement => {
 
     const open = (typeOfIngredient: string) => {
         dispatch({
-            type: 'INGREDIENT_DETAILS_OPEN',
+            type: INGREDIENT_DETAILS_OPEN,
             payload: item,
         })
         if (typeOfIngredient === 'bun') {
             dispatch({
-                type: 'UPDATE_BUN_IN_CONSTRUCTOR',
+                type: UPDATE_BUN_IN_CONSTRUCTOR,
                 payload: item,
                 isBun: true,
             })
             dispatch({
-                type: 'UPDATE_BUN_COUNT',
-                payload: { _id: item._id },
+                type: UPDATE_BUN_COUNT,
+                idForCount: { _id: item._id },
             })
         } else {
             dispatch({
-                type: 'ADD_INGREDIENT_TO_CONSTRUCTOR',
+                type: ADD_INGREDIENT_TO_CONSTRUCTOR,
                 payload: item,
             })
             dispatch({
-                type: 'INCREMENT_INGREDIENT_COUNT',
-                payload: { _id: item._id },
+                type: INCREMENT_INGREDIENT_COUNT,
+                idForCount: { _id: item._id },
             })
         }
     }

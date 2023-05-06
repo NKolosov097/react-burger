@@ -21,8 +21,7 @@ export const ForgotPassword = React.memo((): ReactElement => {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
-        // @ts-ignore
-        dispatch(passwordForgot(email)).then(() => {
+        passwordForgot(email)(dispatch).then(() => {
             // @ts-ignore
             localStorage.setItem('correctEmail', true)
             navigate('/reset-password')

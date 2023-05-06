@@ -6,6 +6,8 @@ import React, { ReactElement } from 'react'
 import { AssemblingBurger } from '../assembling-burger/assembling-burger'
 import burgerConstructorStyles from '../burger-constructor.module.css'
 import { IIngredient } from '../../../utils/types'
+import { ADD_INGREDIENT_TO_CONSTRUCTOR } from '../../../services/actions/burger-constructor-action'
+import { INCREMENT_INGREDIENT_COUNT } from '../../../services/actions/ingredients-action'
 
 type TIngredientsListProps = {
     ingredients: Array<IIngredient>
@@ -18,13 +20,13 @@ export const IngredientsList = React.memo(
 
         const onDropHandlerMains = (item: IIngredient): void => {
             dispatch({
-                type: 'ADD_INGREDIENT_TO_CONSTRUCTOR',
+                type: ADD_INGREDIENT_TO_CONSTRUCTOR,
                 payload: { ...item },
             })
 
             dispatch({
-                type: 'INCREMENT_INGREDIENT_COUNT',
-                payload: { _id: item._id },
+                type: INCREMENT_INGREDIENT_COUNT,
+                idForCount: { _id: item._id },
             })
         }
 

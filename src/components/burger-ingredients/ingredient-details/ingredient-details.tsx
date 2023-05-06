@@ -1,19 +1,17 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import React, { ReactElement } from 'react'
 import { Loader } from '../../../images/loader'
 import detailsStyles from './ingredient-details.module.css'
 import { IIngredient } from '../../../utils/types'
+import { INGREDIENT_DETAILS_CLOSE } from '../../../services/actions/modal-details'
+import { useSelector } from '../../../store'
 
-type TIngredientDetails = {
-    image_large: string
-    name: string
-    calories: number
-    proteins: number
-    fat: number
-    carbohydrates: number
-}
+type TIngredientDetails = Pick<
+    IIngredient,
+    'image_large' | 'name' | 'calories' | 'proteins' | 'fat' | 'carbohydrates'
+>
 
 type TNutritionalValue = {
     title: string
@@ -34,7 +32,7 @@ export const IngredientDetails = React.memo(
         )
 
         const closeModal = (): void => {
-            dispatch({ type: 'INGREDIENT_DETAILS_CLOSE' })
+            dispatch({ type: INGREDIENT_DETAILS_CLOSE })
             navigate(-1)
         }
 
@@ -54,6 +52,7 @@ export const IngredientDetails = React.memo(
             fat: 0,
             carbohydrates: 0,
         }
+
         const nutritionalValue: Array<TNutritionalValue> = [
             {
                 title: 'Калории, ккал',

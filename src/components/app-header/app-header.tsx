@@ -14,6 +14,7 @@ export const AppHeader = React.memo((): ReactElement => {
     const isHome = !!useMatch<string, string>(paths.homePage)
     const isProfile = !!useMatch<string, string>(paths.profile)
     const isOrders = !!useMatch<string, string>(paths.orders)
+    const isFeed = !!useMatch<string, string>(paths.feed)
 
     return (
         <header className="p-4 mb-4">
@@ -39,11 +40,11 @@ export const AppHeader = React.memo((): ReactElement => {
                         to={paths.orders}
                         className={headerStyles.menu_item_content}
                     >
-                        <ListIcon type={isOrders ? 'primary' : 'secondary'} />
+                        <ListIcon type={isFeed ? 'primary' : 'secondary'} />
                         <span
                             className={cn(
                                 'text text_type_main-default p-2 pt-3',
-                                isOrders
+                                isFeed
                                     ? headerStyles.active
                                     : 'text_color_inactive'
                             )}
@@ -63,12 +64,14 @@ export const AppHeader = React.memo((): ReactElement => {
                         className={headerStyles.menu_item_content}
                     >
                         <ProfileIcon
-                            type={isProfile ? 'primary' : 'secondary'}
+                            type={
+                                isProfile || isOrders ? 'primary' : 'secondary'
+                            }
                         />
                         <span
                             className={cn(
                                 'text text_type_main-default p-2 pt-3',
-                                isProfile
+                                isProfile || isOrders
                                     ? headerStyles.active
                                     : 'text_color_inactive'
                             )}

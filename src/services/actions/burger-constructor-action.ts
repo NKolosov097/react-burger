@@ -1,0 +1,22 @@
+export const ADD_INGREDIENT_TO_CONSTRUCTOR: 'ADD_INGREDIENT_TO_CONSTRUCTOR' =
+    'ADD_INGREDIENT_TO_CONSTRUCTOR'
+export const DELETE_INGREDIENT_FROM_CONSTRUCTOR: 'DELETE_INGREDIENT_FROM_CONSTRUCTOR' =
+    'DELETE_INGREDIENT_FROM_CONSTRUCTOR'
+export const UPDATE_BUN_IN_CONSTRUCTOR: 'UPDATE_BUN_IN_CONSTRUCTOR' =
+    'UPDATE_BUN_IN_CONSTRUCTOR'
+export const UPDATE_INGREDIENTS: 'UPDATE_INGREDIENTS' = 'UPDATE_INGREDIENTS'
+
+type TBurgerConstructorActionTypes =
+    | typeof ADD_INGREDIENT_TO_CONSTRUCTOR
+    | typeof DELETE_INGREDIENT_FROM_CONSTRUCTOR
+    | typeof UPDATE_BUN_IN_CONSTRUCTOR
+    | typeof UPDATE_INGREDIENTS
+
+export type TBurgerConstructorAction = {
+    type: TBurgerConstructorActionTypes
+    payload: {
+        type: string
+    }
+    isBun: boolean
+    ID: string
+}

@@ -1,7 +1,7 @@
 import React, { ReactElement, useCallback, useMemo, useState } from 'react'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch, useSelector } from 'react-redux'
 import ReactDOM from 'react-dom'
+import { useDispatch } from 'react-redux'
 import burgerConstructorStyles from './burger-constructor.module.css'
 import { MoneyLogo } from '../../images/money'
 import { Bun } from './bun/bun'
@@ -11,6 +11,9 @@ import { FailOrderDetails } from './order-details/fail-order-details'
 import { OrderDetails } from './order-details/order-details'
 import { Modal } from '../modal/modal'
 import { IIngredient } from '../../utils/types'
+import { UPDATE_INGREDIENTS } from '../../services/actions/burger-constructor-action'
+import { ORDER_DETAILS_OPEN } from '../../services/actions/modal-details'
+import { useSelector } from '../../store'
 
 export const BurgerConstructor = React.memo((): ReactElement => {
     const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
@@ -19,13 +22,10 @@ export const BurgerConstructor = React.memo((): ReactElement => {
         bun,
         ingredients,
     }: { bun: IIngredient; ingredients: Array<IIngredient> } = useSelector(
-        // @ts-ignore
         (store) => store.constructorReducer
     )
 
-    // @ts-ignore
     const { user } = useSelector((store) => store.authReducer)
-    // @ts-ignore
     const { numberOfOrder } = useSelector((store) => store.orderReducer)
 
     const modalRoot: HTMLDivElement | null = document.querySelector('#modal')
@@ -45,7 +45,7 @@ export const BurgerConstructor = React.memo((): ReactElement => {
             newIngredients.splice(hoverIndex, 0, dragIngredient)
 
             dispatch({
-                type: 'UPDATE_INGREDIENTS',
+                type: UPDATE_INGREDIENTS,
                 payload: newIngredients,
             })
         },
@@ -53,7 +53,7 @@ export const BurgerConstructor = React.memo((): ReactElement => {
     )
 
     const orderIngredients: Array<string> = useMemo(() => {
-        const orderIngredientsArr = []
+        const orderIngredientsArr: Array<string> = []
 
         if (bun) orderIngredientsArr.push(bun._id)
         if (ingredients.length > 0)
@@ -67,9 +67,8 @@ export const BurgerConstructor = React.memo((): ReactElement => {
     const getOrder = (): void => {
         if (user) {
             setIsAuthorized(false)
-            // @ts-ignore
             dispatch(getNumberOfOrder(orderIngredients))
-            dispatch({ type: 'ORDER_DETAILS_OPEN' })
+            dispatch({ type: ORDER_DETAILS_OPEN })
         } else {
             setIsAuthorized(true)
         }

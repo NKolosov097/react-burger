@@ -1,8 +1,8 @@
 import {
     IIngredientResponse,
     IUserResponse,
-    IOptions,
     IRefreshTokenResponse,
+    IOptions,
 } from './types'
 
 export const NORMA_API: string = 'https://norma.nomoreparties.space/api'

@@ -1,3 +1,4 @@
+import { IIngredient } from '../../utils/types'
 import {
     INCREMENT_INGREDIENT_COUNT,
     DECREMENT_INGREDIENT_COUNT,
@@ -6,16 +7,26 @@ import {
     GET_INGREDIENTS_SUCCESS,
     UPDATE_BUN_COUNT,
     RESET_COUNTS_OF_INGREDIENTS,
+    TIngredientsAction,
 } from '../actions/ingredients-action'
 
-const initialState = {
+type TInitialState = {
+    ingredients: Array<IIngredient>
+    isLoading: boolean
+    isError: boolean
+}
+
+const initialState: TInitialState = {
     ingredients: [],
     isLoading: false,
     isError: false,
 }
 
-// eslint-disable-next-line @typescript-eslint/default-param-last
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (
+    // eslint-disable-next-line @typescript-eslint/default-param-last
+    state = initialState,
+    action: TIngredientsAction
+) => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {
             return {
@@ -44,7 +55,7 @@ export const ingredientsReducer = (state = initialState, action) => {
                     ...state.ingredients,
                     state.ingredients.map((item) => {
                         const ingredient = item
-                        if (ingredient._id === action.payload._id) {
+                        if (ingredient._id === action.idForCount._id) {
                             ingredient.count = 2
                             return ingredient.count
                         }
@@ -65,7 +76,7 @@ export const ingredientsReducer = (state = initialState, action) => {
                     ...state.ingredients,
                     state.ingredients.map((item) => {
                         const ingredient = item
-                        if (ingredient._id === action.payload._id) {
+                        if (ingredient._id === action.idForCount._id) {
                             if (!ingredient.count) {
                                 ingredient.count = 1
                                 return ingredient.count
@@ -86,7 +97,7 @@ export const ingredientsReducer = (state = initialState, action) => {
                     ...state.ingredients,
                     state.ingredients.map((item) => {
                         const ingredient = item
-                        if (ingredient._id === action.payload._id) {
+                        if (ingredient._id === action.idForCount._id) {
                             if (!ingredient.count) {
                                 ingredient.count = 1
                                 return ingredient.count

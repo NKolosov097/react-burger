@@ -1,27 +1,34 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import React, { ReactElement } from 'react'
 import img from '../../../images/done.png'
 import { Loader } from '../../../images/loader'
 import detailsStyles from './order-details.module.css'
+import { ORDER_DETAILS_CLOSE } from '../../../services/actions/modal-details'
+import { RESET_NUMBER_OF_ORDER } from '../../../services/actions/order-action'
+import {
+    UPDATE_BUN_IN_CONSTRUCTOR,
+    UPDATE_INGREDIENTS,
+} from '../../../services/actions/burger-constructor-action'
+import { RESET_COUNTS_OF_INGREDIENTS } from '../../../services/actions/ingredients-action'
+import { useSelector } from '../../../store'
 
 export const OrderDetails = React.memo((): ReactElement => {
     const dispatch = useDispatch()
     const closeModal = (): void => {
-        dispatch({ type: 'ORDER_DETAILS_CLOSE' })
-        dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
+        dispatch({ type: ORDER_DETAILS_CLOSE })
+        dispatch({ type: RESET_NUMBER_OF_ORDER })
         dispatch({
-            type: 'UPDATE_BUN_IN_CONSTRUCTOR',
+            type: UPDATE_BUN_IN_CONSTRUCTOR,
             isBun: true,
             payload: null,
         })
-        dispatch({ type: 'UPDATE_INGREDIENTS', payload: [] })
-        dispatch({ type: 'RESET_NUMBER_OF_ORDER' })
-        dispatch({ type: 'RESET_COUNTS_OF_INGREDIENTS' })
+        dispatch({ type: UPDATE_INGREDIENTS, payload: [] })
+        dispatch({ type: RESET_NUMBER_OF_ORDER })
+        dispatch({ type: RESET_COUNTS_OF_INGREDIENTS })
     }
 
-    // @ts-ignore
     const { numberOfOrder } = useSelector((store) => store.orderReducer)
 
     return (

@@ -16,18 +16,21 @@ export interface IIngredient {
 }
 
 export interface IUser {
-    email: string
-    name: string
+    email?: string
+    name?: string
+    password?: string
+    token?: string
 }
 
 export interface IIngredientResponse {
     data: Array<IIngredient>
-    success: boolean
+    success?: boolean
+    order: { number: number }
 }
 
 export interface IUserResponse {
     success: boolean
-    user: IUser
+    user?: IUser
     accessToken: string
     refreshToken: string
     message: string
@@ -36,6 +39,8 @@ export interface IUserResponse {
 export interface IRefreshTokenResponse {
     message: string
     success: boolean
+    user: IUser
+    accessToken: string
     refreshToken: string
 }
 
@@ -43,4 +48,14 @@ export interface IOptions extends RequestInit {
     headers: {
         authorization?: string
     }
+}
+
+export type TOrder = {
+    ingredients: Array<string>
+    _id: string
+    name?: string
+    status: string
+    number: string
+    createdAt: string
+    updatedAt: string
 }

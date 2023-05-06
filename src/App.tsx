@@ -1,6 +1,5 @@
 import React, { ReactElement, useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import * as H from 'history'
 import { HomePage } from './pages/home-page/home-page'
 import { Login } from './pages/login/login'
@@ -19,6 +18,7 @@ import { Modal } from './components/modal/modal'
 import { getBurgerIngredients } from './services/actions/ingredients-action'
 import { AppHeader } from './components/app-header/app-header'
 import { paths } from './utils/routes/routes'
+import { useDispatch } from './store'
 
 export const App = React.memo((): ReactElement => {
     const dispatch = useDispatch()
@@ -29,10 +29,8 @@ export const App = React.memo((): ReactElement => {
     const background = state && state.background
 
     useEffect(() => {
-        // @ts-ignore
-        dispatch(getBurgerIngredients())
-        // @ts-ignore
-        dispatch(checkUserAuth())
+        getBurgerIngredients()(dispatch)
+        checkUserAuth()(dispatch)
     }, [dispatch])
 
     return (

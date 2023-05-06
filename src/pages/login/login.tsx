@@ -6,7 +6,6 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { Link, useNavigate } from 'react-router-dom'
-// import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import loginStyles from './login.module.css'
 import { loginAction } from '../../services/actions/auth-action'
@@ -31,8 +30,9 @@ export const Login = React.memo((): ReactElement => {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
-        // @ts-ignore
-        dispatch(loginAction(form.email, form.password)).then(() => {
+        loginAction({ email: form.email, password: form.password })(
+            dispatch
+        ).then(() => {
             navigate('/login')
         })
     }
