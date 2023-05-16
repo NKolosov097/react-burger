@@ -1,9 +1,11 @@
-.container {
+.container,
+.containerOrderStyles {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
-    height: 245px;
-    padding: 24px;
+    max-width: 100%;
+    min-width: 305px;
+    height: auto;
+    padding: 20px;
     color: rgba(242, 242, 243, 1);
 
     background: #1c1c21;
@@ -14,19 +16,29 @@
     border-radius: 40px;
 }
 
+.containerOrderStyles {
+    flex-grow: 2;
+}
+
+.link {
+    text-decoration: none;
+    color: #f2f2f3;
+    width: 100%;
+}
+
 .ID {
     display: flex;
     width: 100%;
     height: 24px;
     justify-content: space-between;
 
-    margin-bottom: 24px;
+    margin-bottom: 10px;
 }
 
 .numberOfOrder {
     display: flex;
     font-size: 28px;
-    font-family: 'Iceland';
+    font-family: 'Iceland', sans-serif;
     font-style: normal;
     font-weight: 400;
 }
@@ -35,7 +47,7 @@
     display: flex;
     font-size: 16px;
     color: rgba(133, 133, 173, 1);
-    font-family: 'JetBrains Mono';
+    font-family: 'JetBrains Mono', sans-serif;
     font-style: normal;
     font-weight: 400;
 }
@@ -48,13 +60,36 @@
     color: #f2f2f3;
     letter-spacing: 1px;
     margin-bottom: 8px;
+    /* white-space: nowrap; */
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
 }
 
-.status {
+.status,
+.statusDone,
+.statusPending,
+.statusCreated,
+.statusError {
     font-size: 16px;
     line-height: 24px;
     letter-spacing: 1px;
     margin-bottom: 24px;
+}
+
+.statusDone {
+    color: #00cccc;
+}
+
+.statusPending {
+    color: #e2ff43;
+}
+
+.statusCreated {
+    color: #37ff11;
+}
+
+.statusError {
+    color: #ff414e;
 }
 
 .ingredientsContainer {
@@ -89,8 +124,29 @@
     content: '';
 }
 
+.overlay {
+    position: relative;
+    background: #1c1c21;
+    opacity: 0.6;
+    align-items: center;
+    justify-content: center;
+}
+
+.countOfIngredientsInOverlay {
+    font-family: 'JetBrains Mono', sans-serif;
+    position: absolute;
+    transform: translate(50%, 50%);
+    top: 5px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #f2f2f3;
+    opacity: 1;
+}
+
 .price {
-    font-family: 'Iceland';
+    font-family: 'Iceland', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 28px;

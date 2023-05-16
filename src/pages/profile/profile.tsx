@@ -12,11 +12,10 @@ import {
     PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { useSelector } from 'react-redux'
 import profileStyles from './profile.module.css'
 import { patchUserInfo } from '../../services/actions/auth-action'
 import { ProfileAsideMenu } from './aside-menu/aside-menu'
-import { useDispatch } from '../../store'
+import { useDispatch, useSelector } from '../../store'
 
 type TForm = {
     name: string
@@ -26,7 +25,6 @@ type TForm = {
 
 export const Profile = React.memo((): ReactElement => {
     const dispatch = useDispatch()
-    // @ts-ignore
     const { user } = useSelector((store) => store.authReducer)
     const [form, setForm] = useState<TForm>({
         name: '',
@@ -36,16 +34,16 @@ export const Profile = React.memo((): ReactElement => {
 
     useEffect(() => {
         setForm({
-            email: user.email,
-            name: user.name,
+            email: user?.email ? user.email : '',
+            name: user?.name ? user.name : '',
             password: '',
         })
-    }, [user.email, user.name])
+    }, [user?.email, user?.name])
 
     const resetForms = () => {
         setForm({
-            email: user.email,
-            name: user.name,
+            email: user?.email ? user.email : '',
+            name: user?.name ? user.name : '',
             password: '',
         })
     }
@@ -94,8 +92,8 @@ export const Profile = React.memo((): ReactElement => {
                         extraClass="mb-6"
                     />
 
-                    {(form.name === user.name &&
-                        form.email === user.email &&
+                    {(form.name === user?.name &&
+                        form.email === user?.email &&
                         form.password?.length === 0) || (
                         <div className={profileStyles.changeInputsContainer}>
                             <Button

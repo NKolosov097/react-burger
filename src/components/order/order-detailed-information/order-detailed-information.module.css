@@ -1,0 +1,13 @@
+.wrapper {
+    width: 100vw;
+    height: calc(100vh - 380px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    max-width: 640px;
+    height: 620px;
+}

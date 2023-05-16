@@ -6,9 +6,9 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import resetPasswordStyles from './reset-password.module.css'
 import { passwordReset } from '../../../services/actions/auth-action'
+import { useDispatch } from '../../../store'
 
 type TForm = {
     password: string

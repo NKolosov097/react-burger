@@ -6,20 +6,23 @@ import {
     TOrderAction,
 } from '../actions/order-action'
 
-type TInitialState = {
+type TState = {
     numberOfOrder: number | null
     isLoading: Boolean
     isError: Boolean
 }
 
-const initialState: TInitialState = {
+const initialState: TState = {
     numberOfOrder: null,
     isLoading: false,
     isError: false,
 }
 
-// eslint-disable-next-line @typescript-eslint/default-param-last
-export const orderReducer = (state = initialState, action: TOrderAction) => {
+export const orderReducer = (
+    // eslint-disable-next-line @typescript-eslint/default-param-last
+    state = initialState,
+    action: TOrderAction
+): TState => {
     switch (action.type) {
         case GET_ORDER_REQUEST: {
             return {

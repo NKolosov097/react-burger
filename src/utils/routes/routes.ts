@@ -8,6 +8,7 @@ export const paths: {
     resetPassword: string
     profile: string
     orders: string
+    orderDetails: string
 } = {
     homePage: '/',
     ingredientDetails: '/ingredients/:id',
@@ -17,5 +18,6 @@ export const paths: {
     forgotPassword: '/forgot-password',
     resetPassword: '/reset-password',
     profile: '/profile',
-    orders: '/profile/orders',
+    orders: '/orders',
+    orderDetails: '/:id',
 }

@@ -1,6 +1,5 @@
 import cn from 'classnames'
 import { useDrop } from 'react-dnd'
-import { useDispatch } from 'react-redux'
 import { v4 as uuid } from 'uuid'
 import React, { ReactElement } from 'react'
 import { AssemblingBurger } from '../assembling-burger/assembling-burger'
@@ -8,6 +7,7 @@ import burgerConstructorStyles from '../burger-constructor.module.css'
 import { IIngredient } from '../../../utils/types'
 import { ADD_INGREDIENT_TO_CONSTRUCTOR } from '../../../services/actions/burger-constructor-action'
 import { INCREMENT_INGREDIENT_COUNT } from '../../../services/actions/ingredients-action'
+import { useDispatch } from '../../../store'
 
 type TIngredientsListProps = {
     ingredients: Array<IIngredient>
@@ -21,7 +21,7 @@ export const IngredientsList = React.memo(
         const onDropHandlerMains = (item: IIngredient): void => {
             dispatch({
                 type: ADD_INGREDIENT_TO_CONSTRUCTOR,
-                payload: { ...item },
+                payload: { type: 'notBun', ingredient: item },
             })
 
             dispatch({
@@ -30,7 +30,7 @@ export const IngredientsList = React.memo(
             })
         }
 
-        const [, dropMains] = useDrop({
+        const [, dropMains] = useDrop<IIngredient>({
             accept: ['main', 'sauce'],
             drop(item) {
                 onDropHandlerMains(item as IIngredient)
@@ -55,7 +55,7 @@ export const IngredientsList = React.memo(
                                         key={ingredient.ID}
                                         ID={ingredient.ID}
                                         image={ingredient?.image}
-                                        price={ingredient?.price}
+                                        price={ingredient.price}
                                         name={ingredient?.name}
                                         _id={ingredient?._id}
                                         index={index}

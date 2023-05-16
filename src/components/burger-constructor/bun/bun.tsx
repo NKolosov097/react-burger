@@ -1,13 +1,12 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { useDrop } from 'react-dnd'
-import { useDispatch } from 'react-redux'
 import React, { ReactElement } from 'react'
 import bunStyles from '../burger-constructor.module.css'
 import { IIngredient } from '../../../utils/types'
 import { UPDATE_BUN_IN_CONSTRUCTOR } from '../../../services/actions/burger-constructor-action'
 import { UPDATE_BUN_COUNT } from '../../../services/actions/ingredients-action'
-// import { IIngredient, IIngredientWithNewId } from '../../../utils/types'
+import { useDispatch } from '../../../store'
 
 type TBunProps = {
     bun: IIngredient | null

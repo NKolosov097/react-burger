@@ -1,9 +1,8 @@
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDrag } from 'react-dnd/dist/hooks'
-import { useDispatch } from 'react-redux'
 import cn from 'classnames'
 import { Link, useLocation } from 'react-router-dom'
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react'
 import { PriceTitle } from '../../price-title/price-title'
 import ingredientItemStyles from './ingredient-item.module.css'
 import { IIngredient } from '../../../utils/types'
@@ -16,24 +15,25 @@ import {
     INCREMENT_INGREDIENT_COUNT,
     UPDATE_BUN_COUNT,
 } from '../../../services/actions/ingredients-action'
+import { useDispatch } from '../../../store'
 
-export const IngredientItem = React.memo((props: IIngredient): ReactElement => {
+export function IngredientItem(props: IIngredient): ReactElement {
     const dispatch = useDispatch()
     const location = useLocation()
 
     const item: IIngredient = {
-        image: props.image,
-        type: props.type,
-        _id: props._id,
-        ID: props.ID,
-        image_large: props.image_large,
-        price: props.price,
-        name: props.name,
-        count: props.count,
-        calories: props.calories,
-        proteins: props.proteins,
-        fat: props.fat,
-        carbohydrates: props.carbohydrates,
+        image: props?.image,
+        type: props?.type,
+        _id: props?._id,
+        ID: props?.ID,
+        image_large: props?.image_large,
+        price: props?.price,
+        name: props?.name,
+        count: props?.count,
+        calories: props?.calories,
+        proteins: props?.proteins,
+        fat: props?.fat,
+        carbohydrates: props?.carbohydrates,
     }
 
     const [{ isDrag }, dragRef] = useDrag({
@@ -62,7 +62,7 @@ export const IngredientItem = React.memo((props: IIngredient): ReactElement => {
         } else {
             dispatch({
                 type: ADD_INGREDIENT_TO_CONSTRUCTOR,
-                payload: item,
+                payload: { type: 'ingredient', ingredient: item },
             })
             dispatch({
                 type: INCREMENT_INGREDIENT_COUNT,
@@ -97,4 +97,4 @@ export const IngredientItem = React.memo((props: IIngredient): ReactElement => {
             </Link>
         </li>
     )
-})
+}

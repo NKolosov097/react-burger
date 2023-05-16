@@ -1,7 +1,6 @@
-import React, { ReactElement, useCallback, useMemo, useState } from 'react'
+import { ReactElement, useCallback, useMemo, useState } from 'react'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import ReactDOM from 'react-dom'
-import { useDispatch } from 'react-redux'
 import burgerConstructorStyles from './burger-constructor.module.css'
 import { MoneyLogo } from '../../images/money'
 import { Bun } from './bun/bun'
@@ -12,30 +11,30 @@ import { OrderDetails } from './order-details/order-details'
 import { Modal } from '../modal/modal'
 import { IIngredient } from '../../utils/types'
 import { UPDATE_INGREDIENTS } from '../../services/actions/burger-constructor-action'
-import { ORDER_DETAILS_OPEN } from '../../services/actions/modal-details'
-import { useSelector } from '../../store'
+// import { ORDER_DETAILS_OPEN } from '../../services/actions/modal-details'
+import { useDispatch, useSelector } from '../../store'
 
-export const BurgerConstructor = React.memo((): ReactElement => {
+export function BurgerConstructor(): ReactElement {
     const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
     const dispatch = useDispatch()
     const {
         bun,
         ingredients,
-    }: { bun: IIngredient; ingredients: Array<IIngredient> } = useSelector(
-        (store) => store.constructorReducer
-    )
+    }: { bun: IIngredient | null; ingredients: Array<IIngredient> } =
+        useSelector((store) => store.constructorReducer)
 
     const { user } = useSelector((store) => store.authReducer)
     const { numberOfOrder } = useSelector((store) => store.orderReducer)
 
     const modalRoot: HTMLDivElement | null = document.querySelector('#modal')
 
-    const totalPrice: number =
+    const totalPrice: number | undefined =
         ingredients.reduce(
-            (acc: number, item: IIngredient) => acc + item.price,
+            (acc: number, item: IIngredient) =>
+                acc + Number(item.price ? item.price : 0),
             0
         ) +
-        Number(bun ? bun?.price : 0) * 2
+        Number(bun && bun.price ? bun?.price : 0) * 2
 
     const moveIngredients = useCallback(
         (dragIndex: number, hoverIndex: number) => {
@@ -67,8 +66,7 @@ export const BurgerConstructor = React.memo((): ReactElement => {
     const getOrder = (): void => {
         if (user) {
             setIsAuthorized(false)
-            dispatch(getNumberOfOrder(orderIngredients))
-            dispatch({ type: ORDER_DETAILS_OPEN })
+            getNumberOfOrder(orderIngredients)(dispatch)
         } else {
             setIsAuthorized(true)
         }
@@ -113,4 +111,4 @@ export const BurgerConstructor = React.memo((): ReactElement => {
                 : null}
         </section>
     )
-})
+}

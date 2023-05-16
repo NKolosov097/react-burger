@@ -1,13 +1,12 @@
 import React, { ReactElement, useEffect } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
 import * as H from 'history'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { HomePage } from './pages/home-page/home-page'
 import { Login } from './pages/login/login'
 import { Register } from './pages/register/register'
 import { ForgotPassword } from './pages/forgot-password/forgot-password'
 import { ResetPassword } from './pages/forgot-password/reset-password/reset-password'
 import { Profile } from './pages/profile/profile'
-import { Orders } from './pages/profile/orders/orders'
 import { checkUserAuth } from './services/actions/auth-action'
 import {
     OnlyAuth,
@@ -19,6 +18,9 @@ import { getBurgerIngredients } from './services/actions/ingredients-action'
 import { AppHeader } from './components/app-header/app-header'
 import { paths } from './utils/routes/routes'
 import { useDispatch } from './store'
+import { Feed } from './pages/feed/feed'
+import { Orders } from './pages/profile/orders/orders'
+import { OrderDetailedInformation } from './components/order/order-detailed-information/order-detailed-information'
 
 export const App = React.memo((): ReactElement => {
     const dispatch = useDispatch()
@@ -31,6 +33,8 @@ export const App = React.memo((): ReactElement => {
     useEffect(() => {
         getBurgerIngredients()(dispatch)
         checkUserAuth()(dispatch)
+
+        return () => localStorage.removeItem('accessToken')
     }, [dispatch])
 
     return (
@@ -61,6 +65,16 @@ export const App = React.memo((): ReactElement => {
                 <Route
                     path={paths.profile}
                     element={<OnlyAuth component={<Profile />} />}
+                />
+                <Route path={paths.feed} element={<Feed />} />
+                <Route
+                    path={paths.orderDetails}
+                    element={
+                        <OrderDetailedInformation
+                            orderFromFeed={false}
+                            orderFromProfile={false}
+                        />
+                    }
                 />
                 <Route
                     path={paths.orders}

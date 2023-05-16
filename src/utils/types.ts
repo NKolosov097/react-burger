@@ -30,7 +30,7 @@ export interface IIngredientResponse {
 
 export interface IUserResponse {
     success: boolean
-    user?: IUser
+    user: IUser | null
     accessToken: string
     refreshToken: string
     message: string
@@ -58,4 +58,30 @@ export type TOrder = {
     number: string
     createdAt: string
     updatedAt: string
+}
+
+export interface IWsSocketMiddlewareActions {
+    wsInit: string
+    wsSendMessage: string
+    onOpen: string
+    onClose: string
+    onError: string
+    onMessage: string
+}
+
+export interface IFeed {
+    createdAt: string
+    ingredients: string[]
+    name: string
+    number: number
+    status: string
+    updatedAt: string
+    _id: string
+}
+
+export interface IFeedResponse {
+    success: boolean
+    total: number
+    totalToday: number
+    orders: Array<IFeed>
 }

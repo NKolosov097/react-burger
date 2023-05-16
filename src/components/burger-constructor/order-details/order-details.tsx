@@ -1,6 +1,5 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { useDispatch } from 'react-redux'
 import React, { ReactElement } from 'react'
 import img from '../../../images/done.png'
 import { Loader } from '../../../images/loader'
@@ -12,7 +11,7 @@ import {
     UPDATE_INGREDIENTS,
 } from '../../../services/actions/burger-constructor-action'
 import { RESET_COUNTS_OF_INGREDIENTS } from '../../../services/actions/ingredients-action'
-import { useSelector } from '../../../store'
+import { useDispatch, useSelector } from '../../../store'
 
 export const OrderDetails = React.memo((): ReactElement => {
     const dispatch = useDispatch()

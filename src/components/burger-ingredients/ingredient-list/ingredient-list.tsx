@@ -1,9 +1,9 @@
-import { useSelector } from 'react-redux'
 import { v4 as uuid } from 'uuid'
 import { ReactElement } from 'react'
 import { IngredientItem } from '../ingredient-item/ingredient-item'
 import ingredientsStyles from '../burger-ingredients.module.css'
 import { IIngredient } from '../../../utils/types'
+import { useSelector } from '../../../store'
 
 type TIngredientList = {
     title: string
@@ -16,7 +16,6 @@ export function IngredientList({
     customRef = null,
     type,
 }: TIngredientList): ReactElement {
-    // @ts-ignore
     const { ingredients } = useSelector((store) => store.ingredientsReducer)
     return (
         <>

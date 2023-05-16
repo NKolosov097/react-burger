@@ -6,9 +6,9 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import forgotPasswordStyles from './forgot-password.module.css'
 import { passwordForgot } from '../../services/actions/auth-action'
+import { useDispatch } from '../../store'
 
 export const ForgotPassword = React.memo((): ReactElement => {
     const dispatch = useDispatch()

@@ -1,4 +1,4 @@
-import { legacy_createStore as createStore } from 'redux'
+import { legacy_createStore as createStore, compose } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { applyMiddleware, ThunkAction } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk'
@@ -13,11 +13,22 @@ import { TAuthActions } from './services/actions/auth-action'
 import { TBurgerConstructorAction } from './services/actions/burger-constructor-action'
 import { TIngredientsAction } from './services/actions/ingredients-action'
 import { TOrderAction } from './services/actions/order-action'
+import { WS_API, wsActions, wsAuthActions } from './utils/ws_api'
+import { socketMiddleware } from './services/middlewares'
+import { TWSActions } from './services/actions/WS-action'
+import { TWSAuthActions } from './services/actions/WS-auth-action'
+import { TModalDetailsAction } from './services/actions/modal-details'
 
-export const store = createStore(
-    rootReducer,
-    composeWithDevTools(applyMiddleware(thunk))
+const enhancer = compose(
+    composeWithDevTools(
+        applyMiddleware(
+            thunk,
+            socketMiddleware(`${WS_API}/all`, wsActions, false),
+            socketMiddleware(WS_API, wsAuthActions, true)
+        )
+    )
 )
+export const store = createStore(rootReducer, enhancer)
 
 type RootState = ReturnType<typeof rootReducer>
 type AppActions =
@@ -25,6 +36,9 @@ type AppActions =
     | TBurgerConstructorAction
     | TIngredientsAction
     | TOrderAction
+    | TModalDetailsAction
+    | TWSActions
+    | TWSAuthActions
 
 export type AppThunk<ReturnType = void> = ThunkAction<
     ReturnType,

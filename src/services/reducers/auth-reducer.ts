@@ -9,15 +9,15 @@ import {
     TAuthActions,
 } from '../actions/auth-action'
 
-type TInitialState = {
-    isLoading: Boolean
-    isChecked: Boolean
+type TState = {
+    isLoading: boolean
+    isChecked: boolean
     isCorrectEmail: Boolean
     user: IUser | null
-    isError: Boolean
+    isError: boolean
 }
 
-const initialState: TInitialState = {
+const initialState: TState = {
     isLoading: false,
     isChecked: false,
     isCorrectEmail: false,
@@ -25,8 +25,11 @@ const initialState: TInitialState = {
     isError: false,
 }
 
-// eslint-disable-next-line
-export const authReducer = (state = initialState, action: TAuthActions) => {
+export const authReducer = (
+    // eslint-disable-next-line @typescript-eslint/default-param-last
+    state = initialState,
+    action: TAuthActions
+): TState => {
     switch (action.type) {
         case REQUEST: {
             return {

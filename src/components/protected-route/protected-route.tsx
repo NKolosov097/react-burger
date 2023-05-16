@@ -13,7 +13,7 @@ function Protected({ onlyUnAuth = false, component }: TProtected) {
         // @ts-ignore
         (store) => store.authReducer.isChecked
     )
-    const user: IUser = useSelector(
+    const user: IUser | null = useSelector(
         // @ts-ignore
         (store) => store.authReducer.user
     )

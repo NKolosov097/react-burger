@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/extensions
 import { NORMA_API, fetchWithRefresh } from '../../utils/burger-api'
 import { IUser } from '../../utils/types'
 
@@ -9,49 +8,54 @@ export const SET_USER: 'SET_USER' = 'SET_USER'
 export const SET_IS_AUTH: 'SET_IS_AUTH' = 'SET_IS_AUTH'
 export const SET_EMAIL_CORRECT_FLAG: 'SET_EMAIL_CORRECT_FLAG' =
     'SET_EMAIL_CORRECT_FLAG'
+export type TAuthActions =
+    | {
+          type: typeof REQUEST
+      }
+    | {
+          type: typeof REQUEST_SUCCESS
+          user: IUser | null
+      }
+    | {
+          type: typeof REQUEST_FAILED
+      }
+    | {
+          type: typeof SET_USER
+          user: IUser | null
+      }
+    | {
+          type: typeof SET_IS_AUTH
+      }
+    | {
+          type: typeof SET_EMAIL_CORRECT_FLAG
+      }
 
-type TAuthActionsTypes =
-    | typeof REQUEST
-    | typeof REQUEST_SUCCESS
-    | typeof REQUEST_FAILED
-    | typeof SET_USER
-    | typeof SET_IS_AUTH
-    | typeof SET_EMAIL_CORRECT_FLAG
-
-export type TAuthActions = {
-    type: TAuthActionsTypes
-    user?: IUser | null
-}
-
-export const getUserData =
-    () =>
-    async (dispatch: any): Promise<void> => {
-        dispatch({
-            type: REQUEST,
-        })
-        const options = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            },
-        }
-        await fetchWithRefresh(`${NORMA_API}/auth/user`, options)
-            .then((res) => {
-                if (res && res.success) {
-                    dispatch({
-                        type: SET_USER,
-                        user: res.user,
-                    })
-                }
-            })
-            .catch((error) =>
-                dispatch({
-                    type: REQUEST_FAILED,
-                    payload: error.message,
-                })
-            )
+export const getUserData = () => async (dispatch: any) => {
+    dispatch({
+        type: REQUEST,
+    })
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
     }
+    await fetchWithRefresh(`${NORMA_API}/auth/user`, options)
+        .then((res) => {
+            if (res && res.success) {
+                dispatch({
+                    type: SET_USER,
+                    user: res.user,
+                })
+            }
+        })
+        .catch(() =>
+            dispatch({
+                type: REQUEST_FAILED,
+            })
+        )
+}
 
 export const checkUserAuth = () => (dispatch: any) => {
     dispatch({
@@ -104,10 +108,9 @@ export const registerAction =
                     }
                 }
             })
-            .catch((error) =>
+            .catch(() =>
                 dispatch({
                     type: REQUEST_FAILED,
-                    payload: error.message,
                 })
             )
     }
@@ -146,10 +149,9 @@ export const loginAction =
                     }
                 }
             })
-            .catch((error) =>
+            .catch(() =>
                 dispatch({
                     type: REQUEST_FAILED,
-                    payload: error.message,
                 })
             )
     }
@@ -178,10 +180,9 @@ export const logoutRequest =
                         user: null,
                     })
             })
-            .catch((error) =>
+            .catch(() =>
                 dispatch({
                     type: REQUEST_FAILED,
-                    payload: error.message,
                 })
             )
         localStorage.removeItem('accessToken')
@@ -206,10 +207,9 @@ export const passwordForgot = (email: string) => async (dispatch: any) => {
                 type: SET_EMAIL_CORRECT_FLAG,
             })
         })
-        .catch((error) =>
+        .catch(() =>
             dispatch({
                 type: REQUEST_FAILED,
-                payload: error.message,
             })
         )
 }
@@ -239,10 +239,9 @@ export const passwordReset =
                     user: res.user,
                 })
             })
-            .catch((error) =>
+            .catch(() =>
                 dispatch({
                     type: REQUEST_FAILED,
-                    payload: error.message,
                 })
             )
     }
@@ -270,10 +269,9 @@ export const patchUserInfo =
                     })
                 }
             })
-            .catch((error) =>
+            .catch(() =>
                 dispatch({
                     type: REQUEST_FAILED,
-                    payload: error.message,
                 })
             )
     }

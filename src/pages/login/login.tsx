@@ -6,9 +6,9 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import loginStyles from './login.module.css'
 import { loginAction } from '../../services/actions/auth-action'
+import { useDispatch } from '../../store'
 
 type TForm = {
     email: string

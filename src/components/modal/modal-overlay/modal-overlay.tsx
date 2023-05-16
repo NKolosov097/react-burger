@@ -1,5 +1,4 @@
 import React, { useEffect, useCallback, ReactElement } from 'react'
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import modalOverlayStyles from './modal-overlay.module.css'
 import {
@@ -12,6 +11,7 @@ import {
 } from '../../../services/actions/modal-details'
 import { RESET_NUMBER_OF_ORDER } from '../../../services/actions/order-action'
 import { RESET_COUNTS_OF_INGREDIENTS } from '../../../services/actions/ingredients-action'
+import { useDispatch } from '../../../store'
 
 export const ModalOverlay = React.memo(
     ({ orderDetails = false }: { orderDetails: boolean }): ReactElement => {

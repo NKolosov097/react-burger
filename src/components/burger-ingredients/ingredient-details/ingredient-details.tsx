@@ -1,12 +1,11 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import React, { ReactElement } from 'react'
 import { Loader } from '../../../images/loader'
 import detailsStyles from './ingredient-details.module.css'
 import { IIngredient } from '../../../utils/types'
 import { INGREDIENT_DETAILS_CLOSE } from '../../../services/actions/modal-details'
-import { useSelector } from '../../../store'
+import { useDispatch, useSelector } from '../../../store'
 
 type TIngredientDetails = Pick<
     IIngredient,
@@ -22,9 +21,8 @@ export const IngredientDetails = React.memo(
     ({ newPage = false }: { newPage: boolean }): ReactElement => {
         const dispatch = useDispatch()
         const navigate = useNavigate()
-        const { id } = useParams()
+        const { id } = useParams<{ id: string }>()
         const ingredients: Array<IIngredient> = useSelector(
-            // @ts-ignore
             (store) => store.ingredientsReducer.ingredients
         )
         const ingredient: IIngredient | undefined = ingredients.find(

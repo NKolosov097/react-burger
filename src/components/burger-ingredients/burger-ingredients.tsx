@@ -16,7 +16,7 @@ type TIngredientLists = {
     ref: React.MutableRefObject<HTMLHeadingElement | null>
 }
 
-export const BurgerIngredients = React.memo((): ReactElement => {
+export function BurgerIngredients(): ReactElement {
     const [current, setCurrent] = useState<string>('Булки')
 
     const bottomTabsRef = useRef<HTMLHeadingElement>(null)
@@ -112,4 +112,4 @@ export const BurgerIngredients = React.memo((): ReactElement => {
             </div>
         </section>
     )
-})
+}

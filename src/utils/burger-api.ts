@@ -7,8 +7,8 @@ import {
 
 export const NORMA_API: string = 'https://norma.nomoreparties.space/api'
 
-const checkResponse = async <T>(res: Response): Promise<T> =>
-    (await res.ok)
+const checkResponse = <T>(res: Response): Promise<T> =>
+    (res.ok)
         ? res.json()
         : res.json().then((err: Error) => Promise.reject(err))
 
@@ -21,7 +21,9 @@ export const getIngredients = async (): Promise<IIngredientResponse> => {
     }
 }
 
-export const postOrder = async (ingredients: Array<string>) => {
+export const postOrder = async (
+    ingredients: Array<string>
+): Promise<IIngredientResponse> => {
     try {
         const res = await fetch(`${NORMA_API}/orders`, {
             method: 'POST',
@@ -34,7 +36,7 @@ export const postOrder = async (ingredients: Array<string>) => {
     }
 }
 
-export const forgotPassword = async (email: string) => {
+export const forgotPassword = async (email: string): Promise<IUserResponse> => {
     try {
         const res = await fetch(`${NORMA_API}/password-reset`, {
             method: 'POST',

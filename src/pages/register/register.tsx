@@ -8,9 +8,9 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import registerStyles from './register.module.css'
 import { registerAction } from '../../services/actions/auth-action'
+import { useDispatch } from '../../store'
 
 type TForm = {
     name: string

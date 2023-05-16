@@ -1,0 +1,101 @@
+.ordersBoardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-grow: 1;
+    width: 50%;
+
+    color: #f2f2f3;
+}
+
+.currentOrders {
+    display: flex;
+    width: 100%;
+
+    margin-bottom: 60px;
+}
+
+.doneOrdersContainer,
+.inProcessOrdersContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    width: 50%;
+}
+
+.doneOrdersHeader,
+.inProcessOrdersHeader {
+    display: flex;
+    width: 100%;
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 1px;
+}
+
+.doneOrdersList,
+.inProcessOrdersList {
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.doneOrderNumber,
+.pendingOrderNumber {
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 24px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    color: #00cccc;
+}
+
+.doneOrderNumber:last-child,
+.pendingOrderNumber:last-child {
+    margin-bottom: 0;
+}
+
+.pendingOrderNumber {
+    color: #f2f2f3;
+}
+
+.doneForTheAllTimeContainer,
+.doneTodayContainer {
+    display: flex;
+    flex-wrap: wrap;
+
+    margin-bottom: 60px;
+}
+
+.doneTodayContainer {
+    margin-bottom: 0;
+}
+
+.doneForTheAllTimeHeader,
+.doneTodayHeader {
+    display: flex;
+    width: 100%;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+}
+
+.doneForTheAllTimeNumber,
+.doneTodayNumber {
+    display: flex;
+    width: 100%;
+    margin-bottom: 0;
+
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 144px;
+    line-height: 120px;
+    text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25),
+        0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+}

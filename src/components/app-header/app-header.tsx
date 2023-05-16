@@ -37,7 +37,7 @@ export const AppHeader = React.memo((): ReactElement => {
                         </span>
                     </NavLink>
                     <NavLink
-                        to={paths.orders}
+                        to={paths.feed}
                         className={headerStyles.menu_item_content}
                     >
                         <ListIcon type={isFeed ? 'primary' : 'secondary'} />
