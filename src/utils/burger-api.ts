@@ -8,9 +8,7 @@ import {
 export const NORMA_API: string = 'https://norma.nomoreparties.space/api'
 
 const checkResponse = <T>(res: Response): Promise<T> =>
-    (res.ok)
-        ? res.json()
-        : res.json().then((err: Error) => Promise.reject(err))
+    res.ok ? res.json() : res.json().then((err: Error) => Promise.reject(err))
 
 export const getIngredients = async (): Promise<IIngredientResponse> => {
     try {
@@ -25,11 +23,20 @@ export const postOrder = async (
     ingredients: Array<string>
 ): Promise<IIngredientResponse> => {
     try {
-        const res = await fetch(`${NORMA_API}/orders`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ingredients }),
-        })
+        const res = await fetch(
+            `${NORMA_API}/orders?token=${localStorage.getItem('accessToken')}`,
+            {
+                method: 'POST',
+                // @ts-ignore
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem(
+                        'accessToken'
+                    )}`,
+                },
+                body: JSON.stringify({ ingredients }),
+            }
+        )
         return await checkResponse<IIngredientResponse>(res)
     } catch (e) {
         throw new Error('Что-то пошло не так')

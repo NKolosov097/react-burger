@@ -7,8 +7,8 @@ import {
 import cn from 'classnames'
 import { Link, useNavigate } from 'react-router-dom'
 import forgotPasswordStyles from './forgot-password.module.css'
-import { passwordForgot } from '../../services/actions/auth-action'
 import { useDispatch } from '../../store'
+import { passwordForgot } from '../../services/actions/auth-action/auth-thunk'
 
 export const ForgotPassword = React.memo((): ReactElement => {
     const dispatch = useDispatch()

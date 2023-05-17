@@ -5,14 +5,13 @@ import burgerConstructorStyles from './burger-constructor.module.css'
 import { MoneyLogo } from '../../images/money'
 import { Bun } from './bun/bun'
 import { IngredientsList } from './ingredients-list-in-constructor/ingredients-list'
-import { getNumberOfOrder } from '../../services/actions/order-action'
 import { FailOrderDetails } from './order-details/fail-order-details'
 import { OrderDetails } from './order-details/order-details'
 import { Modal } from '../modal/modal'
 import { IIngredient } from '../../utils/types'
 import { UPDATE_INGREDIENTS } from '../../services/actions/burger-constructor-action'
-// import { ORDER_DETAILS_OPEN } from '../../services/actions/modal-details'
 import { useDispatch, useSelector } from '../../store'
+import { getNumberOfOrder } from '../../services/actions/order-action/order-thunk'
 
 export function BurgerConstructor(): ReactElement {
     const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
@@ -24,7 +23,9 @@ export function BurgerConstructor(): ReactElement {
         useSelector((store) => store.constructorReducer)
 
     const { user } = useSelector((store) => store.authReducer)
-    const { numberOfOrder } = useSelector((store) => store.orderReducer)
+    const { numberOfOrder, isLoading } = useSelector(
+        (store) => store.orderReducer
+    )
 
     const modalRoot: HTMLDivElement | null = document.querySelector('#modal')
 
@@ -63,14 +64,49 @@ export function BurgerConstructor(): ReactElement {
         return orderIngredientsArr
     }, [bun, ingredients])
 
-    const getOrder = (): void => {
+    // eslint-disable-next-line consistent-return
+    const getOrder = () => {
         if (user) {
             setIsAuthorized(false)
             getNumberOfOrder(orderIngredients)(dispatch)
         } else {
             setIsAuthorized(true)
         }
+
+        // if (numberOfOrder) {
+        //     return (
+        //         <Modal>
+        //             <OrderDetails isLoading />
+        //         </Modal>
+        //     )
+        // }
+        // if (isLoading) {
+        //     return (
+        //         <Modal orderDetails>
+        //             <OrderDetails isLoading={false} />
+        //         </Modal>
+        //     )
+        // }
     }
+
+    // const getOrderModal = () => {
+    //     if (!numberOfOrder) {
+    //         if (isLoading) {
+    //             return (
+    //                 <Modal>
+    //                     <OrderDetails isLoading />
+    //                 </Modal>
+    //             )
+    //         }
+
+    //         return (
+    //             <Modal orderDetails>
+    //                 <OrderDetails isLoading={false} />
+    //             </Modal>
+    //         )
+    //     }
+    //     return null
+    // }
 
     return (
         <section className={burgerConstructorStyles.wrapper}>
@@ -101,11 +137,18 @@ export function BurgerConstructor(): ReactElement {
                     </div>
                 )}
             </div>
-            {numberOfOrder && (
+            {numberOfOrder && !isLoading && (
                 <Modal orderDetails>
-                    <OrderDetails />
+                    <OrderDetails isLoading={false} />
                 </Modal>
             )}
+
+            {isLoading && !numberOfOrder && (
+                <Modal>
+                    <OrderDetails isLoading />
+                </Modal>
+            )}
+
             {isAuthorized && modalRoot
                 ? ReactDOM.createPortal(<FailOrderDetails />, modalRoot)
                 : null}

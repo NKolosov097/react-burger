@@ -7,8 +7,8 @@ import {
 import cn from 'classnames'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import resetPasswordStyles from './reset-password.module.css'
-import { passwordReset } from '../../../services/actions/auth-action'
 import { useDispatch } from '../../../store'
+import { passwordReset } from '../../../services/actions/auth-action/auth-thunk'
 
 type TForm = {
     password: string

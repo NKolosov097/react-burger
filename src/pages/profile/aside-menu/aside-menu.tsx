@@ -2,9 +2,9 @@ import { ReactElement } from 'react'
 import cn from 'classnames'
 import { Link, useMatch } from 'react-router-dom'
 import asideMenuStyles from './aside-menu.module.css'
-import { logoutRequest } from '../../../services/actions/auth-action'
 import { paths } from '../../../utils/routes/routes'
 import { useDispatch } from '../../../store'
+import { logoutRequest } from '../../../services/actions/auth-action/auth-thunk'
 
 export function ProfileAsideMenu(): ReactElement {
     const dispatch = useDispatch()

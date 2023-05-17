@@ -9,8 +9,8 @@ import {
     INGREDIENT_DETAILS_CLOSE,
     ORDER_DETAILS_CLOSE,
 } from '../../../services/actions/modal-details'
-import { RESET_NUMBER_OF_ORDER } from '../../../services/actions/order-action'
-import { RESET_COUNTS_OF_INGREDIENTS } from '../../../services/actions/ingredients-action'
+import { RESET_NUMBER_OF_ORDER } from '../../../services/actions/order-action/order-action'
+import { RESET_COUNTS_OF_INGREDIENTS } from '../../../services/actions/ingredients-action/ingredients-action'
 import { useDispatch } from '../../../store'
 
 export const ModalOverlay = React.memo(

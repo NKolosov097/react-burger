@@ -7,20 +7,20 @@ import { Register } from './pages/register/register'
 import { ForgotPassword } from './pages/forgot-password/forgot-password'
 import { ResetPassword } from './pages/forgot-password/reset-password/reset-password'
 import { Profile } from './pages/profile/profile'
-import { checkUserAuth } from './services/actions/auth-action'
 import {
     OnlyAuth,
     OnlyUnAuth,
 } from './components/protected-route/protected-route'
 import { IngredientDetails } from './components/burger-ingredients/ingredient-details/ingredient-details'
 import { Modal } from './components/modal/modal'
-import { getBurgerIngredients } from './services/actions/ingredients-action'
 import { AppHeader } from './components/app-header/app-header'
 import { paths } from './utils/routes/routes'
 import { useDispatch } from './store'
 import { Feed } from './pages/feed/feed'
 import { Orders } from './pages/profile/orders/orders'
 import { OrderDetailedInformation } from './components/order/order-detailed-information/order-detailed-information'
+import { checkUserAuth } from './services/actions/auth-action/auth-thunk'
+import { getBurgerIngredients } from './services/actions/ingredients-action/ingredients-thunk'
 
 export const App = React.memo((): ReactElement => {
     const dispatch = useDispatch()

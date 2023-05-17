@@ -13,9 +13,9 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import profileStyles from './profile.module.css'
-import { patchUserInfo } from '../../services/actions/auth-action'
 import { ProfileAsideMenu } from './aside-menu/aside-menu'
 import { useDispatch, useSelector } from '../../store'
+import { patchUserInfo } from '../../services/actions/auth-action/auth-thunk'
 
 type TForm = {
     name: string

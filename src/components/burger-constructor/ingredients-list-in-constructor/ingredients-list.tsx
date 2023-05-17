@@ -6,7 +6,7 @@ import { AssemblingBurger } from '../assembling-burger/assembling-burger'
 import burgerConstructorStyles from '../burger-constructor.module.css'
 import { IIngredient } from '../../../utils/types'
 import { ADD_INGREDIENT_TO_CONSTRUCTOR } from '../../../services/actions/burger-constructor-action'
-import { INCREMENT_INGREDIENT_COUNT } from '../../../services/actions/ingredients-action'
+import { INCREMENT_INGREDIENT_COUNT } from '../../../services/actions/ingredients-action/ingredients-action'
 import { useDispatch } from '../../../store'
 
 type TIngredientsListProps = {

@@ -4,7 +4,7 @@ import {
     GET_ORDER_SUCCESS,
     RESET_NUMBER_OF_ORDER,
     TOrderAction,
-} from '../actions/order-action'
+} from '../actions/order-action/order-action'
 
 type TState = {
     numberOfOrder: number | null

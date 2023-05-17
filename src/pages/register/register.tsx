@@ -9,8 +9,8 @@ import {
 import cn from 'classnames'
 import { Link } from 'react-router-dom'
 import registerStyles from './register.module.css'
-import { registerAction } from '../../services/actions/auth-action'
 import { useDispatch } from '../../store'
+import { registerAction } from '../../services/actions/auth-action/auth-thunk'
 
 type TForm = {
     name: string

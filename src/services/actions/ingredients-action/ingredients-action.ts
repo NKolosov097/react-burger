@@ -1,5 +1,4 @@
-import { getIngredients } from '../../utils/burger-api'
-import { IIngredient } from '../../utils/types'
+import { IIngredient } from '../../../utils/types'
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' =
     'GET_INGREDIENTS_REQUEST'
@@ -41,22 +40,3 @@ export type TIngredientsAction =
     | {
           type: typeof RESET_COUNTS_OF_INGREDIENTS
       }
-
-export const getBurgerIngredients = () => (dispatch: any) => {
-    dispatch({
-        type: GET_INGREDIENTS_REQUEST,
-    })
-    getIngredients()
-        .then((res) => {
-            if (res && res.success)
-                dispatch({
-                    type: GET_INGREDIENTS_SUCCESS,
-                    payload: res.data,
-                })
-        })
-        .catch(() =>
-            dispatch({
-                type: GET_INGREDIENTS_FAILED,
-            })
-        )
-}

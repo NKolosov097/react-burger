@@ -8,7 +8,7 @@ import {
     UPDATE_BUN_COUNT,
     RESET_COUNTS_OF_INGREDIENTS,
     TIngredientsAction,
-} from '../actions/ingredients-action'
+} from '../actions/ingredients-action/ingredients-action'
 
 type TState = {
     ingredients: Array<IIngredient>

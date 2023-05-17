@@ -6,8 +6,8 @@ import {
     WS_AUTH_CONNECTION_CLOSED,
     WS_AUTH_CONNECTION_START,
 } from '../../../services/actions/WS-auth-action'
-import { getUserData } from '../../../services/actions/auth-action'
 import { Order } from '../../../components/order/order'
+import { getUserData } from '../../../services/actions/auth-action/auth-thunk'
 
 export function Orders(): ReactElement {
     const dispatch = useDispatch()
@@ -20,14 +20,14 @@ export function Orders(): ReactElement {
         }
     }, [dispatch])
 
-    // const { orders } = useSelector((store) => store.wsAuthReducer)
-    const { orders } = useSelector((store) => store.wsReducer)
+    const { orders } = useSelector((store) => store.wsAuthReducer)
+    // const { orders } = useSelector((store) => store.wsReducer)
     console.log(orders)
 
     return (
         <section className={stylesOrders.wrapper}>
             <ProfileAsideMenu />
-            {orders.length > 0 ? (
+            {orders && orders.length > 0 ? (
                 <ul className={`${stylesOrders.orders} pr-2 custom-scroll`}>
                     {orders &&
                         orders.map((order) => (

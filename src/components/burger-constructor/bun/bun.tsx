@@ -5,7 +5,7 @@ import React, { ReactElement } from 'react'
 import bunStyles from '../burger-constructor.module.css'
 import { IIngredient } from '../../../utils/types'
 import { UPDATE_BUN_IN_CONSTRUCTOR } from '../../../services/actions/burger-constructor-action'
-import { UPDATE_BUN_COUNT } from '../../../services/actions/ingredients-action'
+import { UPDATE_BUN_COUNT } from '../../../services/actions/ingredients-action/ingredients-action'
 import { useDispatch } from '../../../store'
 
 type TBunProps = {

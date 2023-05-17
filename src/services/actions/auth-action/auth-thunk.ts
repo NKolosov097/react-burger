@@ -1,36 +1,16 @@
-import { NORMA_API, fetchWithRefresh } from '../../utils/burger-api'
-import { IUser } from '../../utils/types'
+import { AppDispatch } from '../../../store'
+import { NORMA_API, fetchWithRefresh } from '../../../utils/burger-api'
+import { IUser } from '../../../utils/types'
+import {
+    REQUEST,
+    REQUEST_FAILED,
+    REQUEST_SUCCESS,
+    SET_EMAIL_CORRECT_FLAG,
+    SET_IS_AUTH,
+    SET_USER,
+} from './auth-action'
 
-export const REQUEST: 'REQUEST' = 'REQUEST'
-export const REQUEST_SUCCESS: 'REQUEST_SUCCESS' = 'REQUEST_SUCCESS'
-export const REQUEST_FAILED: 'REQUEST_FAILED' = 'REQUEST_FAILED'
-export const SET_USER: 'SET_USER' = 'SET_USER'
-export const SET_IS_AUTH: 'SET_IS_AUTH' = 'SET_IS_AUTH'
-export const SET_EMAIL_CORRECT_FLAG: 'SET_EMAIL_CORRECT_FLAG' =
-    'SET_EMAIL_CORRECT_FLAG'
-export type TAuthActions =
-    | {
-          type: typeof REQUEST
-      }
-    | {
-          type: typeof REQUEST_SUCCESS
-          user: IUser | null
-      }
-    | {
-          type: typeof REQUEST_FAILED
-      }
-    | {
-          type: typeof SET_USER
-          user: IUser | null
-      }
-    | {
-          type: typeof SET_IS_AUTH
-      }
-    | {
-          type: typeof SET_EMAIL_CORRECT_FLAG
-      }
-
-export const getUserData = () => async (dispatch: any) => {
+export const getUserData = () => async (dispatch: AppDispatch) => {
     dispatch({
         type: REQUEST,
     })
@@ -57,7 +37,7 @@ export const getUserData = () => async (dispatch: any) => {
         )
 }
 
-export const checkUserAuth = () => (dispatch: any) => {
+export const checkUserAuth = () => (dispatch: AppDispatch) => {
     dispatch({
         type: REQUEST,
     })
@@ -76,7 +56,7 @@ export const checkUserAuth = () => (dispatch: any) => {
 
 export const registerAction =
     ({ email, password, name }: IUser) =>
-    async (dispatch: any): Promise<void> => {
+    async (dispatch: AppDispatch): Promise<void> => {
         dispatch({
             type: REQUEST,
         })
@@ -117,7 +97,7 @@ export const registerAction =
 
 export const loginAction =
     ({ email, password }: IUser) =>
-    async (dispatch: any) => {
+    async (dispatch: AppDispatch) => {
         dispatch({
             type: REQUEST,
         })
@@ -158,7 +138,7 @@ export const loginAction =
 
 export const logoutRequest =
     () =>
-    async (dispatch: any): Promise<void> => {
+    async (dispatch: AppDispatch): Promise<void> => {
         dispatch({
             type: REQUEST,
         })
@@ -189,34 +169,35 @@ export const logoutRequest =
         localStorage.removeItem('refreshToken')
     }
 
-export const passwordForgot = (email: string) => async (dispatch: any) => {
-    dispatch({
-        type: REQUEST,
-    })
-    const options = {
-        method: 'POST',
-        body: JSON.stringify({ email }),
-        headers: {
-            'Content-Type': 'application/json',
-            authorization: undefined,
-        },
-    }
-    return fetchWithRefresh(`${NORMA_API}/password-reset`, options)
-        .then(() => {
-            dispatch({
-                type: SET_EMAIL_CORRECT_FLAG,
-            })
+export const passwordForgot =
+    (email: string) => async (dispatch: AppDispatch) => {
+        dispatch({
+            type: REQUEST,
         })
-        .catch(() =>
-            dispatch({
-                type: REQUEST_FAILED,
+        const options = {
+            method: 'POST',
+            body: JSON.stringify({ email }),
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: undefined,
+            },
+        }
+        return fetchWithRefresh(`${NORMA_API}/password-reset`, options)
+            .then(() => {
+                dispatch({
+                    type: SET_EMAIL_CORRECT_FLAG,
+                })
             })
-        )
-}
+            .catch(() =>
+                dispatch({
+                    type: REQUEST_FAILED,
+                })
+            )
+    }
 
 export const passwordReset =
     ({ password, token }: IUser) =>
-    async (dispatch: any) => {
+    async (dispatch: AppDispatch) => {
         dispatch({
             type: REQUEST,
         })
@@ -235,7 +216,6 @@ export const passwordReset =
                 })
                 dispatch({
                     type: REQUEST_SUCCESS,
-                    isChecked: true,
                     user: res.user,
                 })
             })
@@ -248,7 +228,7 @@ export const passwordReset =
 
 export const patchUserInfo =
     ({ email, password, name }: IUser) =>
-    async (dispatch: any) => {
+    async (dispatch: AppDispatch) => {
         dispatch({
             type: REQUEST,
         })

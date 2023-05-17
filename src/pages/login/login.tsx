@@ -7,8 +7,8 @@ import {
 import cn from 'classnames'
 import { Link, useNavigate } from 'react-router-dom'
 import loginStyles from './login.module.css'
-import { loginAction } from '../../services/actions/auth-action'
 import { useDispatch } from '../../store'
+import { loginAction } from '../../services/actions/auth-action/auth-thunk'
 
 type TForm = {
     email: string

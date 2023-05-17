@@ -14,7 +14,7 @@ import {
 import {
     INCREMENT_INGREDIENT_COUNT,
     UPDATE_BUN_COUNT,
-} from '../../../services/actions/ingredients-action'
+} from '../../../services/actions/ingredients-action/ingredients-action'
 import { useDispatch } from '../../../store'
 
 export function IngredientItem(props: IIngredient): ReactElement {

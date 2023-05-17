@@ -6,6 +6,7 @@
     min-width: 305px;
     height: auto;
     padding: 20px;
+    order: -1;
     color: rgba(242, 242, 243, 1);
 
     background: #1c1c21;

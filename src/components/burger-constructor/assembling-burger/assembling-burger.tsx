@@ -8,7 +8,7 @@ import cn from 'classnames'
 import assemblingBurgerStyles from '../burger-constructor.module.css'
 import { IIngredient } from '../../../utils/types'
 import { DELETE_INGREDIENT_FROM_CONSTRUCTOR } from '../../../services/actions/burger-constructor-action'
-import { DECREMENT_INGREDIENT_COUNT } from '../../../services/actions/ingredients-action'
+import { DECREMENT_INGREDIENT_COUNT } from '../../../services/actions/ingredients-action/ingredients-action'
 import { useDispatch } from '../../../store'
 
 type TAssemblingBurgerProps = Pick<

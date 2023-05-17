@@ -7,7 +7,7 @@ import {
     SET_IS_AUTH,
     SET_USER,
     TAuthActions,
-} from '../actions/auth-action'
+} from '../actions/auth-action/auth-action'
 
 type TState = {
     isLoading: boolean
