@@ -23,6 +23,7 @@ export const AppHeader = React.memo((): ReactElement => {
                     <NavLink
                         to={paths.homePage}
                         className={headerStyles.menu_item_content}
+                        title="Go to constructor page"
                     >
                         <BurgerIcon type={isHome ? 'primary' : 'secondary'} />
                         <span
@@ -39,6 +40,7 @@ export const AppHeader = React.memo((): ReactElement => {
                     <NavLink
                         to={paths.feed}
                         className={headerStyles.menu_item_content}
+                        title="Go to orders page"
                     >
                         <ListIcon type={isFeed ? 'primary' : 'secondary'} />
                         <span
@@ -53,7 +55,10 @@ export const AppHeader = React.memo((): ReactElement => {
                         </span>
                     </NavLink>
                 </li>
-                <li className={headerStyles.logo}>
+                <li
+                    className={headerStyles.logo}
+                    title="Go to constructor page"
+                >
                     <NavLink className="mt-2" to={paths.homePage}>
                         <Logo />
                     </NavLink>
@@ -62,6 +67,7 @@ export const AppHeader = React.memo((): ReactElement => {
                     <NavLink
                         to={paths.profile}
                         className={headerStyles.menu_item_content}
+                        title="Go to profile"
                     >
                         <ProfileIcon
                             type={

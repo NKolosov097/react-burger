@@ -14,7 +14,11 @@ import { RESET_COUNTS_OF_INGREDIENTS } from '../../../services/actions/ingredien
 import { useDispatch } from '../../../store'
 
 export const ModalOverlay = React.memo(
-    ({ orderDetails = false }: { orderDetails: boolean }): ReactElement => {
+    ({
+        orderDetailsFromConstructor = false,
+    }: {
+        orderDetailsFromConstructor: boolean
+    }): ReactElement => {
         const dispatch = useDispatch()
         const navigate = useNavigate()
         const handleClose = useCallback((): void => {
@@ -24,7 +28,7 @@ export const ModalOverlay = React.memo(
         useEffect(() => {
             const handleEscClose = (event: KeyboardEvent): void => {
                 if (event.key === 'Escape') {
-                    if (orderDetails) {
+                    if (orderDetailsFromConstructor) {
                         dispatch({ type: UPDATE_INGREDIENTS, payload: [] })
                         dispatch({
                             type: UPDATE_BUN_IN_CONSTRUCTOR,
@@ -44,10 +48,10 @@ export const ModalOverlay = React.memo(
             document.addEventListener('keydown', handleEscClose)
 
             return () => document.removeEventListener('keydown', handleEscClose)
-        }, [dispatch, handleClose, orderDetails])
+        }, [dispatch, handleClose, orderDetailsFromConstructor])
 
         const closeModal = (): void => {
-            if (orderDetails) {
+            if (orderDetailsFromConstructor) {
                 dispatch({ type: UPDATE_INGREDIENTS, payload: [] })
                 dispatch({
                     type: UPDATE_BUN_IN_CONSTRUCTOR,

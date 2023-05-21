@@ -27,7 +27,6 @@ export const postOrder = async (
             `${NORMA_API}/orders?token=${localStorage.getItem('accessToken')}`,
             {
                 method: 'POST',
-                // @ts-ignore
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem(

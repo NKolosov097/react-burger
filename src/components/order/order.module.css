@@ -6,7 +6,6 @@
     min-width: 305px;
     height: auto;
     padding: 20px;
-    order: -1;
     color: rgba(242, 242, 243, 1);
 
     background: #1c1c21;
@@ -61,9 +60,6 @@
     color: #f2f2f3;
     letter-spacing: 1px;
     margin-bottom: 8px;
-    /* white-space: nowrap; */
-    /* overflow: hidden; */
-    /* text-overflow: ellipsis; */
 }
 
 .status,
@@ -102,6 +98,7 @@
 }
 
 .ingredients {
+    position: relative;
     display: flex;
     padding: 0;
     margin-left: 15px;
@@ -115,14 +112,36 @@
     border-radius: 50%;
     border: 1px solid rgba(128, 26, 178, 1);
     background: #131316;
-    z-index: 1;
-
     justify-content: center;
     align-items: center;
 }
 
 .ingredientEl::marker {
     content: '';
+}
+
+.ingredientEl:nth-child(1) {
+    z-index: 60;
+}
+
+.ingredientEl:nth-child(2) {
+    z-index: 50;
+}
+
+.ingredientEl:nth-child(3) {
+    z-index: 40;
+}
+
+.ingredientEl:nth-child(4) {
+    z-index: 30;
+}
+
+.ingredientEl:nth-child(5) {
+    z-index: 20;
+}
+
+.ingredientEl:nth-child(5) {
+    z-index: 10;
 }
 
 .overlay {
@@ -144,6 +163,10 @@
     line-height: 24px;
     color: #f2f2f3;
     opacity: 1;
+}
+
+.ml10 {
+    margin-left: -10px;
 }
 
 .price {

@@ -1,30 +1,33 @@
-import { ReactElement } from 'react'
+import { ReactElement, useMemo } from 'react'
+import { v4 as uuid } from 'uuid'
 import {
     CurrencyIcon,
     FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink, useLocation } from 'react-router-dom'
+import { Location, NavLink } from 'react-router-dom'
 import cn from 'classnames'
 import orderStyles from './order.module.css'
-import { useSelector } from '../../store'
+
+import { useDispatch, useSelector } from '../../store'
 import { IFeed, IIngredient } from '../../utils/types'
 import { paths } from '../../utils/routes/routes'
-import { Ingredient } from './ingredientForOrder/ingredient'
-import { Overlay } from './overlayForImageIngredient/overlay'
-// import * as H from "history";
+import { ORDER_INFO_OPEN } from '../../services/actions/order-info-action'
+import { Overlay } from './overlay-for-image-ingredient/overlay'
 
 type OrderProps = {
     order: IFeed
     ordersPage: boolean
+    location: Location
 }
 
-export function Order({ order, ordersPage }: OrderProps): ReactElement {
-    const location = useLocation()
-    // const state = location.state as { background?: H.Location }
-    // const background = state && state.background
-
+export function Order({
+    order,
+    ordersPage,
+    location,
+}: OrderProps): ReactElement {
+    const dispatch = useDispatch()
     const { ingredients } = useSelector((store) => store.ingredientsReducer)
-    let totalPrice: number = 0
+
     let status: string = ''
     let stylesStatus = orderStyles.statusDone
 
@@ -42,28 +45,37 @@ export function Order({ order, ordersPage }: OrderProps): ReactElement {
         stylesStatus = orderStyles.statusError
     }
 
-    const imagesOfIngredients = order.ingredients.map((ingredient) => {
-        const itemOfOrder = ingredients.find(
-            (item: IIngredient) => item._id === ingredient
-        )
-        const { image, price, type } = itemOfOrder || {
-            image: '',
-            price: 0,
-            type: '',
-        }
+    const ordersOfIngredients = useMemo(
+        () =>
+            order.ingredients
+                .map((id) =>
+                    ingredients.find((item: IIngredient) => item._id === id)
+                )
+                .filter((ingredient) => ingredient),
+        [order, ingredients]
+    )
 
-        if (type === 'bun') totalPrice += 2 * price
-        else totalPrice += price
+    const uniqueIngredients = useMemo(
+        () =>
+            Array.from(
+                new Set<IIngredient>(ordersOfIngredients as IIngredient[])
+            ),
+        [ordersOfIngredients]
+    )
 
-        return <Ingredient image={image} />
-    })
+    const totalPrice = useMemo(
+        () =>
+            ordersOfIngredients.reduce(
+                (acc, ingredient) => acc + Number(ingredient?.price),
+                0
+            ),
+        [ordersOfIngredients]
+    )
 
     const getDate = () => {
         const date = order.createdAt
         return <FormattedDate date={new Date(date)} />
     }
-
-    const countOfIngredients = imagesOfIngredients.length
 
     return (
         <li
@@ -76,10 +88,11 @@ export function Order({ order, ordersPage }: OrderProps): ReactElement {
                 className={orderStyles.link}
                 to={
                     ordersPage
-                        ? { pathname: `${paths.orders}/:${order._id}` }
-                        : { pathname: `${paths.feed}/:${order._id}` }
+                        ? { pathname: `${paths.orders}/${order._id}` }
+                        : { pathname: `${paths.feed}/${order._id}` }
                 }
                 state={{ background: location }}
+                onClick={() => dispatch({ type: ORDER_INFO_OPEN })}
             >
                 <div className={orderStyles.ID}>
                     <h2 className={orderStyles.numberOfOrder}>
@@ -93,27 +106,38 @@ export function Order({ order, ordersPage }: OrderProps): ReactElement {
                 <h3 className={stylesStatus}>{status}</h3>
                 <div className={orderStyles.ingredientsContainer}>
                     <ul className={orderStyles.ingredients}>
-                        {imagesOfIngredients.map((item, index) => {
-                            if (!ordersPage && index < 4) return item
-                            if (ordersPage && index < 5) return item
-                            if (!ordersPage && index === 4)
+                        {uniqueIngredients.map((item, index) => {
+                            if (index < 5)
                                 return (
-                                    <Overlay
-                                        key={item.key}
-                                        countOfIngredients={countOfIngredients}
-                                        ordersPage={ordersPage || false}
+                                    <li
+                                        key={uuid()}
+                                        className={orderStyles.ingredientEl}
                                     >
-                                        {item}
-                                    </Overlay>
+                                        <img
+                                            src={item.image}
+                                            alt=""
+                                            width={110}
+                                        />
+                                    </li>
                                 )
-                            if (ordersPage && index === 5)
+                            if (index === 5)
                                 return (
                                     <Overlay
-                                        key={item.key}
-                                        countOfIngredients={countOfIngredients}
-                                        ordersPage={ordersPage || false}
+                                        key={item.ID}
+                                        countOfIngredients={
+                                            ordersOfIngredients.length
+                                        }
                                     >
-                                        {item}
+                                        <li
+                                            key={uuid()}
+                                            className={orderStyles.ingredientEl}
+                                        >
+                                            <img
+                                                src={item.image}
+                                                alt=""
+                                                width={110}
+                                            />
+                                        </li>
                                     </Overlay>
                                 )
                             return null

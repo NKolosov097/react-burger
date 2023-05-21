@@ -1,4 +1,6 @@
 import { ReactElement, useEffect } from 'react'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useLocation, useParams } from 'react-router-dom'
 import stylesOrders from './orders.module.css'
 import { ProfileAsideMenu } from '../aside-menu/aside-menu'
 import { useDispatch, useSelector } from '../../../store'
@@ -10,6 +12,8 @@ import { Order } from '../../../components/order/order'
 import { getUserData } from '../../../services/actions/auth-action/auth-thunk'
 
 export function Orders(): ReactElement {
+    const location = useLocation()
+    const { id } = useParams<{ id: string }>()
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -21,8 +25,6 @@ export function Orders(): ReactElement {
     }, [dispatch])
 
     const { orders } = useSelector((store) => store.wsAuthReducer)
-    // const { orders } = useSelector((store) => store.wsReducer)
-    console.log(orders)
 
     return (
         <section className={stylesOrders.wrapper}>
@@ -31,7 +33,12 @@ export function Orders(): ReactElement {
                 <ul className={`${stylesOrders.orders} pr-2 custom-scroll`}>
                     {orders &&
                         orders.map((order) => (
-                            <Order key={order._id} order={order} ordersPage />
+                            <Order
+                                key={order._id}
+                                order={order}
+                                ordersPage
+                                location={location}
+                            />
                         ))}
                 </ul>
             ) : (
@@ -39,6 +46,19 @@ export function Orders(): ReactElement {
                     Вы пока ничего не заказывали 🙄
                 </div>
             )}
+
+            {id ? (
+                <div
+                    style={{
+                        width: '100vw',
+                        height: '100vh',
+                        background: 'black',
+                        fontSize: '100px',
+                    }}
+                >
+                    в id что-то лежит
+                </div>
+            ) : null}
         </section>
     )
 }

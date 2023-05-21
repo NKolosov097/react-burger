@@ -1,0 +1,66 @@
+.ingredientEl {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    list-style: none;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.imageAmdName {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+}
+
+.ingredientImage {
+    display: flex;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 1px solid rgba(128, 26, 178, 1);
+    background: #131316;
+    justify-content: center;
+    align-items: center;
+    margin-right: 16px;
+}
+
+.ingredientImage::marker {
+    content: '';
+}
+
+.name {
+    display: flex;
+    justify-content: start;
+    max-width: 320px;
+
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 1px;
+}
+
+.price {
+    display: flex;
+    flex-wrap: nowrap;
+
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 24px;
+    letter-spacing: 1px;
+
+    margin-left: 16px;
+}
+
+.priceTitle {
+    display: flex;
+    margin-right: 10px;
+}

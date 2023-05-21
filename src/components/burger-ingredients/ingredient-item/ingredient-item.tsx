@@ -83,13 +83,14 @@ export function IngredientItem(props: IIngredient): ReactElement {
                     pathname: `/ingredients/${item._id}`,
                 }}
                 state={{ background: location }}
+                onClick={() => console.log('id')}
             >
                 <button
                     className={ingredientItemStyles.button}
                     type="button"
                     onClick={() => open(item.type)}
                 >
-                    {item.count ? <Counter count={item.count} /> : null}
+                    {item?.count ? <Counter count={item.count} /> : null}
                     <img className="mb-1" src={item.image} alt={item.name} />
                     <PriceTitle price={item.price} />
                     <h2 className={ingredientItemStyles.name}>{item.name}</h2>

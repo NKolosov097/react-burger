@@ -1,4 +1,5 @@
 import { ReactElement, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import stylesFeed from './feed.module.css'
 import { useDispatch, useSelector } from '../../store'
 import { OrdersBoard } from '../../components/orders-board/orders-board'
@@ -10,6 +11,7 @@ import {
 import { Order } from '../../components/order/order'
 
 export function Feed(): ReactElement {
+    const location = useLocation()
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch({ type: WS_CONNECTION_START })
@@ -44,13 +46,14 @@ export function Feed(): ReactElement {
                             key={order._id}
                             order={order}
                             ordersPage={false}
+                            location={location}
                         />
                     ))}
             </ul>
 
             <OrdersBoard
-                doneOrders={doneOrders.slice(0, 5)}
-                pendingOrders={pendingOrders.slice(0, 5)}
+                doneOrders={doneOrders.slice(0, 10)}
+                pendingOrders={pendingOrders.slice(0, 10)}
                 total={total}
                 totalToday={totalToday}
             />

@@ -1,7 +1,8 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate, useParams } from 'react-router-dom'
 import React, { ReactElement } from 'react'
-import { Loader } from '../../../images/loader'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import Loader from 'react-spinners/ClipLoader'
 import detailsStyles from './ingredient-details.module.css'
 import { IIngredient } from '../../../utils/types'
 import { INGREDIENT_DETAILS_CLOSE } from '../../../services/actions/modal-details'

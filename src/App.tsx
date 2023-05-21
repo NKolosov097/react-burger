@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect } from 'react'
 import * as H from 'history'
+// @ts-ignore
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { HomePage } from './pages/home-page/home-page'
 import { Login } from './pages/login/login'
@@ -18,7 +19,7 @@ import { paths } from './utils/routes/routes'
 import { useDispatch } from './store'
 import { Feed } from './pages/feed/feed'
 import { Orders } from './pages/profile/orders/orders'
-import { OrderDetailedInformation } from './components/order/order-detailed-information/order-detailed-information'
+import { OrderInfo } from './components/order/order-info/order-info'
 import { checkUserAuth } from './services/actions/auth-action/auth-thunk'
 import { getBurgerIngredients } from './services/actions/ingredients-action/ingredients-thunk'
 
@@ -68,15 +69,6 @@ export const App = React.memo((): ReactElement => {
                 />
                 <Route path={paths.feed} element={<Feed />} />
                 <Route
-                    path={paths.orderDetails}
-                    element={
-                        <OrderDetailedInformation
-                            orderFromFeed={false}
-                            orderFromProfile={false}
-                        />
-                    }
-                />
-                <Route
                     path={paths.orders}
                     element={<OnlyAuth component={<Orders />} />}
                 />
@@ -90,6 +82,36 @@ export const App = React.memo((): ReactElement => {
                             <Modal>
                                 <IngredientDetails newPage />
                             </Modal>
+                        }
+                    />
+                </Routes>
+            )}
+
+            {background && (
+                <Routes>
+                    <Route
+                        path={`${paths.feed}${paths.orderDetails}`}
+                        element={
+                            <Modal>
+                                <OrderInfo />
+                            </Modal>
+                        }
+                    />
+                </Routes>
+            )}
+
+            {background && (
+                <Routes>
+                    <Route
+                        path={`${paths.orders}${paths.orderDetails}`}
+                        element={
+                            <OnlyAuth
+                                component={
+                                    <Modal>
+                                        <OrderInfo />
+                                    </Modal>
+                                }
+                            />
                         }
                     />
                 </Routes>

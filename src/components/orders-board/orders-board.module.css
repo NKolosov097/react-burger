@@ -37,6 +37,9 @@
 
 .doneOrdersList,
 .inProcessOrdersList {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
     padding: 0;
     list-style: none;
     text-align: center;
@@ -44,6 +47,8 @@
 
 .doneOrderNumber,
 .pendingOrderNumber {
+    display: flex;
+    width: 50%;
     font-family: 'Iceland';
     font-style: normal;
     font-weight: 400;

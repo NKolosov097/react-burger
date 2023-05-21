@@ -18,6 +18,7 @@ import { socketMiddleware } from './services/middlewares'
 import { TWSActions } from './services/actions/WS-action'
 import { TWSAuthActions } from './services/actions/WS-auth-action'
 import { TModalDetailsAction } from './services/actions/modal-details'
+import { TOrderInfoAction } from './services/actions/order-info-action'
 
 const enhancer = compose(
     composeWithDevTools(
@@ -36,6 +37,7 @@ type AppActions =
     | TBurgerConstructorAction
     | TIngredientsAction
     | TOrderAction
+    | TOrderInfoAction
     | TModalDetailsAction
     | TWSActions
     | TWSAuthActions

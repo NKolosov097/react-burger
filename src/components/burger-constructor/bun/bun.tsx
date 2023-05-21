@@ -60,7 +60,7 @@ export const Bun = React.memo(
                                 bunStyles.plugText
                             )}
                         >
-                            Выберите булку
+                            Выберите булочку
                         </span>
                     </div>
                 )}

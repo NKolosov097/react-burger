@@ -81,4 +81,5 @@
 .isLoadingP {
     font-size: 40px;
     margin-top: calc(50% - 40px);
+    margin-bottom: 30px;
 }

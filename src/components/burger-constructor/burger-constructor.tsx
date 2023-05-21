@@ -64,7 +64,6 @@ export function BurgerConstructor(): ReactElement {
         return orderIngredientsArr
     }, [bun, ingredients])
 
-    // eslint-disable-next-line consistent-return
     const getOrder = () => {
         if (user) {
             setIsAuthorized(false)
@@ -72,41 +71,7 @@ export function BurgerConstructor(): ReactElement {
         } else {
             setIsAuthorized(true)
         }
-
-        // if (numberOfOrder) {
-        //     return (
-        //         <Modal>
-        //             <OrderDetails isLoading />
-        //         </Modal>
-        //     )
-        // }
-        // if (isLoading) {
-        //     return (
-        //         <Modal orderDetails>
-        //             <OrderDetails isLoading={false} />
-        //         </Modal>
-        //     )
-        // }
     }
-
-    // const getOrderModal = () => {
-    //     if (!numberOfOrder) {
-    //         if (isLoading) {
-    //             return (
-    //                 <Modal>
-    //                     <OrderDetails isLoading />
-    //                 </Modal>
-    //             )
-    //         }
-
-    //         return (
-    //             <Modal orderDetails>
-    //                 <OrderDetails isLoading={false} />
-    //             </Modal>
-    //         )
-    //     }
-    //     return null
-    // }
 
     return (
         <section className={burgerConstructorStyles.wrapper}>
@@ -138,7 +103,7 @@ export function BurgerConstructor(): ReactElement {
                 )}
             </div>
             {numberOfOrder && !isLoading && (
-                <Modal orderDetails>
+                <Modal orderDetailsFromConstructor>
                     <OrderDetails isLoading={false} />
                 </Modal>
             )}
