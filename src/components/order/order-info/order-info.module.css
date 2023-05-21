@@ -21,7 +21,6 @@
     height: 24px;
     display: flex;
     text-align: center;
-    justify-content: center;
 
     font-family: 'Iceland';
     font-style: normal;
@@ -53,6 +52,15 @@
     justify-content: start;
 
     margin-bottom: 40px;
+}
+
+.closeButton {
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 .statusDone {

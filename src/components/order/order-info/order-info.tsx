@@ -1,7 +1,8 @@
 import { ReactElement, useMemo } from 'react'
-import { useMatch, useParams } from 'react-router-dom'
+import { useMatch, useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuid } from 'uuid'
 import {
+    CloseIcon,
     CurrencyIcon,
     FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -12,6 +13,7 @@ import { IIngredient } from '../../../utils/types'
 import { Ingredient } from '../ingredient/ingredient'
 
 export function OrderInfo(): ReactElement {
+    const navigate = useNavigate()
     const { id } = useParams<{ id: string }>()
     const { ingredients } = useSelector((store) => store.ingredientsReducer)
 
@@ -83,6 +85,10 @@ export function OrderInfo(): ReactElement {
         [ordersOfIngredients]
     )
 
+    const closeModal = (): void => {
+        navigate(-1)
+    }
+
     return (
         <dialog className={orderDetailsStyles.wrapper}>
             <h2 className={orderDetailsStyles.number}>#{order?.number}</h2>
@@ -90,6 +96,13 @@ export function OrderInfo(): ReactElement {
             <h3 className={`${stylesStatus} ${orderDetailsStyles.status}`}>
                 {status}
             </h3>
+            <button
+                className={orderDetailsStyles.closeButton}
+                type="button"
+                onClick={closeModal}
+            >
+                <CloseIcon type="primary" />
+            </button>
             <p className={orderDetailsStyles.constituent}>Состав:</p>
             <ul
                 className={`${orderDetailsStyles.listOfOrders} pl-2 custom-scroll`}

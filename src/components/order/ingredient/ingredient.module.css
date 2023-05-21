@@ -1,6 +1,6 @@
 .ingredientEl {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     width: 100%;
     list-style: none;
     justify-content: space-between;
@@ -48,6 +48,8 @@
 
 .price {
     display: flex;
+    justify-content: end;
+    width: 150px;
     flex-wrap: nowrap;
 
     font-family: 'Iceland';
