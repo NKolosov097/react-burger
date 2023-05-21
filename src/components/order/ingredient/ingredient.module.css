@@ -35,8 +35,8 @@
 
 .name {
     display: flex;
-    justify-content: start;
-    max-width: 320px;
+    justify-content: center;
+    width: 280px;
 
     font-family: 'JetBrains Mono';
     font-style: normal;
