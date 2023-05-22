@@ -33,7 +33,7 @@ export const Login = React.memo((): ReactElement => {
         loginAction({ email: form.email, password: form.password })(
             dispatch
         ).then(() => {
-            navigate('/login')
+            navigate('/')
         })
     }
 

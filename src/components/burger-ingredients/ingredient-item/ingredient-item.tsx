@@ -6,7 +6,7 @@ import { ReactElement } from 'react'
 import { PriceTitle } from '../../price-title/price-title'
 import ingredientItemStyles from './ingredient-item.module.css'
 import { IIngredient } from '../../../utils/types'
-import { INGREDIENT_DETAILS_OPEN } from '../../../services/actions/modal-details'
+// import { INGREDIENT_DETAILS_OPEN } from '../../../services/actions/modal-details'
 import {
     ADD_INGREDIENT_TO_CONSTRUCTOR,
     UPDATE_BUN_IN_CONSTRUCTOR,
@@ -45,10 +45,10 @@ export function IngredientItem(props: IIngredient): ReactElement {
     })
 
     const open = (typeOfIngredient: string) => {
-        dispatch({
-            type: INGREDIENT_DETAILS_OPEN,
-            payload: item,
-        })
+        // dispatch({
+        //     type: INGREDIENT_DETAILS_OPEN,
+        //     payload: item,
+        // })
         if (typeOfIngredient === 'bun') {
             dispatch({
                 type: UPDATE_BUN_IN_CONSTRUCTOR,
@@ -83,7 +83,6 @@ export function IngredientItem(props: IIngredient): ReactElement {
                     pathname: `/ingredients/${item._id}`,
                 }}
                 state={{ background: location }}
-                onClick={() => console.log('id')}
             >
                 <button
                     className={ingredientItemStyles.button}

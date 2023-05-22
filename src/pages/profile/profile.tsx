@@ -34,16 +34,16 @@ export const Profile = React.memo((): ReactElement => {
 
     useEffect(() => {
         setForm({
-            email: user?.email ? user.email : '',
-            name: user?.name ? user.name : '',
+            email: user?.email || '',
+            name: user?.name || '',
             password: '',
         })
     }, [user?.email, user?.name])
 
     const resetForms = () => {
         setForm({
-            email: user?.email ? user.email : '',
-            name: user?.name ? user.name : '',
+            email: user?.email || '',
+            name: user?.email || '',
             password: '',
         })
     }

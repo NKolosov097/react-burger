@@ -1,4 +1,4 @@
-import { IWsSocketMiddlewareActions } from './types'
+import { IWSMiddlewareActions } from './types'
 import {
     WS_CONNECTION_CLOSED,
     WS_CONNECTION_ERROR,
@@ -19,18 +19,20 @@ import {
 export const WS_API: 'wss://norma.nomoreparties.space/orders' =
     'wss://norma.nomoreparties.space/orders'
 
-export const wsActions: IWsSocketMiddlewareActions = {
+export const wsActions: IWSMiddlewareActions = {
     wsInit: WS_CONNECTION_START,
     wsSendMessage: WS_SEND_ORDERS,
+    wsClose: WS_CONNECTION_CLOSED,
     onOpen: WS_CONNECTION_SUCCESS,
     onClose: WS_CONNECTION_CLOSED,
     onError: WS_CONNECTION_ERROR,
     onMessage: WS_GET_ORDERS,
 }
 
-export const wsAuthActions: IWsSocketMiddlewareActions = {
+export const wsAuthActions: IWSMiddlewareActions = {
     wsInit: WS_AUTH_CONNECTION_START,
     wsSendMessage: WS_AUTH_SEND_ORDERS,
+    wsClose: WS_AUTH_CONNECTION_CLOSED,
     onOpen: WS_AUTH_CONNECTION_SUCCESS,
     onClose: WS_AUTH_CONNECTION_CLOSED,
     onError: WS_AUTH_CONNECTION_ERROR,

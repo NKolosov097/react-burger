@@ -1,5 +1,5 @@
 import { ReactElement, useEffect } from 'react'
-// eslint-disable-next-line import/no-extraneous-dependencies
+import { v4 as uuid } from 'uuid'
 import { useLocation, useParams } from 'react-router-dom'
 import stylesOrders from './orders.module.css'
 import { ProfileAsideMenu } from '../aside-menu/aside-menu'
@@ -17,7 +17,7 @@ export function Orders(): ReactElement {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        getUserData()(dispatch)
+        dispatch(getUserData())
         dispatch({ type: WS_AUTH_CONNECTION_START })
         return () => {
             dispatch({ type: WS_AUTH_CONNECTION_CLOSED })
@@ -32,14 +32,16 @@ export function Orders(): ReactElement {
             {orders && orders.length > 0 ? (
                 <ul className={`${stylesOrders.orders} pr-2 custom-scroll`}>
                     {orders &&
-                        orders.map((order) => (
-                            <Order
-                                key={order._id}
-                                order={order}
-                                ordersPage
-                                location={location}
-                            />
-                        ))}
+                        orders
+                            .map((order) => (
+                                <Order
+                                    key={uuid()}
+                                    order={order}
+                                    ordersPage
+                                    location={location}
+                                />
+                            ))
+                            .reverse()}
                 </ul>
             ) : (
                 <div className={stylesOrders.emptyOrders}>

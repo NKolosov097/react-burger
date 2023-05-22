@@ -1,4 +1,4 @@
-import { ReactElement, useMemo } from 'react'
+import { ReactElement, useMemo, useEffect } from 'react'
 import { useMatch, useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuid } from 'uuid'
 import {
@@ -7,19 +7,37 @@ import {
     FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import orderDetailsStyles from './order-info.module.css'
-import { useSelector } from '../../../store'
+import { useDispatch, useSelector } from '../../../store'
 import { paths } from '../../../utils/routes/routes'
 import { IIngredient } from '../../../utils/types'
 import { Ingredient } from '../ingredient/ingredient'
+import {
+    WS_CONNECTION_CLOSED,
+    WS_CONNECTION_START,
+} from '../../../services/actions/WS-action'
 
-export function OrderInfo(): ReactElement {
+type TOrderInfo = {
+    newPage: boolean
+}
+
+export function OrderInfo({ newPage }: TOrderInfo): ReactElement {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     const { id } = useParams<{ id: string }>()
     const { ingredients } = useSelector((store) => store.ingredientsReducer)
+    const ingredientsCopy: Array<IIngredient> = structuredClone(ingredients)
 
     const isOrders = !!useMatch<string, string>(
         `${paths.orders}${paths.orderDetails}`
     )
+
+    useEffect(() => {
+        dispatch({ type: WS_CONNECTION_START })
+        return () => {
+            dispatch({ type: WS_CONNECTION_CLOSED })
+        }
+    }, [dispatch])
 
     const feedOrders = useSelector((store) => store.wsReducer.orders)
     const profileOrders = useSelector((store) => store.wsAuthReducer.orders)
@@ -28,7 +46,7 @@ export function OrderInfo(): ReactElement {
     const order = orders.find((item) => item._id === id)
 
     let status: string = ''
-    let stylesStatus = orderDetailsStyles.statusDone
+    let stylesStatus: string = orderDetailsStyles.statusDone
 
     if (order?.status === 'done') {
         status = 'Выполнен'
@@ -44,8 +62,15 @@ export function OrderInfo(): ReactElement {
         stylesStatus = orderDetailsStyles.statusError
     }
 
+    let stylesNumber = orderDetailsStyles.number
+    if (!newPage) {
+        stylesNumber = orderDetailsStyles.numberNewPage
+    } else {
+        stylesNumber = orderDetailsStyles.number
+    }
+
     const getDate = () => {
-        const date = order?.createdAt
+        const date: string | undefined = order?.createdAt
         return <FormattedDate key={uuid()} date={new Date(date as string)} />
     }
 
@@ -53,10 +78,10 @@ export function OrderInfo(): ReactElement {
         () =>
             order?.ingredients
                 .map((el) =>
-                    ingredients.find((item: IIngredient) => item._id === el)
+                    ingredientsCopy.find((item: IIngredient) => item._id === el)
                 )
                 .filter((ingredient) => ingredient),
-        [order, ingredients]
+        [order, ingredientsCopy]
     )
 
     const uniqueIngredients = useMemo(
@@ -91,7 +116,7 @@ export function OrderInfo(): ReactElement {
 
     return (
         <dialog className={orderDetailsStyles.wrapper}>
-            <h2 className={orderDetailsStyles.number}>#{order?.number}</h2>
+            <h2 className={stylesNumber}>#{order?.number}</h2>
             <h1 className={orderDetailsStyles.name}>{order?.name}</h1>
             <h3 className={`${stylesStatus} ${orderDetailsStyles.status}`}>
                 {status}
@@ -101,7 +126,7 @@ export function OrderInfo(): ReactElement {
                 type="button"
                 onClick={closeModal}
             >
-                <CloseIcon type="primary" />
+                {newPage ? <CloseIcon type="primary" /> : null}
             </button>
             <p className={orderDetailsStyles.constituent}>Состав:</p>
             <ul
@@ -109,7 +134,7 @@ export function OrderInfo(): ReactElement {
             >
                 {uniqueIngredients.map((item) => (
                     <Ingredient
-                        key={item.ID}
+                        key={uuid()}
                         image={item.image}
                         price={item.price}
                         name={item.name}

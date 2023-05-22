@@ -1,5 +1,6 @@
 import { ReactElement, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import { v4 as uuid } from 'uuid'
 import stylesFeed from './feed.module.css'
 import { useDispatch, useSelector } from '../../store'
 import { OrdersBoard } from '../../components/orders-board/orders-board'
@@ -43,7 +44,7 @@ export function Feed(): ReactElement {
                 {orders &&
                     orders.map((order) => (
                         <Order
-                            key={order._id}
+                            key={uuid()}
                             order={order}
                             ordersPage={false}
                             location={location}

@@ -60,9 +60,10 @@ export type TOrder = {
     updatedAt: string
 }
 
-export interface IWsSocketMiddlewareActions {
+export interface IWSMiddlewareActions {
     wsInit: string
     wsSendMessage: string
+    wsClose: string
     onOpen: string
     onClose: string
     onError: string

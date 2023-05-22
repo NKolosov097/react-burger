@@ -33,11 +33,13 @@ export const Register = React.memo((): ReactElement => {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
-        registerAction({
-            email: form.email,
-            password: form.password,
-            name: form.name,
-        })(dispatch)
+        dispatch(
+            registerAction({
+                email: form.email,
+                password: form.password,
+                name: form.name,
+            })
+        )
     }
 
     return (
@@ -72,11 +74,13 @@ export const Register = React.memo((): ReactElement => {
                     size="medium"
                     extraClass="mb-20"
                     onClick={() =>
-                        registerAction({
-                            email: form.email,
-                            password: form.password,
-                            name: form.name,
-                        })(dispatch)
+                        dispatch(
+                            registerAction({
+                                email: form.email,
+                                password: form.password,
+                                name: form.name,
+                            })
+                        )
                     }
                 >
                     Зарегистрироваться

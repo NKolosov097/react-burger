@@ -1,10 +1,10 @@
 import { Middleware, MiddlewareAPI } from 'redux'
-import { IWsSocketMiddlewareActions } from '../../utils/types'
+import { IWSMiddlewareActions } from '../../utils/types'
 
 export const socketMiddleware =
     (
         WS_API: string,
-        wsActions: IWsSocketMiddlewareActions,
+        wsActions: IWSMiddlewareActions,
         isAuth: boolean = false
     ): Middleware =>
     (store: MiddlewareAPI) => {
@@ -16,19 +16,25 @@ export const socketMiddleware =
             const {
                 wsInit,
                 wsSendMessage,
+                wsClose,
                 onOpen,
                 onClose,
                 onError,
                 onMessage,
             } = wsActions
 
-            if (type === wsInit) {
+            if (type === wsInit && !socket) {
                 if (!isAuth) {
                     socket = new WebSocket(WS_API)
                 } else {
                     socket = new WebSocket(
                         `${WS_API}?token=${localStorage.getItem('accessToken')}`
                     )
+                }
+            }
+            if (type === wsActions.wsClose && socket) {
+                socket.onclose = () => {
+                    dispatch({ type: wsClose })
                 }
             }
             if (socket) {

@@ -1,6 +1,5 @@
 import React, { ReactElement, useEffect } from 'react'
 import * as H from 'history'
-// @ts-ignore
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { HomePage } from './pages/home-page/home-page'
 import { Login } from './pages/login/login'
@@ -26,16 +25,15 @@ import { getBurgerIngredients } from './services/actions/ingredients-action/ingr
 export const App = React.memo((): ReactElement => {
     const dispatch = useDispatch()
     const location = useLocation()
+    // const { pathname } = useLocation()
 
     const state = location.state as { background?: H.Location }
 
     const background = state && state.background
 
     useEffect(() => {
-        getBurgerIngredients()(dispatch)
+        dispatch(getBurgerIngredients())
         checkUserAuth()(dispatch)
-
-        return () => localStorage.removeItem('accessToken')
     }, [dispatch])
 
     return (
@@ -69,8 +67,18 @@ export const App = React.memo((): ReactElement => {
                 />
                 <Route path={paths.feed} element={<Feed />} />
                 <Route
+                    path={`${paths.feed}${paths.orderDetails}`}
+                    element={<OrderInfo newPage={false} />}
+                />
+                <Route
                     path={paths.orders}
                     element={<OnlyAuth component={<Orders />} />}
+                />
+                <Route
+                    path={`${paths.orders}${paths.orderDetails}`}
+                    element={
+                        <OnlyAuth component={<OrderInfo newPage={false} />} />
+                    }
                 />
                 <Route path="*" element={<HomePage />} />
             </Routes>
@@ -93,7 +101,7 @@ export const App = React.memo((): ReactElement => {
                         path={`${paths.feed}${paths.orderDetails}`}
                         element={
                             <Modal>
-                                <OrderInfo />
+                                <OrderInfo newPage />
                             </Modal>
                         }
                     />
@@ -108,7 +116,7 @@ export const App = React.memo((): ReactElement => {
                             <OnlyAuth
                                 component={
                                     <Modal>
-                                        <OrderInfo />
+                                        <OrderInfo newPage />
                                     </Modal>
                                 }
                             />

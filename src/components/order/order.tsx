@@ -8,10 +8,9 @@ import { Location, NavLink } from 'react-router-dom'
 import cn from 'classnames'
 import orderStyles from './order.module.css'
 
-import { useDispatch, useSelector } from '../../store'
+import { useSelector } from '../../store'
 import { IFeed, IIngredient } from '../../utils/types'
 import { paths } from '../../utils/routes/routes'
-import { ORDER_INFO_OPEN } from '../../services/actions/order-info-action'
 import { Overlay } from './overlay-for-image-ingredient/overlay'
 
 type OrderProps = {
@@ -25,7 +24,6 @@ export function Order({
     ordersPage,
     location,
 }: OrderProps): ReactElement {
-    const dispatch = useDispatch()
     const { ingredients } = useSelector((store) => store.ingredientsReducer)
 
     let status: string = ''
@@ -92,7 +90,6 @@ export function Order({
                         : { pathname: `${paths.feed}/${order._id}` }
                 }
                 state={{ background: location }}
-                onClick={() => dispatch({ type: ORDER_INFO_OPEN })}
             >
                 <div className={orderStyles.ID}>
                     <h2 className={orderStyles.numberOfOrder}>
@@ -114,6 +111,7 @@ export function Order({
                                         className={orderStyles.ingredientEl}
                                     >
                                         <img
+                                            key={uuid()}
                                             src={item.image}
                                             alt=""
                                             width={110}
@@ -123,7 +121,7 @@ export function Order({
                             if (index === 5)
                                 return (
                                     <Overlay
-                                        key={item.ID}
+                                        key={uuid()}
                                         countOfIngredients={
                                             ordersOfIngredients.length
                                         }
@@ -133,6 +131,7 @@ export function Order({
                                             className={orderStyles.ingredientEl}
                                         >
                                             <img
+                                                key={uuid()}
                                                 src={item.image}
                                                 alt=""
                                                 width={110}

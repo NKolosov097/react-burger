@@ -1,6 +1,6 @@
 .asideWrapper {
     position: sticky;
-    max-width: 320px;
+    width: 320px;
     height: auto;
     display: flex;
     flex-wrap: wrap;

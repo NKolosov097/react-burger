@@ -2,9 +2,8 @@
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    width: 46%;
+    max-width: 46%;
     justify-content: center;
-    align-items: center;
     text-align: center;
     color: #f2f2f3;
 

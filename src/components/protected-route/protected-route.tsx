@@ -10,13 +10,9 @@ type TProtected = {
 
 function Protected({ onlyUnAuth = false, component }: TProtected) {
     const isChecked: boolean = useSelector(
-        // @ts-ignore
         (store) => store.authReducer.isChecked
     )
-    const user: IUser | null = useSelector(
-        // @ts-ignore
-        (store) => store.authReducer.user
-    )
+    const user: IUser | null = useSelector((store) => store.authReducer.user)
     const location = useLocation()
 
     if (!isChecked) {

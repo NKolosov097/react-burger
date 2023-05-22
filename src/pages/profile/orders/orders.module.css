@@ -1,6 +1,6 @@
 .wrapper {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     max-width: 1400px;
     height: calc(100vh - 380px);
 
