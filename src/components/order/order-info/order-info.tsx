@@ -15,6 +15,10 @@ import {
     WS_CONNECTION_CLOSED,
     WS_CONNECTION_START,
 } from '../../../services/actions/WS-action'
+import {
+    WS_AUTH_CONNECTION_CLOSED,
+    WS_AUTH_CONNECTION_START,
+} from '../../../services/actions/WS-auth-action'
 
 type TOrderInfo = {
     newPage: boolean
@@ -32,17 +36,27 @@ export function OrderInfo({ newPage }: TOrderInfo): ReactElement {
         `${paths.orders}${paths.orderDetails}`
     )
 
-    useEffect(() => {
-        dispatch({ type: WS_CONNECTION_START })
-        return () => {
-            dispatch({ type: WS_CONNECTION_CLOSED })
-        }
-    }, [dispatch])
-
     const feedOrders = useSelector((store) => store.wsReducer.orders)
     const profileOrders = useSelector((store) => store.wsAuthReducer.orders)
 
     const orders = isOrders ? profileOrders : feedOrders
+
+    useEffect(() => {
+        if (isOrders) {
+            dispatch({ type: WS_AUTH_CONNECTION_START })
+        } else {
+            dispatch({ type: WS_CONNECTION_START })
+        }
+
+        return () => {
+            if (isOrders) {
+                dispatch({ type: WS_AUTH_CONNECTION_CLOSED })
+            } else {
+                dispatch({ type: WS_CONNECTION_CLOSED })
+            }
+        }
+    }, [dispatch, isOrders])
+
     const order = orders.find((item) => item._id === id)
 
     let status: string = ''
