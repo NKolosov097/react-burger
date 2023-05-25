@@ -62,8 +62,8 @@ export type TOrder = {
 
 export interface IWSMiddlewareActions {
     wsInit: string
-    wsSendMessage: string
     wsClose: string
+    wsSendMessage: string
     onOpen: string
     onClose: string
     onError: string

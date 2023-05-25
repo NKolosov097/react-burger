@@ -15,15 +15,18 @@ export const socketMiddleware =
             const { type, payload } = action
             const {
                 wsInit,
-                wsSendMessage,
                 wsClose,
+                wsSendMessage,
                 onOpen,
                 onClose,
                 onError,
                 onMessage,
             } = wsActions
 
-            if (type === wsInit && !socket) {
+            let autoConnect: boolean = false
+            let timer: NodeJS.Timeout | null = null
+
+            const connect = () => {
                 if (!isAuth) {
                     socket = new WebSocket(WS_API)
                 } else {
@@ -31,15 +34,27 @@ export const socketMiddleware =
                         `${WS_API}?token=${localStorage.getItem('accessToken')}`
                     )
                 }
+                autoConnect = true
             }
-            if (type === wsActions.wsClose && socket) {
-                socket.onclose = () => {
-                    dispatch({ type: wsClose })
-                }
+
+            if (type === wsInit && !socket) {
+                connect()
             }
+
             if (socket) {
                 socket.onopen = () => {
                     dispatch({ type: onOpen })
+                }
+
+                if (type === wsClose) {
+                    if (timer) {
+                        clearTimeout(timer)
+                        timer = null
+                    }
+                    autoConnect = false
+                    socket.close()
+                    dispatch({ type: onClose })
+                    return
                 }
 
                 socket.onerror = () => {
@@ -56,6 +71,13 @@ export const socketMiddleware =
 
                 socket.onclose = () => {
                     dispatch({ type: onClose })
+                    if (autoConnect && !timer) {
+                        timer = setTimeout(() => {
+                            connect()
+                            timer = null
+                        }, 1000)
+                    }
+                    socket = null
                 }
 
                 if (type === wsSendMessage) {

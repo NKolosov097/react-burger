@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from '../../store'
 import { OrdersBoard } from '../../components/orders-board/orders-board'
 import { IFeed } from '../../utils/types'
 import {
-    WS_CONNECTION_CLOSED,
+    WS_CONNECTION_CLOSE,
     WS_CONNECTION_START,
 } from '../../services/actions/WS-action'
 import { Order } from '../../components/order/order'
@@ -17,7 +17,7 @@ export function Feed(): ReactElement {
     useEffect(() => {
         dispatch({ type: WS_CONNECTION_START })
         return () => {
-            dispatch({ type: WS_CONNECTION_CLOSED })
+            dispatch({ type: WS_CONNECTION_CLOSE })
         }
     }, [dispatch])
 
