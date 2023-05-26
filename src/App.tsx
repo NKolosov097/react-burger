@@ -1,38 +1,39 @@
 import React, { ReactElement, useEffect } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import * as H from 'history'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { HomePage } from './pages/home-page/home-page'
 import { Login } from './pages/login/login'
 import { Register } from './pages/register/register'
 import { ForgotPassword } from './pages/forgot-password/forgot-password'
 import { ResetPassword } from './pages/forgot-password/reset-password/reset-password'
 import { Profile } from './pages/profile/profile'
-import { Orders } from './pages/profile/orders/orders'
-import { checkUserAuth } from './services/actions/auth-action'
 import {
     OnlyAuth,
     OnlyUnAuth,
 } from './components/protected-route/protected-route'
 import { IngredientDetails } from './components/burger-ingredients/ingredient-details/ingredient-details'
 import { Modal } from './components/modal/modal'
-import { getBurgerIngredients } from './services/actions/ingredients-action'
 import { AppHeader } from './components/app-header/app-header'
 import { paths } from './utils/routes/routes'
+import { useDispatch } from './store'
+import { Feed } from './pages/feed/feed'
+import { Orders } from './pages/profile/orders/orders'
+import { OrderInfo } from './components/order/order-info/order-info'
+import { checkUserAuth } from './services/actions/auth-action/auth-thunk'
+import { getBurgerIngredients } from './services/actions/ingredients-action/ingredients-thunk'
 
 export const App = React.memo((): ReactElement => {
     const dispatch = useDispatch()
     const location = useLocation()
+    // const { pathname } = useLocation()
 
     const state = location.state as { background?: H.Location }
 
     const background = state && state.background
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(getBurgerIngredients())
-        // @ts-ignore
-        dispatch(checkUserAuth())
+        checkUserAuth()(dispatch)
     }, [dispatch])
 
     return (
@@ -64,9 +65,20 @@ export const App = React.memo((): ReactElement => {
                     path={paths.profile}
                     element={<OnlyAuth component={<Profile />} />}
                 />
+                <Route path={paths.feed} element={<Feed />} />
+                <Route
+                    path={`${paths.feed}${paths.orderDetails}`}
+                    element={<OrderInfo newPage={false} />}
+                />
                 <Route
                     path={paths.orders}
                     element={<OnlyAuth component={<Orders />} />}
+                />
+                <Route
+                    path={`${paths.orders}${paths.orderDetails}`}
+                    element={
+                        <OnlyAuth component={<OrderInfo newPage={false} />} />
+                    }
                 />
                 <Route path="*" element={<HomePage />} />
             </Routes>
@@ -78,6 +90,36 @@ export const App = React.memo((): ReactElement => {
                             <Modal>
                                 <IngredientDetails newPage />
                             </Modal>
+                        }
+                    />
+                </Routes>
+            )}
+
+            {background && (
+                <Routes>
+                    <Route
+                        path={`${paths.feed}${paths.orderDetails}`}
+                        element={
+                            <Modal>
+                                <OrderInfo newPage />
+                            </Modal>
+                        }
+                    />
+                </Routes>
+            )}
+
+            {background && (
+                <Routes>
+                    <Route
+                        path={`${paths.orders}${paths.orderDetails}`}
+                        element={
+                            <OnlyAuth
+                                component={
+                                    <Modal>
+                                        <OrderInfo newPage />
+                                    </Modal>
+                                }
+                            />
                         }
                     />
                 </Routes>

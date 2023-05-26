@@ -14,6 +14,7 @@ export const AppHeader = React.memo((): ReactElement => {
     const isHome = !!useMatch<string, string>(paths.homePage)
     const isProfile = !!useMatch<string, string>(paths.profile)
     const isOrders = !!useMatch<string, string>(paths.orders)
+    const isFeed = !!useMatch<string, string>(paths.feed)
 
     return (
         <header className="p-4 mb-4">
@@ -22,6 +23,7 @@ export const AppHeader = React.memo((): ReactElement => {
                     <NavLink
                         to={paths.homePage}
                         className={headerStyles.menu_item_content}
+                        title="Go to constructor page"
                     >
                         <BurgerIcon type={isHome ? 'primary' : 'secondary'} />
                         <span
@@ -36,14 +38,15 @@ export const AppHeader = React.memo((): ReactElement => {
                         </span>
                     </NavLink>
                     <NavLink
-                        to={paths.orders}
+                        to={paths.feed}
                         className={headerStyles.menu_item_content}
+                        title="Go to orders page"
                     >
-                        <ListIcon type={isOrders ? 'primary' : 'secondary'} />
+                        <ListIcon type={isFeed ? 'primary' : 'secondary'} />
                         <span
                             className={cn(
                                 'text text_type_main-default p-2 pt-3',
-                                isOrders
+                                isFeed
                                     ? headerStyles.active
                                     : 'text_color_inactive'
                             )}
@@ -52,7 +55,10 @@ export const AppHeader = React.memo((): ReactElement => {
                         </span>
                     </NavLink>
                 </li>
-                <li className={headerStyles.logo}>
+                <li
+                    className={headerStyles.logo}
+                    title="Go to constructor page"
+                >
                     <NavLink className="mt-2" to={paths.homePage}>
                         <Logo />
                     </NavLink>
@@ -61,14 +67,17 @@ export const AppHeader = React.memo((): ReactElement => {
                     <NavLink
                         to={paths.profile}
                         className={headerStyles.menu_item_content}
+                        title="Go to profile"
                     >
                         <ProfileIcon
-                            type={isProfile ? 'primary' : 'secondary'}
+                            type={
+                                isProfile || isOrders ? 'primary' : 'secondary'
+                            }
                         />
                         <span
                             className={cn(
                                 'text text_type_main-default p-2 pt-3',
-                                isProfile
+                                isProfile || isOrders
                                     ? headerStyles.active
                                     : 'text_color_inactive'
                             )}

@@ -7,15 +7,22 @@ const modalRoot: HTMLDivElement | null = document.querySelector('#modal')
 type TModalProps = {
     children: ReactElement
     // eslint-disable-next-line react/require-default-props
-    orderDetails?: boolean
+    orderDetailsFromConstructor?: boolean
 }
 
 export const Modal = React.memo(
-    ({ children, orderDetails = false }: TModalProps): JSX.Element | null =>
+    ({
+        children,
+        orderDetailsFromConstructor = false,
+    }: TModalProps): JSX.Element | null =>
         modalRoot
             ? ReactDOM.createPortal(
                   <>
-                      <ModalOverlay orderDetails={orderDetails} />
+                      <ModalOverlay
+                          orderDetailsFromConstructor={
+                              orderDetailsFromConstructor
+                          }
+                      />
                       {children}
                   </>,
                   modalRoot

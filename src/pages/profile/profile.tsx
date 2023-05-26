@@ -5,7 +5,6 @@ import React, {
     ChangeEvent,
     FormEvent,
 } from 'react'
-
 import {
     Button,
     EmailInput,
@@ -13,13 +12,10 @@ import {
     PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
-import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 import profileStyles from './profile.module.css'
-import {
-    logoutRequest,
-    patchUserInfo,
-} from '../../services/actions/auth-action'
+import { ProfileAsideMenu } from './aside-menu/aside-menu'
+import { useDispatch, useSelector } from '../../store'
+import { patchUserInfo } from '../../services/actions/auth-action/auth-thunk'
 
 type TForm = {
     name: string
@@ -29,7 +25,6 @@ type TForm = {
 
 export const Profile = React.memo((): ReactElement => {
     const dispatch = useDispatch()
-    // @ts-ignore
     const { user } = useSelector((store) => store.authReducer)
     const [form, setForm] = useState<TForm>({
         name: '',
@@ -39,16 +34,16 @@ export const Profile = React.memo((): ReactElement => {
 
     useEffect(() => {
         setForm({
-            email: user.email,
-            name: user.name,
+            email: user?.email || '',
+            name: user?.name || '',
             password: '',
         })
-    }, [user.email, user.name])
+    }, [user?.email, user?.name])
 
     const resetForms = () => {
         setForm({
-            email: user.email,
-            name: user.name,
+            email: user?.email || '',
+            name: user?.email || '',
             password: '',
         })
     }
@@ -59,54 +54,17 @@ export const Profile = React.memo((): ReactElement => {
 
     const onSubmit = (e: FormEvent) => {
         e.preventDefault()
-        // @ts-ignore
-        dispatch(patchUserInfo(form.email, form.password, form.name))
+        const userData = {
+            email: form.email,
+            password: form.password,
+            name: form.name,
+        }
+        patchUserInfo(userData)(dispatch)
     }
     return (
         <section className={profileStyles.wrapper}>
+            <ProfileAsideMenu />
             <div className={profileStyles.container}>
-                <aside className={profileStyles.asideWrapper}>
-                    <ul className={cn(profileStyles.asideList, 'mb-20')}>
-                        <li
-                            className={cn(
-                                profileStyles.asideItem,
-                                profileStyles.active
-                            )}
-                        >
-                            <Link
-                                className={cn(
-                                    profileStyles.asideItem,
-                                    profileStyles.active
-                                )}
-                                to="/profile"
-                            >
-                                Профиль
-                            </Link>
-                        </li>
-                        <li className={profileStyles.asideItem}>
-                            <Link
-                                className={profileStyles.asideItem}
-                                to="orders"
-                            >
-                                История заказа
-                            </Link>
-                        </li>
-                        <li className={profileStyles.asideItem}>
-                            <Link
-                                className={profileStyles.asideItem}
-                                to="/login"
-                                // @ts-ignore
-                                onClick={() => dispatch(logoutRequest())}
-                            >
-                                Выход
-                            </Link>
-                        </li>
-                    </ul>
-                    <p className={profileStyles.p}>
-                        В этом разделе вы можете изменить свои персональные
-                        данные
-                    </p>
-                </aside>
                 <form onSubmit={onSubmit}>
                     <Input
                         onChange={onChange}
@@ -134,8 +92,8 @@ export const Profile = React.memo((): ReactElement => {
                         extraClass="mb-6"
                     />
 
-                    {(form.name === user.name &&
-                        form.email === user.email &&
+                    {(form.name === user?.name &&
+                        form.email === user?.email &&
                         form.password?.length === 0) || (
                         <div className={profileStyles.changeInputsContainer}>
                             <Button
@@ -151,14 +109,11 @@ export const Profile = React.memo((): ReactElement => {
                                 type="primary"
                                 size="medium"
                                 onClick={() =>
-                                    dispatch(
-                                        // @ts-ignore
-                                        patchUserInfo(
-                                            form.email,
-                                            form.password,
-                                            form.name
-                                        )
-                                    )
+                                    patchUserInfo({
+                                        email: form.email,
+                                        password: form.password,
+                                        name: form.name,
+                                    })(dispatch)
                                 }
                             >
                                 Сохранить

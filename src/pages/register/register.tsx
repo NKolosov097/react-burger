@@ -8,9 +8,9 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import registerStyles from './register.module.css'
-import { registerAction } from '../../services/actions/auth-action'
+import { useDispatch } from '../../store'
+import { registerAction } from '../../services/actions/auth-action/auth-thunk'
 
 type TForm = {
     name: string
@@ -33,8 +33,13 @@ export const Register = React.memo((): ReactElement => {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
-        // @ts-ignore
-        dispatch(registerAction(form.email, form.password, form.name))
+        dispatch(
+            registerAction({
+                email: form.email,
+                password: form.password,
+                name: form.name,
+            })
+        )
     }
 
     return (
@@ -70,8 +75,11 @@ export const Register = React.memo((): ReactElement => {
                     extraClass="mb-20"
                     onClick={() =>
                         dispatch(
-                            // @ts-ignore
-                            registerAction(form.email, form.password, form.name)
+                            registerAction({
+                                email: form.email,
+                                password: form.password,
+                                name: form.name,
+                            })
                         )
                     }
                 >

@@ -1,11 +1,12 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { useDrop } from 'react-dnd'
-import { useDispatch } from 'react-redux'
 import React, { ReactElement } from 'react'
 import bunStyles from '../burger-constructor.module.css'
 import { IIngredient } from '../../../utils/types'
-// import { IIngredient, IIngredientWithNewId } from '../../../utils/types'
+import { UPDATE_BUN_IN_CONSTRUCTOR } from '../../../services/actions/burger-constructor-action'
+import { UPDATE_BUN_COUNT } from '../../../services/actions/ingredients-action/ingredients-action'
+import { useDispatch } from '../../../store'
 
 type TBunProps = {
     bun: IIngredient | null
@@ -17,14 +18,14 @@ export const Bun = React.memo(
         const dispatch = useDispatch()
         const onDropHandlerBuns = (item: IIngredient): void => {
             dispatch({
-                type: 'UPDATE_BUN_IN_CONSTRUCTOR',
+                type: UPDATE_BUN_IN_CONSTRUCTOR,
                 payload: { ...item },
                 isBun: true,
             })
 
             dispatch({
-                type: 'UPDATE_BUN_COUNT',
-                payload: { _id: item._id },
+                type: UPDATE_BUN_COUNT,
+                idForCount: { _id: item._id },
             })
         }
 
@@ -59,7 +60,7 @@ export const Bun = React.memo(
                                 bunStyles.plugText
                             )}
                         >
-                            Выберите булку
+                            Выберите булочку
                         </span>
                     </div>
                 )}

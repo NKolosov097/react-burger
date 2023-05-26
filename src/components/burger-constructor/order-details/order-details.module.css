@@ -67,7 +67,8 @@
     letter-spacing: 2px;
 }
 
-.startOrder {
+.startOrder,
+.isLoadingP {
     font-family: 'JetBrains Mono';
     font-style: normal;
     font-weight: 400;
@@ -75,4 +76,10 @@
     line-height: 24px;
     height: 24px;
     letter-spacing: 2px;
+}
+
+.isLoadingP {
+    font-size: 40px;
+    margin-top: calc(50% - 40px);
+    margin-bottom: 30px;
 }

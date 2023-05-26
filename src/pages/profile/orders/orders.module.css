@@ -1,6 +1,38 @@
-.container {
-    transform: translateY(50%);
-    font-size: 50px;
+.wrapper {
+    display: flex;
+    /* flex-wrap: wrap; */
+    max-width: 1400px;
+    height: calc(100vh - 380px);
+
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    align-items: flex-start;
+    padding-right: 25px;
+}
+
+.orders {
+    max-width: 1080px;
+    min-width: 365px;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-grow: 2;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.emptyOrders {
+    max-width: 1080px;
+    min-width: 365px;
+    height: 100%;
+    display: flex;
+    flex-grow: 2;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
     justify-content: center;
+
+    font-size: 50px;
 }

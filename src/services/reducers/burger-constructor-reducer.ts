@@ -1,24 +1,34 @@
+import { IIngredient } from '../../utils/types'
 import {
     ADD_INGREDIENT_TO_CONSTRUCTOR,
     DELETE_INGREDIENT_FROM_CONSTRUCTOR,
+    TBurgerConstructorAction,
     UPDATE_BUN_IN_CONSTRUCTOR,
     UPDATE_INGREDIENTS,
 } from '../actions/burger-constructor-action'
 
-const initialState = {
+type TState = {
+    bun: IIngredient | null
+    ingredients: Array<IIngredient>
+}
+
+const initialState: TState = {
     bun: null,
     ingredients: [],
 }
 
-// eslint-disable-next-line @typescript-eslint/default-param-last
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (
+    // eslint-disable-next-line @typescript-eslint/default-param-last
+    state = initialState,
+    action: TBurgerConstructorAction
+): TState => {
     switch (action.type) {
         case ADD_INGREDIENT_TO_CONSTRUCTOR: {
             return {
                 ...state,
                 ingredients:
                     action.payload.type !== 'bun'
-                        ? [...state.ingredients, action.payload]
+                        ? [...state.ingredients, action.payload.ingredient]
                         : state.ingredients,
             }
         }

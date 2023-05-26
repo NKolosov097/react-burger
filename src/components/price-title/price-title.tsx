@@ -1,9 +1,9 @@
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react'
 import { MoneyLogo } from '../../images/money'
 import priceStyles from './price-title.module.css'
 
-export const PriceTitle = React.memo(
-    ({ price }: { price: number }): ReactElement => (
+export function PriceTitle({ price }: { price: number }): ReactElement {
+    return (
         <h3 className={priceStyles.header}>
             {price}
             <span className={priceStyles.span}>
@@ -11,4 +11,4 @@ export const PriceTitle = React.memo(
             </span>
         </h3>
     )
-)
+}

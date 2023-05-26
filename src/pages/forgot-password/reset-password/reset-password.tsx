@@ -6,9 +6,9 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import resetPasswordStyles from './reset-password.module.css'
-import { passwordReset } from '../../../services/actions/auth-action'
+import { useDispatch } from '../../../store'
+import { passwordReset } from '../../../services/actions/auth-action/auth-thunk'
 
 type TForm = {
     password: string
@@ -30,8 +30,10 @@ export const ResetPassword = React.memo((): ReactElement => {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
-        // @ts-ignore
-        dispatch(passwordReset(form.password, form.token)).then(() => {
+        passwordReset({
+            password: form.password,
+            token: form.token,
+        })(dispatch).then(() => {
             localStorage.removeItem('correctEmail')
             navigate('/login')
         })

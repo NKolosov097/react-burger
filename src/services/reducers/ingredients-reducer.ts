@@ -1,3 +1,4 @@
+import { IIngredient } from '../../utils/types'
 import {
     INCREMENT_INGREDIENT_COUNT,
     DECREMENT_INGREDIENT_COUNT,
@@ -6,16 +7,26 @@ import {
     GET_INGREDIENTS_SUCCESS,
     UPDATE_BUN_COUNT,
     RESET_COUNTS_OF_INGREDIENTS,
-} from '../actions/ingredients-action'
+    TIngredientsAction,
+} from '../actions/ingredients-action/ingredients-action'
 
-const initialState = {
+type TState = {
+    ingredients: Array<IIngredient>
+    isLoading: boolean
+    isError: boolean
+}
+
+const initialState: TState = {
     ingredients: [],
     isLoading: false,
     isError: false,
 }
 
-// eslint-disable-next-line @typescript-eslint/default-param-last
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (
+    // eslint-disable-next-line @typescript-eslint/default-param-last
+    state = initialState,
+    action: TIngredientsAction
+): TState => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {
             return {
@@ -41,18 +52,20 @@ export const ingredientsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ingredients: [
+                    // @ts-ignore
                     ...state.ingredients,
+                    // @ts-ignore
                     state.ingredients.map((item) => {
                         const ingredient = item
-                        if (ingredient._id === action.payload._id) {
+                        if (ingredient._id === action.idForCount._id) {
                             ingredient.count = 2
-                            return ingredient.count
+                            return ingredient
                         }
                         if (ingredient.type === 'bun') {
                             ingredient.count = 0
-                            return ingredient.count
+                            return ingredient
                         }
-                        return ingredient.count
+                        return ingredient
                     }),
                 ],
             }
@@ -62,19 +75,21 @@ export const ingredientsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ingredients: [
+                    // @ts-ignore
                     ...state.ingredients,
+                    // @ts-ignore
                     state.ingredients.map((item) => {
                         const ingredient = item
-                        if (ingredient._id === action.payload._id) {
+                        if (ingredient._id === action.idForCount._id) {
                             if (!ingredient.count) {
                                 ingredient.count = 1
-                                return ingredient.count
+                                return ingredient
                             }
 
                             ingredient.count += 1
-                            return ingredient.count
+                            return ingredient
                         }
-                        return ingredient.count
+                        return ingredient
                     }),
                 ],
             }
@@ -83,19 +98,21 @@ export const ingredientsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ingredients: [
+                    // @ts-ignore
                     ...state.ingredients,
+                    // @ts-ignore
                     state.ingredients.map((item) => {
                         const ingredient = item
-                        if (ingredient._id === action.payload._id) {
+                        if (ingredient._id === action.idForCount._id) {
                             if (!ingredient.count) {
                                 ingredient.count = 1
-                                return ingredient.count
+                                return ingredient
                             }
 
                             ingredient.count -= 1
-                            return ingredient.count
+                            return ingredient
                         }
-                        return ingredient.count
+                        return ingredient
                     }),
                 ],
             }
@@ -104,11 +121,13 @@ export const ingredientsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ingredients: [
+                    // @ts-ignore
                     ...state.ingredients,
-                    state.ingredients.map((ingredient) => {
-                        const item = ingredient
-                        item.count = 0
-                        return item.count
+                    // @ts-ignore
+                    state.ingredients.map((item) => {
+                        const ingredient = item
+                        ingredient.count = 0
+                        return ingredient
                     }),
                 ],
             }
