@@ -1,0 +1,186 @@
+.container,
+.containerOrderStyles {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    min-width: 305px;
+    height: auto;
+    padding: 20px;
+    color: rgba(242, 242, 243, 1);
+
+    background: #1c1c21;
+    margin-bottom: 24px;
+
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06),
+        0px 0px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 40px;
+}
+
+.containerOrderStyles {
+    flex-grow: 2;
+}
+
+.link {
+    text-decoration: none;
+    color: #f2f2f3;
+    width: 100%;
+}
+
+.ID {
+    display: flex;
+    width: 100%;
+    height: 24px;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+.numberOfOrder {
+    display: flex;
+    font-size: 28px;
+    font-family: 'Iceland', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.createdAt {
+    display: flex;
+    font-size: 16px;
+    color: rgba(133, 133, 173, 1);
+    font-family: 'JetBrains Mono', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.burgerName {
+    width: 100%;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    color: #f2f2f3;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.status,
+.statusDone,
+.statusPending,
+.statusCreated,
+.statusError {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+}
+
+.statusDone {
+    color: #00cccc;
+}
+
+.statusPending {
+    color: #e2ff43;
+}
+
+.statusCreated {
+    color: #37ff11;
+}
+
+.statusError {
+    color: #ff414e;
+}
+
+.ingredientsContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+}
+
+.ingredients {
+    position: relative;
+    display: flex;
+    padding: 0;
+    margin-left: 15px;
+}
+
+.ingredientEl {
+    display: flex;
+    width: 64px;
+    height: 64px;
+    margin-left: -15px;
+    border-radius: 50%;
+    border: 1px solid rgba(128, 26, 178, 1);
+    background: #131316;
+    justify-content: center;
+    align-items: center;
+}
+
+.ingredientEl::marker {
+    content: '';
+}
+
+.ingredientEl:nth-child(1) {
+    z-index: 60;
+}
+
+.ingredientEl:nth-child(2) {
+    z-index: 50;
+}
+
+.ingredientEl:nth-child(3) {
+    z-index: 40;
+}
+
+.ingredientEl:nth-child(4) {
+    z-index: 30;
+}
+
+.ingredientEl:nth-child(5) {
+    z-index: 20;
+}
+
+.ingredientEl:nth-child(5) {
+    z-index: 10;
+}
+
+.overlay {
+    position: relative;
+    background: #1c1c21;
+    opacity: 0.6;
+    align-items: center;
+    justify-content: center;
+}
+
+.countOfIngredientsInOverlay {
+    font-family: 'JetBrains Mono', sans-serif;
+    position: absolute;
+    transform: translate(50%, 50%);
+    top: 5px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #f2f2f3;
+    opacity: 1;
+}
+
+.ml10 {
+    margin-left: -10px;
+}
+
+.price {
+    font-family: 'Iceland', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 24px;
+
+    display: flex;
+    margin-top: 4px;
+}
+
+span {
+    display: flex;
+    margin-right: 10px;
+}

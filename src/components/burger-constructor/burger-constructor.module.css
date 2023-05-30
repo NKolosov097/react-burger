@@ -1,0 +1,74 @@
+.wrapper {
+    position: relative;
+    width: 50%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
+.list {
+    list-style: none;
+    max-height: 45vh;
+    overflow-y: auto;
+}
+
+.totalPrice {
+    display: flex;
+    right: 50px;
+    margin-top: 40px;
+    font-weight: normal;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Iceland';
+    font-size: 48px;
+}
+
+.moneyLogo {
+    display: flex;
+    margin-left: 10px;
+}
+
+.buttonWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.plugText {
+    transform: translateY(50%);
+}
+
+.plugWrapper {
+    text-align: center;
+}
+
+.assemblingBurgerLi {
+    margin: 10px 0;
+    align-items: center;
+    display: flex;
+    cursor: grab;
+}
+
+.assemblingBurgerButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.isDragging {
+    opacity: 0;
+}
+
+.isNotDragging {
+    opacity: 1;
+}
+
+.orderWrapper {
+    display: flex;
+    padding: 0 20px;
+    justify-content: space-around;
+}
