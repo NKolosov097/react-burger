@@ -15,6 +15,7 @@
         "@types/react-router-dom": "^5.3.3",
         "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
         "classnames": "^2.3.2",
+        "mocha": "^10.2.0",
         "prop-types": "^15.8.1",
         "react": "^18.2.0",
         "react-dnd": "^16.0.1",
@@ -35,13 +36,13 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "homepage": ".",
+        "homepage": "https://nkolosov097.github.io/react-burger",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
+        "cypress:open": "./node_modules/.bin/cypress open",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "cypress:open": "./node_modules/.bin/cypress open",
-        "predeploy": "npm run build",
-        "deploy": "gh-pages -d build",
         "eject": "react-scripts eject"
     },
     "eslintConfig": {

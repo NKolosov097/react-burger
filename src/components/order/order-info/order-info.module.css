@@ -1,6 +1,6 @@
 .wrapper {
     width: 640px;
-    height: 620px;
+    min-height: 620px;
     position: fixed;
     display: flex;
     flex-wrap: wrap;

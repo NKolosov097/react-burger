@@ -44,7 +44,7 @@ export const OrderDetails = React.memo(
                     type="button"
                     onClick={closeModal}
                 >
-                    <CloseIcon type="primary" />
+                    {!isLoading && <CloseIcon type="primary" />}
                 </button>
                 {!isLoading && (
                     <h2

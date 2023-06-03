@@ -1,21 +1,24 @@
 import { ReactElement, useCallback, useMemo, useState } from 'react'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import ReactDOM from 'react-dom'
+// import ReactDOM from 'react-dom'
+import { useNavigate } from 'react-router-dom'
 import burgerConstructorStyles from './burger-constructor.module.css'
 import { MoneyLogo } from '../../images/money'
 import { Bun } from './bun/bun'
 import { IngredientsList } from './ingredients-list-in-constructor/ingredients-list'
-import { FailOrderDetails } from './order-details/fail-order-details'
+// import { FailOrderDetails } from './order-details/fail-order-details'
 import { OrderDetails } from './order-details/order-details'
 import { Modal } from '../modal/modal'
 import { IIngredient } from '../../utils/types'
 import { UPDATE_INGREDIENTS } from '../../services/actions/burger-constructor-action'
 import { useDispatch, useSelector } from '../../store'
 import { getNumberOfOrder } from '../../services/actions/order-action/order-thunk'
+import { paths } from '../../utils/routes/routes'
 
 export function BurgerConstructor(): ReactElement {
     const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const {
         bun,
         ingredients,
@@ -73,6 +76,8 @@ export function BurgerConstructor(): ReactElement {
         }
     }
 
+    if (isAuthorized && modalRoot) navigate(paths.login)
+
     return (
         <section className={burgerConstructorStyles.wrapper}>
             <Bun bun={bun} coordinate="top" />
@@ -114,9 +119,9 @@ export function BurgerConstructor(): ReactElement {
                 </Modal>
             )}
 
-            {isAuthorized && modalRoot
+            {/* {isAuthorized && modalRoot
                 ? ReactDOM.createPortal(<FailOrderDetails />, modalRoot)
-                : null}
+                : null} */}
         </section>
     )
 }

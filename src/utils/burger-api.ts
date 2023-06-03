@@ -7,7 +7,7 @@ import {
 
 export const NORMA_API: string = 'https://norma.nomoreparties.space/api'
 
-const checkResponse = <T>(res: Response): Promise<T> =>
+export const checkResponse = <T>(res: Response): Promise<T> =>
     res.ok ? res.json() : res.json().then((err: Error) => Promise.reject(err))
 
 export const getIngredients = async (): Promise<IIngredientResponse> => {
