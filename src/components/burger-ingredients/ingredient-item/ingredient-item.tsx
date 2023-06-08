@@ -6,7 +6,6 @@ import { ReactElement } from 'react'
 import { PriceTitle } from '../../price-title/price-title'
 import ingredientItemStyles from './ingredient-item.module.css'
 import { IIngredient } from '../../../utils/types'
-// import { INGREDIENT_DETAILS_OPEN } from '../../../services/actions/modal-details'
 import {
     ADD_INGREDIENT_TO_CONSTRUCTOR,
     UPDATE_BUN_IN_CONSTRUCTOR,
@@ -45,10 +44,6 @@ export function IngredientItem(props: IIngredient): ReactElement {
     })
 
     const open = (typeOfIngredient: string) => {
-        // dispatch({
-        //     type: INGREDIENT_DETAILS_OPEN,
-        //     payload: item,
-        // })
         if (typeOfIngredient === 'bun') {
             dispatch({
                 type: UPDATE_BUN_IN_CONSTRUCTOR,
@@ -77,6 +72,7 @@ export function IngredientItem(props: IIngredient): ReactElement {
                 isDrag ? ingredientItemStyles.itemIsDragging : '',
                 ingredientItemStyles.item
             )}
+            data-test={item._id}
         >
             <Link
                 to={{
@@ -90,7 +86,12 @@ export function IngredientItem(props: IIngredient): ReactElement {
                     onClick={() => open(item.type)}
                 >
                     {item?.count ? <Counter count={item.count} /> : null}
-                    <img className="mb-1" src={item.image} alt={item.name} />
+                    <img
+                        width={250}
+                        className="mb-1"
+                        src={item.image_large}
+                        alt={item.name}
+                    />
                     <PriceTitle price={item.price} />
                     <h2 className={ingredientItemStyles.name}>{item.name}</h2>
                 </button>

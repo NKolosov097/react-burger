@@ -2,6 +2,8 @@ import cn from 'classnames'
 import { useDrop } from 'react-dnd'
 import { v4 as uuid } from 'uuid'
 import React, { ReactElement } from 'react'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { AnimatePresence, motion } from 'framer-motion'
 import { AssemblingBurger } from '../assembling-burger/assembling-burger'
 import burgerConstructorStyles from '../burger-constructor.module.css'
 import { IIngredient } from '../../../utils/types'
@@ -38,51 +40,85 @@ export const IngredientsList = React.memo(
         })
 
         return (
-            <div ref={dropMains}>
+            <div ref={dropMains} data-test="constructor-drop-target-notBun">
                 {ingredients.length > 0 ? (
-                    <ul
-                        className={cn(
-                            'm-2 custom-scroll',
-                            burgerConstructorStyles.list
-                        )}
-                    >
-                        {ingredients.map((item, index) => {
-                            const ingredient = item
-                            ingredient.ID = uuid()
-                            return (
-                                item.type !== 'bun' && (
-                                    <AssemblingBurger
-                                        key={ingredient.ID}
-                                        ID={ingredient.ID}
-                                        image={ingredient?.image}
-                                        price={ingredient.price}
-                                        name={ingredient?.name}
-                                        _id={ingredient?._id}
-                                        index={index}
-                                        moveIngredients={moveIngredients}
-                                    />
-                                )
-                            )
-                        })}
-                    </ul>
-                ) : (
-                    <div className="pl-20 ml-1 m-2">
-                        <div
-                            className={cn(
-                                'constructor-element',
-                                burgerConstructorStyles.plugWrapper
-                            )}
+                    <AnimatePresence>
+                        <motion.div
+                            key="burger-constructor"
+                            initial={{ y: '+100%' }}
+                            animate={{
+                                y: '0',
+                                transition: { duration: 0.25 },
+                            }}
+                            exit={{
+                                y: '+100%',
+                                transition: { duration: 0.15 },
+                            }}
+                            transition={{ type: 'ease-in-out' }}
                         >
-                            <span
+                            <ul
                                 className={cn(
-                                    'constructor-element__text',
-                                    burgerConstructorStyles.plugText
+                                    'm-2 custom-scroll',
+                                    burgerConstructorStyles.list
                                 )}
                             >
-                                Выберите начинку
-                            </span>
-                        </div>
-                    </div>
+                                {ingredients.map((item, index) => {
+                                    const ingredient = item
+                                    ingredient.ID = uuid()
+                                    return (
+                                        item.type !== 'bun' && (
+                                            <AssemblingBurger
+                                                key={ingredient.ID}
+                                                ID={ingredient.ID}
+                                                image={ingredient?.image}
+                                                price={ingredient.price}
+                                                name={ingredient?.name}
+                                                _id={ingredient?._id}
+                                                index={index}
+                                                moveIngredients={
+                                                    moveIngredients
+                                                }
+                                            />
+                                        )
+                                    )
+                                })}
+                            </ul>
+                        </motion.div>
+                    </AnimatePresence>
+                ) : (
+                    <AnimatePresence>
+                        <motion.div
+                            key="burger-constructor"
+                            initial={{ y: '+100%' }}
+                            animate={{
+                                y: '0',
+                                transition: { duration: 0.25 },
+                            }}
+                            exit={{
+                                y: '+100%',
+                                transition: { duration: 0.15 },
+                            }}
+                            transition={{ type: 'ease-in-out' }}
+                        >
+                            <div className="pl-20 ml-1 m-2">
+                                <div
+                                    className={cn(
+                                        'constructor-element',
+                                        burgerConstructorStyles.plugWrapper
+                                    )}
+                                >
+                                    <span
+                                        className={cn(
+                                            'constructor-element__text',
+                                            burgerConstructorStyles.plugText
+                                        )}
+                                    >
+                                        Выберите начинку
+                                    </span>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
                 )}
             </div>
         )

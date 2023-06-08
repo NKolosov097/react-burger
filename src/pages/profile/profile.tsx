@@ -65,7 +65,7 @@ export const Profile = React.memo((): ReactElement => {
         <section className={profileStyles.wrapper}>
             <ProfileAsideMenu />
             <div className={profileStyles.container}>
-                <form onSubmit={onSubmit}>
+                <form onSubmit={onSubmit} autoComplete="on">
                     <Input
                         onChange={onChange}
                         placeholder="Имя"
