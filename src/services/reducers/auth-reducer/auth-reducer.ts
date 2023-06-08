@@ -1,4 +1,4 @@
-import { IUser } from '../../utils/types'
+import { IUser } from '../../../utils/types'
 import {
     REQUEST_FAILED,
     REQUEST,
@@ -7,7 +7,7 @@ import {
     SET_IS_AUTH,
     SET_USER,
     TAuthActions,
-} from '../actions/auth-action/auth-action'
+} from '../../actions/auth-action/auth-action'
 
 type TState = {
     isLoading: boolean
@@ -17,7 +17,7 @@ type TState = {
     isError: boolean
 }
 
-const initialState: TState = {
+export const initialState: TState = {
     isLoading: false,
     isChecked: false,
     isCorrectEmail: false,
@@ -57,6 +57,7 @@ export const authReducer = (
             return {
                 ...state,
                 user: action.user,
+                isLoading: false,
                 isChecked: true,
             }
         }
@@ -64,6 +65,7 @@ export const authReducer = (
             return {
                 ...state,
                 isCorrectEmail: true,
+                isLoading: false,
             }
         }
         case SET_IS_AUTH: {

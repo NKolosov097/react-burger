@@ -4,7 +4,7 @@ import {
     GET_ORDER_SUCCESS,
     RESET_NUMBER_OF_ORDER,
     TOrderAction,
-} from '../actions/order-action/order-action'
+} from '../../actions/order-action/order-action'
 
 type TState = {
     numberOfOrder: number | null
@@ -12,7 +12,7 @@ type TState = {
     isError: Boolean
 }
 
-const initialState: TState = {
+export const initialState: TState = {
     numberOfOrder: null,
     isLoading: false,
     isError: false,
@@ -42,6 +42,7 @@ export const orderReducer = (
                 ...state,
                 isError: true,
                 isLoading: false,
+                numberOfOrder: null,
             }
         }
         case RESET_NUMBER_OF_ORDER: {

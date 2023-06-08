@@ -1,4 +1,4 @@
-import { IIngredient } from '../../utils/types'
+import { IIngredient } from '../../../utils/types'
 import {
     INCREMENT_INGREDIENT_COUNT,
     DECREMENT_INGREDIENT_COUNT,
@@ -8,7 +8,7 @@ import {
     UPDATE_BUN_COUNT,
     RESET_COUNTS_OF_INGREDIENTS,
     TIngredientsAction,
-} from '../actions/ingredients-action/ingredients-action'
+} from '../../actions/ingredients-action/ingredients-action'
 
 type TState = {
     ingredients: Array<IIngredient>
@@ -16,7 +16,7 @@ type TState = {
     isError: boolean
 }
 
-const initialState: TState = {
+export const initialState: TState = {
     ingredients: [],
     isLoading: false,
     isError: false,

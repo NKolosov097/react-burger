@@ -17,7 +17,7 @@
         "jsx": "react-jsx",
         "noImplicitAny": false
     },
-    "include": ["src", "css-modules.d.ts"],
+    "include": ["src", "css-modules.d.ts", "cypress/**/*"],
     "rules": {
         "import/extensions": [
             "error",

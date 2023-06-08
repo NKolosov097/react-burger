@@ -25,7 +25,6 @@ import { getBurgerIngredients } from './services/actions/ingredients-action/ingr
 export const App = React.memo((): ReactElement => {
     const dispatch = useDispatch()
     const location = useLocation()
-    // const { pathname } = useLocation()
 
     const state = location.state as { background?: H.Location }
 

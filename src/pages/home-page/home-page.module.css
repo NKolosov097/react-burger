@@ -12,3 +12,15 @@
     font-weight: 700;
     letter-spacing: 2px;
 }
+
+.loading {
+    position: relative;
+    display: flex;
+    margin: auto;
+    width: 100vw;
+    height: calc(100vh - 380px);
+    transform: translate3d(0, 100px, 0);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}

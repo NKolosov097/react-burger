@@ -1,5 +1,6 @@
 {
     "name": "react-burger",
+    "homepage": "https://nkolosov097.github.io/react-burger/",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
@@ -15,6 +16,7 @@
         "@types/react-router-dom": "^5.3.3",
         "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
         "classnames": "^2.3.2",
+        "framer-motion": "^10.12.16",
         "mocha": "^10.2.0",
         "prop-types": "^15.8.1",
         "react": "^18.2.0",
@@ -36,10 +38,9 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "homepage": "https://nkolosov097.github.io/react-burger",
         "predeploy": "npm run build",
         "deploy": "gh-pages -d build",
-        "cypress:open": "./node_modules/.bin/cypress open",
+        "cypress:open": "cypress open",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
@@ -64,6 +65,7 @@
         ]
     },
     "devDependencies": {
+        "@4tw/cypress-drag-drop": "^2.2.4",
         "@testing-library/react": "^14.0.0",
         "@types/styled-components": "^5.1.26",
         "@types/uuid": "^9.0.1",

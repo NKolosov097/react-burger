@@ -1,18 +1,18 @@
-import { IIngredient } from '../../utils/types'
+import { IIngredient } from '../../../utils/types'
 import {
     ADD_INGREDIENT_TO_CONSTRUCTOR,
     DELETE_INGREDIENT_FROM_CONSTRUCTOR,
     TBurgerConstructorAction,
     UPDATE_BUN_IN_CONSTRUCTOR,
     UPDATE_INGREDIENTS,
-} from '../actions/burger-constructor-action'
+} from '../../actions/burger-constructor-action'
 
 type TState = {
     bun: IIngredient | null
     ingredients: Array<IIngredient>
 }
 
-const initialState: TState = {
+export const initialState: TState = {
     bun: null,
     ingredients: [],
 }

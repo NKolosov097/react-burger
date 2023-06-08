@@ -1,16 +1,16 @@
-import { IIngredient } from '../../utils/types'
+import { IIngredient } from '../../../utils/types'
 import {
     ORDER_INFO_CLOSE,
     ORDER_INFO_OPEN,
     TOrderInfoAction,
-} from '../actions/order-info-action'
+} from '../../actions/order-info-action'
 
 type TOrderInfoState = {
     isOrderInfoOpened: boolean
     payload: IIngredient | null
 }
 
-const initialState: TOrderInfoState = {
+export const initialState: TOrderInfoState = {
     isOrderInfoOpened: false,
     payload: null,
 }

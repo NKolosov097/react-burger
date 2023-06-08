@@ -8,7 +8,7 @@ import {
     useSelector as selectorHook,
 } from 'react-redux'
 import type {} from 'redux-thunk/extend-redux'
-import { rootReducer } from './services/reducers'
+import { rootReducer } from './services/reducers/index-reducer'
 import { TAuthActions } from './services/actions/auth-action/auth-action'
 import { TBurgerConstructorAction } from './services/actions/burger-constructor-action'
 import { TIngredientsAction } from './services/actions/ingredients-action/ingredients-action'

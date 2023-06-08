@@ -93,6 +93,7 @@ export const IngredientDetails = React.memo(
                                 className={detailsStyles.closeButton}
                                 type="button"
                                 onClick={closeModal}
+                                data-test="modal-close-icon"
                             >
                                 {newPage ? <CloseIcon type="primary" /> : null}
                             </button>
