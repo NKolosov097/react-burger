@@ -68,9 +68,8 @@ export const ModalOverlay = React.memo(
         }
 
         return (
-            <div
-                role="button"
-                tabIndex={0}
+            <button
+                type="button"
                 aria-label="modal-overlay"
                 onClick={closeModal}
                 onKeyDown={closeModal}
