@@ -18,6 +18,14 @@ describe('Redux auth reducer', () => {
         preloadedState: initialState,
     })
 
+    const testFullObj = {
+        email: 'test@gmail.com',
+        password: 'password',
+        name: 'user',
+    }
+
+    const testNameEmailObj = { email: 'test@gmail.com', name: 'user' }
+
     beforeEach(() => {
         store = configureStore({
             reducer: authReducer,
@@ -47,7 +55,7 @@ describe('Redux auth reducer', () => {
             jest.fn(() =>
                 Promise.resolve({
                     json: () => ({
-                        user: { email: 'test@gmail.com', name: 'user' },
+                        user: testNameEmailObj,
                         success: true,
                     }),
                     ok: true,
@@ -61,7 +69,7 @@ describe('Redux auth reducer', () => {
 
         expect(store.getState()).toEqual({
             ...initialState,
-            user: { email: 'test@gmail.com', name: 'user' },
+            user: testNameEmailObj,
             isLoading: false,
             isChecked: true,
         })
@@ -99,13 +107,7 @@ describe('Redux auth reducer', () => {
             )
         )
 
-        await store.dispatch(
-            registerAction({
-                email: 'test@gmail.com',
-                name: 'test',
-                password: 'password',
-            })
-        )
+        await store.dispatch(registerAction(testFullObj))
 
         expect(fetch).toBeCalledTimes(1)
 
@@ -121,13 +123,7 @@ describe('Redux auth reducer', () => {
             jest.fn(() => Promise.reject())
         )
 
-        await store.dispatch(
-            registerAction({
-                email: 'test@gmail.com',
-                name: 'test',
-                password: 'password',
-            })
-        )
+        await store.dispatch(registerAction(testFullObj))
 
         expect(fetch).toBeCalledTimes(1)
 
@@ -144,7 +140,7 @@ describe('Redux auth reducer', () => {
             jest.fn(() =>
                 Promise.resolve({
                     json: () => ({
-                        user: { email: 'test@gmail.com', name: 'user' },
+                        user: testNameEmailObj,
                         accessToken: 'accessToken',
                         refreshToken: 'refreshToken',
                         success: true,
@@ -165,7 +161,7 @@ describe('Redux auth reducer', () => {
 
         expect(store.getState()).toEqual({
             ...initialState,
-            user: { email: 'test@gmail.com', name: 'user' },
+            user: testNameEmailObj,
             isChecked: true,
         })
     })
@@ -239,7 +235,7 @@ describe('Redux auth reducer', () => {
             jest.fn(() =>
                 Promise.resolve({
                     json: () => ({
-                        user: { email: 'test@gmail.com', name: 'user' },
+                        user: testNameEmailObj,
                         success: true,
                     }),
                     ok: true,
@@ -247,19 +243,13 @@ describe('Redux auth reducer', () => {
             )
         )
 
-        await store.dispatch(
-            patchUserInfo({
-                email: 'test@gmail.com',
-                password: 'password',
-                name: 'user',
-            })
-        )
+        await store.dispatch(patchUserInfo(testFullObj))
 
         expect(fetch).toBeCalledTimes(1)
 
         expect(store.getState()).toEqual({
             ...initialState,
-            user: { email: 'test@gmail.com', name: 'user' },
+            user: testNameEmailObj,
             isLoading: false,
             isChecked: true,
         })
@@ -270,13 +260,7 @@ describe('Redux auth reducer', () => {
             jest.fn(() => Promise.reject())
         )
 
-        await store.dispatch(
-            patchUserInfo({
-                email: 'test@gmail.com',
-                password: 'password',
-                name: 'user',
-            })
-        )
+        await store.dispatch(patchUserInfo(testFullObj))
 
         expect(fetch).toBeCalledTimes(1)
 
@@ -334,11 +318,7 @@ describe('Redux auth reducer', () => {
             jest.fn(() =>
                 Promise.resolve({
                     json: () => ({
-                        user: {
-                            email: 'test@gmail.com',
-                            name: 'user',
-                            password: 'password',
-                        },
+                        user: testFullObj,
                         message: 'success',
                         success: true,
                     }),
@@ -358,11 +338,7 @@ describe('Redux auth reducer', () => {
 
         expect(store.getState()).toEqual({
             ...initialState,
-            user: {
-                email: 'test@gmail.com',
-                name: 'user',
-                password: 'password',
-            },
+            user: testFullObj,
             isChecked: true,
             isCorrectEmail: true,
             isLoading: false,

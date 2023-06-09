@@ -5,9 +5,10 @@ describe('Constructor E2E tests', () => {
         cy.viewport(1400, 900)
         cy.visit('#/')
     })
+    const ingredientItem = '[class^=ingredient-item_item]'
 
     it('show and hide ingredient details modal', () => {
-        cy.get('[class^=ingredient-item_item]').first().click()
+        cy.get(ingredientItem).first().click()
         cy.get('[class^=ingredient-details_container]').contains(
             'Детали ингредиента'
         )
@@ -17,17 +18,9 @@ describe('Constructor E2E tests', () => {
 
     it('create order', () => {
         cy.get('[data-test="ingredient-list-bun"]').first().as('listOfBuns')
-        cy.get('@listOfBuns')
-            .eq(0)
-            .find('[class^=ingredient-item_item]')
-            .first()
-            .as('bun')
+        cy.get('@listOfBuns').eq(0).find(ingredientItem).first().as('bun')
         cy.get('[data-test="ingredient-list-sauce"]').as('listOfSauces')
-        cy.get('@listOfSauces')
-            .eq(0)
-            .find('[class^=ingredient-item_item]')
-            .first()
-            .as('sauce')
+        cy.get('@listOfSauces').eq(0).find(ingredientItem).first().as('sauce')
         cy.get('[data-test="constructor-drop-target-bun"]')
             .first()
             .as('bun-desc')
