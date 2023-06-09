@@ -39,7 +39,11 @@ export const Login = React.memo((): ReactElement => {
 
     return (
         <section className={loginStyles.wrapper}>
-            <form onSubmit={handleSubmit} className={loginStyles.container}>
+            <form
+                onSubmit={handleSubmit}
+                autoComplete="on"
+                className={loginStyles.container}
+            >
                 <h1 className={cn(loginStyles.header, 'mb-6')}>Вход</h1>
                 <EmailInput
                     onChange={onChange}

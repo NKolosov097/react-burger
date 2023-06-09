@@ -47,6 +47,7 @@ export const ResetPassword = React.memo((): ReactElement => {
         <section className={resetPasswordStyles.wrapper}>
             <form
                 onSubmit={handleSubmit}
+                autoComplete="on"
                 className={resetPasswordStyles.container}
             >
                 <h1 className={cn(resetPasswordStyles.header, 'mb-6')}>

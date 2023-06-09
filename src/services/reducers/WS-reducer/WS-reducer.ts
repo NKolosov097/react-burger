@@ -4,8 +4,8 @@ import {
     WS_CONNECTION_CLOSED,
     WS_GET_ORDERS,
     TWSActions,
-} from '../actions/WS-action'
-import { IFeed } from '../../utils/types'
+} from '../../actions/WS-action'
+import { IFeed } from '../../../utils/types'
 
 type TWSState = {
     wsConnected: boolean

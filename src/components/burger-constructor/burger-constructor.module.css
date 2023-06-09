@@ -1,6 +1,7 @@
 .wrapper {
     position: relative;
     width: 50%;
+    scroll-behavior: smooth;
 }
 
 .container {
@@ -14,6 +15,10 @@
     list-style: none;
     max-height: 45vh;
     overflow-y: auto;
+    display: flex;
+    flex-flow: row wrap;
+    margin-left: 10px;
+    width: 100%;
 }
 
 .totalPrice {
@@ -47,9 +52,10 @@
 }
 
 .assemblingBurgerLi {
-    margin: 10px 0;
+    margin: 5px 0;
     align-items: center;
     display: flex;
+    min-width: 100%;
     cursor: grab;
 }
 

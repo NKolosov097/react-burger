@@ -1,12 +1,12 @@
 {
     "name": "react-burger",
+    "homepage": "https://nkolosov097.github.io/react-burger/",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
         "@redux-devtools/extension": "^3.2.5",
         "@reduxjs/toolkit": "^1.9.3",
         "@testing-library/jest-dom": "^5.16.5",
-        "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^13.5.0",
         "@types/jest": "^27.5.2",
         "@types/node": "^16.18.13",
@@ -16,6 +16,8 @@
         "@types/react-router-dom": "^5.3.3",
         "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
         "classnames": "^2.3.2",
+        "framer-motion": "^10.12.16",
+        "mocha": "^10.2.0",
         "prop-types": "^15.8.1",
         "react": "^18.2.0",
         "react-dnd": "^16.0.1",
@@ -36,6 +38,9 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
+        "cypress:open": "cypress open",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
@@ -60,8 +65,11 @@
         ]
     },
     "devDependencies": {
+        "@4tw/cypress-drag-drop": "^2.2.4",
+        "@testing-library/react": "^14.0.0",
         "@types/styled-components": "^5.1.26",
         "@types/uuid": "^9.0.1",
+        "cypress": "^12.13.0",
         "eslint": "^8.35.0",
         "eslint-config-airbnb": "^19.0.4",
         "eslint-config-airbnb-typescript": "^17.0.0",
@@ -70,6 +78,11 @@
         "eslint-plugin-jsx-a11y": "^6.7.1",
         "eslint-plugin-react": "^7.32.2",
         "eslint-plugin-react-hooks": "^4.6.0",
-        "prettier": "2.8.4"
+        "fetch-mock": "^9.11.0",
+        "gh-pages": "^5.0.0",
+        "jest": "^27.5.1",
+        "prettier": "2.8.4",
+        "react-test-renderer": "^18.2.0",
+        "redux-mock-store": "^1.5.4"
     }
 }

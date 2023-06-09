@@ -1,4 +1,6 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { AnimatePresence, motion } from 'framer-motion'
 import cn from 'classnames'
 import { useDrop } from 'react-dnd'
 import React, { ReactElement } from 'react'
@@ -36,33 +38,69 @@ export const Bun = React.memo(
             },
         })
         return (
-            <div ref={dropBuns} className="pl-20 ml-1">
+            <div
+                ref={dropBuns}
+                className="pl-20 ml-1"
+                data-test="constructor-drop-target-bun"
+            >
                 {bun ? (
-                    <ConstructorElement
-                        type={coordinate}
-                        isLocked
-                        text={bun.name}
-                        price={bun.price}
-                        thumbnail={bun.image}
-                    />
-                ) : (
-                    <div
-                        className={cn(
-                            coordinate === 'top'
-                                ? 'constructor-element constructor-element_pos_top'
-                                : 'constructor-element constructor-element_pos_bottom',
-                            bunStyles.plugWrapper
-                        )}
-                    >
-                        <span
-                            className={cn(
-                                'constructor-element__text',
-                                bunStyles.plugText
-                            )}
+                    <AnimatePresence>
+                        <motion.div
+                            key="burger-constructor"
+                            initial={{ y: '+100%' }}
+                            animate={{
+                                y: '0',
+                                transition: { duration: 0.25 },
+                            }}
+                            exit={{
+                                y: '+100%',
+                                transition: { duration: 0.15 },
+                            }}
+                            transition={{ type: 'ease-in-out' }}
                         >
-                            Выберите булочку
-                        </span>
-                    </div>
+                            <ConstructorElement
+                                type={coordinate}
+                                isLocked
+                                text={bun.name}
+                                price={bun.price}
+                                thumbnail={bun.image}
+                            />
+                        </motion.div>
+                    </AnimatePresence>
+                ) : (
+                    <AnimatePresence>
+                        <motion.div
+                            key="burger-constructor"
+                            initial={{ y: '+100%' }}
+                            animate={{
+                                y: '0',
+                                transition: { duration: 0.25 },
+                            }}
+                            exit={{
+                                y: '+100%',
+                                transition: { duration: 0.15 },
+                            }}
+                            transition={{ type: 'ease-in-out' }}
+                        >
+                            <div
+                                className={cn(
+                                    coordinate === 'top'
+                                        ? 'constructor-element constructor-element_pos_top'
+                                        : 'constructor-element constructor-element_pos_bottom',
+                                    bunStyles.plugWrapper
+                                )}
+                            >
+                                <span
+                                    className={cn(
+                                        'constructor-element__text',
+                                        bunStyles.plugText
+                                    )}
+                                >
+                                    Выберите булочку
+                                </span>
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
                 )}
             </div>
         )

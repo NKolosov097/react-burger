@@ -1,11 +1,11 @@
-import { IFeed } from '../../utils/types'
+import { IFeed } from '../../../utils/types'
 import {
     TWSAuthActions,
     WS_AUTH_CONNECTION_CLOSED,
     WS_AUTH_CONNECTION_ERROR,
     WS_AUTH_CONNECTION_SUCCESS,
     WS_AUTH_GET_ORDERS,
-} from '../actions/WS-auth-action'
+} from '../../actions/WS-auth-action'
 
 type TWSState = {
     wsConnected: boolean
