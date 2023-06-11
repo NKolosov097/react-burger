@@ -19,7 +19,7 @@ export function ProfileAsideMenu(): ReactElement {
     }
 
     return (
-        <aside className={asideMenuStyles.asideWrapper}>
+        <>
             <ul className={cn(asideMenuStyles.asideList)}>
                 <li
                     className={cn(
@@ -66,6 +66,6 @@ export function ProfileAsideMenu(): ReactElement {
             <p className={asideMenuStyles.p}>
                 В этом разделе вы можете изменить свои персональные данные
             </p>
-        </aside>
+        </>
     )
 }

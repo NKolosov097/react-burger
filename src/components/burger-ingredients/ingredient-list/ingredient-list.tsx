@@ -4,7 +4,8 @@ import { IngredientItem } from '../ingredient-item/ingredient-item'
 import ingredientsStyles from '../burger-ingredients.module.css'
 import { IIngredient } from '../../../utils/types'
 import { useSelector } from '../../../store'
-import { EmptyIngredientItem } from '../ingredient-item/empty-ingredient-item'
+// import { EmptyIngredientItem } from '../ingredient-item/empty-ingredient-item'
+import { EmptyItem } from '../../empty-item/empty-item'
 
 type TIngredientList = {
     title: string
@@ -90,11 +91,7 @@ export function IngredientList({
                       })
                     : emptyIngredients.map((item: { type: string }) => {
                           const ID = uuid()
-                          return (
-                              item.type === type && (
-                                  <EmptyIngredientItem key={ID} />
-                              )
-                          )
+                          return item.type === type && <EmptyItem key={ID} />
                       })}
             </ul>
         </>

@@ -24,3 +24,16 @@
     justify-content: center;
     align-items: center;
 }
+
+.ingredientsWrapper {
+    position: relative;
+    width: 50%;
+    padding: 0 25px;
+    scroll-behavior: smooth;
+}
+
+.constructorWrapper {
+    position: relative;
+    width: 50%;
+    scroll-behavior: smooth;
+}

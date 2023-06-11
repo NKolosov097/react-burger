@@ -4,7 +4,6 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import React, { ReactElement } from 'react'
-// import img from '../../../images/done.png'
 import detailsStyles from './order-details.module.css'
 import { ORDER_DETAILS_CLOSE } from '../../../services/actions/modal-details'
 import { RESET_NUMBER_OF_ORDER } from '../../../services/actions/order-action/order-action'
