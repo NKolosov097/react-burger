@@ -77,7 +77,7 @@ export function BurgerIngredients(): ReactElement {
     ]
 
     return (
-        <section className={ingredientsStyles.burgerIngredients}>
+        <>
             <div
                 className={cn('mb-5', ingredientsStyles.tabs)}
                 ref={bottomTabsRef}
@@ -110,6 +110,6 @@ export function BurgerIngredients(): ReactElement {
                     />
                 ))}
             </div>
-        </section>
+        </>
     )
 }

@@ -1,8 +1,7 @@
 .wrapper {
     display: flex;
-    /* flex-wrap: wrap; */
     max-width: 1400px;
-    height: calc(100vh - 380px);
+    height: calc(100vh - 180px);
 
     margin-left: auto;
     margin-right: auto;
@@ -35,4 +34,14 @@
     justify-content: center;
 
     font-size: 50px;
+}
+
+.asideWrapper {
+    position: sticky;
+    width: 320px;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 120px;
+    flex: 1;
 }

@@ -17,7 +17,7 @@ export const AppHeader = React.memo((): ReactElement => {
     const isFeed = !!useMatch<string, string>(paths.feed)
 
     return (
-        <header className="p-4 mb-4">
+        <header className={`${headerStyles.header} p-4 mb-4`}>
             <menu className={headerStyles.menu}>
                 <li className={headerStyles.menu_item}>
                     <NavLink

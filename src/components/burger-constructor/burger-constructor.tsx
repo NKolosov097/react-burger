@@ -1,7 +1,6 @@
 import { ReactElement, useCallback, useMemo, useState } from 'react'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from 'react-router-dom'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { AnimatePresence, motion } from 'framer-motion'
 import burgerConstructorStyles from './burger-constructor.module.css'
 import { MoneyLogo } from '../../images/money'
@@ -79,7 +78,7 @@ export function BurgerConstructor(): ReactElement | null {
     if (isAuthorized && modalRoot) navigate(paths.login)
 
     return (
-        <section className={burgerConstructorStyles.wrapper}>
+        <>
             <Bun bun={bun} coordinate="top" />
             <IngredientsList
                 moveIngredients={moveIngredients}
@@ -134,50 +133,18 @@ export function BurgerConstructor(): ReactElement | null {
                         )}
                     </div>
                     {numberOfOrder && !isLoading && (
-                        <AnimatePresence>
-                            <motion.div
-                                key="burger-constructor"
-                                initial={{ x: '+100%' }}
-                                animate={{
-                                    x: '0',
-                                    transition: { duration: 0.25 },
-                                }}
-                                exit={{
-                                    x: '+100%',
-                                    transition: { duration: 0.15 },
-                                }}
-                                transition={{ type: 'ease-in-out' }}
-                            >
-                                <Modal orderDetailsFromConstructor>
-                                    <OrderDetails isLoading={false} />
-                                </Modal>
-                            </motion.div>
-                        </AnimatePresence>
+                        <Modal orderDetailsFromConstructor>
+                            <OrderDetails isLoading={false} />
+                        </Modal>
                     )}
 
                     {isLoading && !numberOfOrder && (
-                        <AnimatePresence>
-                            <motion.div
-                                key="burger-constructor"
-                                initial={{ y: '+100%' }}
-                                animate={{
-                                    y: '0',
-                                    transition: { duration: 0.25 },
-                                }}
-                                exit={{
-                                    y: '+100%',
-                                    transition: { duration: 0.15 },
-                                }}
-                                transition={{ type: 'ease-in-out' }}
-                            >
-                                <Modal>
-                                    <OrderDetails isLoading />
-                                </Modal>
-                            </motion.div>
-                        </AnimatePresence>
+                        <Modal>
+                            <OrderDetails isLoading />
+                        </Modal>
                     )}
                 </motion.div>
             </AnimatePresence>
-        </section>
+        </>
     )
 }

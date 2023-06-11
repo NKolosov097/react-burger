@@ -3,7 +3,7 @@
     flex-wrap: wrap;
     column-gap: 40px;
     max-width: 1400px;
-    height: calc(100vh - 270px);
+    height: calc(100vh - 240px);
     margin-left: auto;
     margin-right: auto;
     justify-content: space-between;
@@ -31,4 +31,15 @@
 .text {
     width: 100%;
     text-align: left;
+}
+
+.ordersBoardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-grow: 1;
+    width: 50%;
+    height: 100%;
+
+    color: #f2f2f3;
 }

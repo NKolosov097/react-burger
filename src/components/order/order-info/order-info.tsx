@@ -19,6 +19,7 @@ import {
     WS_AUTH_CONNECTION_CLOSED,
     WS_AUTH_CONNECTION_START,
 } from '../../../services/actions/WS-auth-action'
+import { AnimatedLoading } from '../../animated-loading/animated-loading'
 
 type TOrderInfo = {
     newPage: boolean
@@ -128,7 +129,7 @@ export function OrderInfo({ newPage }: TOrderInfo): ReactElement {
         navigate(-1)
     }
 
-    return (
+    return order ? (
         <dialog className={orderDetailsStyles.wrapper}>
             <h2 className={stylesNumber}>#{order?.number}</h2>
             <h1 className={orderDetailsStyles.name}>{order?.name}</h1>
@@ -164,5 +165,9 @@ export function OrderInfo({ newPage }: TOrderInfo): ReactElement {
                 </div>
             </div>
         </dialog>
+    ) : (
+        <section className={orderDetailsStyles.loading}>
+            <AnimatedLoading />
+        </section>
     )
 }
