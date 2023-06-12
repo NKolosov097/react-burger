@@ -40,9 +40,25 @@
   <summary><h3>Local start of aplication</h3></summary>
   <ol>
     <li>
-      <h4>Clone the repository</h4>
+      <h4>Clone the repository:</h4>
       ```
         git@github.com:NKolosov097/react-burger.git 
+      ```
+    </li>
+    <li>
+      <h4>Install all dependencies:</h4>
+      ```
+        npm i 
+      ```
+    </li>
+    <li>
+      <h4>Start the application:</h4>
+      ```
+       npm start
+      ```
+      or 
+      ```
+        yarn start
       ```
     </li>
   </ol>
