@@ -63,8 +63,7 @@
 
 <hr>
 
-<details>
-  <summary><h3>Testing</h3></summary>
+<h3>Testing</h3>
   <details>
     <summary><h4>Unit tests</h4></summary>
     <h4>Launch all unit tests:</h4>
@@ -98,4 +97,3 @@
       </li>
     </ol>
   </details>
-</details>
