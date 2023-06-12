@@ -1,5 +1,5 @@
 <h1 align="center"><a href="https://nkolosov097.github.io/react-burger" target="_blank">Stellar Burger</a></h1>
-<h3 align="start">Technologies</h3>
+<h3 align="start">Used stack</h3>
 <h4>
   <ul>
     <li>Typescript</li>
@@ -38,7 +38,7 @@
 
 <details>
   <summary><h3>Local start of aplication</h3></summary>
-  &#9;<ol>
+  <ol>
     <li>
       <h4>Clone the repository:</h4>
       <code>git@github.com:NKolosov097/react-burger.git</code>
@@ -73,7 +73,7 @@
   
   <details>
     <summary><h4>E2E tests</h4></summary>
-    &#9;<ol>
+    <ol>
       <li>
         <h4>Create <code>fixtures</code> folder in cypress directory</h4>
       </li>
