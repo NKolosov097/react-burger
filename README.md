@@ -38,7 +38,7 @@
 
 <details>
   <summary><h3>Local start of aplication</h3></summary>
-  <ol>
+  &#9;<ol>
     <li>
       <h4>Clone the repository:</h4>
       <code>git@github.com:NKolosov097/react-burger.git</code>
@@ -73,7 +73,7 @@
   
   <details>
     <summary><h4>E2E tests</h4></summary>
-    <ol>
+    &#9;<ol>
       <li>
         <h4>Create <code>fixtures</code> folder in cypress directory</h4>
       </li>
