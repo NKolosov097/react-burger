@@ -62,8 +62,8 @@
 </details>
 
 <hr>
-
-<h3>Testing</h3>
+<derails>
+<summary><h3>Testing</h3></summary>
   <details>
     <summary><h4>Unit tests</h4></summary>
     <h4>Launch all unit tests:</h4>
@@ -96,4 +96,5 @@
         <code>yarn run cypress:open</code>
       </li>
     </ol>
+  </details>
   </details>
