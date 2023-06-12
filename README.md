@@ -1,5 +1,6 @@
 <h1 align="center"><a href="https://nkolosov097.github.io/react-burger" target="_blank">Stellar Burger</a></h1>
-<h4 align="start">Technologies
+<h3 align="start">Technologies</h3>
+<h4>
   <ul>
     <li>Typescript</li>
     <li>React</li>
@@ -15,10 +16,10 @@
     <li>Cypress</li>
     <li>Gh Pages</li>
   </ul>
-</h4>
+  </h4>
 
-<h4 align="start">Description
-  <h4>Online burger constructor, when you can:</h4>
+<h3 align="start">Description</h3>
+  <h4>Online burger constructor, when you can:
   <ul>
     <li>Drag and drop ingredients from the list on the left to the right</li>
     <li>Create your own unique burger</li>
