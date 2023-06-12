@@ -41,19 +41,29 @@
   <ol>
     <li>
       <h4>Clone the repository:</h4>
-      <code> git@github.com:NKolosov097/react-burger.git </code>
+      <code> 
+        git@github.com:NKolosov097/react-burger.git 
+      </code>
     </li>
     <li>
       <h4>Install all dependencies:</h4>
-      <code> npm i </code>
+      <code> 
+        npm i 
+      </code>
       or
-      <code> yarn add </code>
+      <code>
+        yarn add 
+      </code>
     </li>
     <li>
       <h4>Start the application:</h4>
-      <code> npm start </code>
+      <code> 
+        npm start 
+      </code>
       or 
-      <code> yarn start </code>
+      <code> 
+        yarn start 
+      </code>
     </li>
   </ol>
 </details>
