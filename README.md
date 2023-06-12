@@ -41,7 +41,7 @@
   <ol>
     <li>
       <h4>Clone the repository:</h4>
-      ```
+      ```html
         git@github.com:NKolosov097/react-burger.git 
       ```
     </li>
