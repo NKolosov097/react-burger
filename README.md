@@ -55,5 +55,8 @@
       or 
       <code>yarn start</code>
     </li>
+    <li>
+      <h4>Go to http://localhost:3000 to view the application</h4>
+    </li>
   </ol>
 </details>
