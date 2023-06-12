@@ -18,7 +18,7 @@
 </h4>
 
 <h4 align="start">Description
-  <p>Online burger constructor, when you can:</p>
+  <h5>Online burger constructor, when you can:</h5>
   <ul>
     <li>Drag and drop ingredients from the list on the left to the right</li>
     <li>Create your own unique burger</li>
