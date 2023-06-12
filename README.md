@@ -33,3 +33,15 @@
     <li>Change your personal info in profile page</li>
   </ul>
 </h4>
+
+<hr>
+
+<details>
+  <summary><h3>Local start of aplication</h3></summary>
+  <ol>
+    <li>
+      <h4>Clone the repository</h4>
+      ```git@github.com:NKolosov097/react-burger.git```
+    </li>
+  </ol>
+</details>
