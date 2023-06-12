@@ -74,7 +74,7 @@
     <summary><h4>E2E tests</h4></summary>
     <ol>
       <li>
-        <h4>Create "fixtures" folder in cypress directory</h4>
+        <h4>Create <code>fixtures</code> folder in cypress directory</h4>
       </li>
       <li>
         <h4>Create <code>login.json</code> with following content:</h4>
