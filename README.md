@@ -41,29 +41,29 @@
   <ol>
     <li>
       <h4>Clone the repository:</h4>
-      ```html
+<!--       ```html -->
         git@github.com:NKolosov097/react-burger.git 
-      ```
+<!--       ``` -->
     </li>
     <li>
       <h4>Install all dependencies:</h4>
-      ```
+<!--       ``` -->
         npm i 
-      ```
+<!--       ``` -->
       or
-      ```
+<!--       ``` -->
         yarn add 
-      ```
+<!--       ``` -->
     </li>
     <li>
       <h4>Start the application:</h4>
-      ```
+<!--       ``` -->
        npm start
-      ```
+<!--       ``` -->
       or 
-      ```
+<!--       ``` -->
         yarn start
-      ```
+<!--       ``` -->
     </li>
   </ol>
 </details>
