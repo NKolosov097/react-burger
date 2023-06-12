@@ -66,19 +66,23 @@
 <details>
   <summary><h3>Testing</h3></summary>
   <details>
-    <summary><h3>Unit tests</h3></summary>
+    <summary><h4>Unit tests</h4></summary>
     <h4>Launch all unit tests:</h4>
     <code>npm run test</code>
   </details>
   
   <details>
-    <summary><h3>E2E tests</h3></summary>
+    <summary><h4>E2E tests</h4></summary>
     <ol>
       <li>
-        <h4>Install all dependencies:</h4>
-        <code>npm i</code>
-        or
-        <code>yarn add</code>
+        <h4>Create "fixtures" folder in cypress directory</h4>
+      </li>
+      <li>
+        <h4>Create <code>login.json</code> with following content:</h4>
+        <code>{
+          "email": "email@gmail.com",
+          "password": "password"
+        }</code>
       </li>
       <li>
         <h4>Start the application:</h4>
@@ -87,7 +91,10 @@
         <code>yarn start</code>
       </li>
       <li>
-        <h4>Go to http://localhost:3000 to view the application</h4>
+        <h4>Launch cypress:</h4>
+        <code>npm run cypress:open</code>
+        or 
+        <code>yarn run cypress:open</code>
       </li>
     </ol>
   </details>
