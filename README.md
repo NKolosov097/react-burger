@@ -60,3 +60,35 @@
     </li>
   </ol>
 </details>
+
+<hr>
+
+<details>
+  <summary><h3>Testing</h3></summary>
+  <details>
+    <summary><h3>Unit tests</h3></summary>
+    <h4>Launch all unit tests:</h4>
+    <code>npm run test</code>
+  </details>
+  
+  <details>
+    <summary><h3>E2E tests</h3></summary>
+    <ol>
+      <li>
+        <h4>Install all dependencies:</h4>
+        <code>npm i</code>
+        or
+        <code>yarn add</code>
+      </li>
+      <li>
+        <h4>Start the application:</h4>
+        <code>npm start</code>
+        or 
+        <code>yarn start</code>
+      </li>
+      <li>
+        <h4>Go to http://localhost:3000 to view the application</h4>
+      </li>
+    </ol>
+  </details>
+</details>
