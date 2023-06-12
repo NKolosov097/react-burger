@@ -1,6 +1,5 @@
 <h1 align="center"><a href="https://nkolosov097.github.io/react-burger" target="_blank">Stellar Burger</a></h1>
 <h4 align="start">Technologies
-  <hr>
   <ul>
     <li>Typescript</li>
     <li>React</li>
