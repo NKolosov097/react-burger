@@ -79,10 +79,10 @@
       </li>
       <li>
         <h4>Create <code>login.json</code> with following content:</h4>
-        <pre><code>        {
-          "email": "email@gmail.com",
-          "password": "password"
-        }</code></pre>
+        <pre><code>{
+  "email": "email@gmail.com",
+  "password": "password"
+}</code></pre>
       </li>
       <li>
         <h4>Start the application:</h4>
