@@ -18,6 +18,8 @@
   </ul>
   </h4>
 
+<hr>
+
 <h3 align="start">Description</h3>
   <h4>Online burger constructor, when you can:
   <ul>
