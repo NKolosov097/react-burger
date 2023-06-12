@@ -1,4 +1,4 @@
-https://nkolosov097.github.io/react-burger/
+Ссылка на проект: https://nkolosov097.github.io/react-burger/
 
 # Getting Started with Create React App
 

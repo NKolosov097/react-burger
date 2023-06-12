@@ -44,7 +44,11 @@ export const Register = React.memo((): ReactElement => {
 
     return (
         <section className={registerStyles.wrapper}>
-            <form onSubmit={handleSubmit} className={registerStyles.container}>
+            <form
+                onSubmit={handleSubmit}
+                autoComplete="on"
+                className={registerStyles.container}
+            >
                 <h1 className={cn(registerStyles.header, 'mb-6')}>
                     Регистрация
                 </h1>

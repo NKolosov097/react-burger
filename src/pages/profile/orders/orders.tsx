@@ -1,6 +1,7 @@
 import { ReactElement, useEffect } from 'react'
 import { v4 as uuid } from 'uuid'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
 import stylesOrders from './orders.module.css'
 import { ProfileAsideMenu } from '../aside-menu/aside-menu'
 import { useDispatch, useSelector } from '../../../store'
@@ -10,10 +11,10 @@ import {
 } from '../../../services/actions/WS-auth-action'
 import { Order } from '../../../components/order/order'
 import { getUserData } from '../../../services/actions/auth-action/auth-thunk'
+import { EmptyItem } from '../../../components/empty-item/empty-item'
 
 export function Orders(): ReactElement {
     const location = useLocation()
-    const { id } = useParams<{ id: string }>()
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -26,41 +27,64 @@ export function Orders(): ReactElement {
 
     const { orders } = useSelector((store) => store.wsAuthReducer)
 
+    const emptyOrders = [
+        {
+            id: 1,
+        },
+        {
+            id: 2,
+        },
+        {
+            id: 3,
+        },
+        {
+            id: 4,
+        },
+        {
+            id: 5,
+        },
+    ]
+
     return (
         <section className={stylesOrders.wrapper}>
-            <ProfileAsideMenu />
-            {orders && orders.length > 0 ? (
-                <ul className={`${stylesOrders.orders} pr-2 custom-scroll`}>
-                    {orders &&
-                        orders
-                            .map((order) => (
-                                <Order
-                                    key={uuid()}
-                                    order={order}
-                                    ordersPage
-                                    location={location}
-                                />
-                            ))
-                            .reverse()}
-                </ul>
-            ) : (
-                <div className={stylesOrders.emptyOrders}>
-                    Вы пока ничего не заказывали 🙄
-                </div>
-            )}
-
-            {id ? (
-                <div
-                    style={{
-                        width: '100vw',
-                        height: '100vh',
-                        background: 'black',
-                        fontSize: '100px',
-                    }}
+            <AnimatePresence>
+                <motion.aside
+                    key="orders-aside-menu"
+                    initial={{ x: '-100%' }}
+                    animate={{ x: '0', transition: { duration: 0.45 } }}
+                    exit={{ x: '+100%', transition: { duration: 0.15 } }}
+                    transition={{ type: 'ease-in-out' }}
+                    className={stylesOrders.asideWrapper}
                 >
-                    в id что-то лежит
-                </div>
-            ) : null}
+                    <ProfileAsideMenu />
+                </motion.aside>
+            </AnimatePresence>
+
+            <AnimatePresence>
+                <motion.ul
+                    key="orders-container"
+                    initial={{ x: '+100%' }}
+                    animate={{ x: '0', transition: { duration: 0.55 } }}
+                    exit={{ x: '-100%', transition: { duration: 0.25 } }}
+                    transition={{ type: 'ease-in-out' }}
+                    className={`${stylesOrders.orders} pr-2 custom-scroll`}
+                >
+                    {orders.length > 0
+                        ? orders
+                              .map((order) => (
+                                  <Order
+                                      key={uuid()}
+                                      order={order}
+                                      ordersPage
+                                      location={location}
+                                  />
+                              ))
+                              .reverse()
+                        : emptyOrders.map((order) => (
+                              <EmptyItem isProfile key={order.id} />
+                          ))}
+                </motion.ul>
+            </AnimatePresence>
         </section>
     )
 }

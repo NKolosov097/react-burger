@@ -2,6 +2,7 @@ import cn from 'classnames'
 import { useDrop } from 'react-dnd'
 import { v4 as uuid } from 'uuid'
 import React, { ReactElement } from 'react'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { AssemblingBurger } from '../assembling-burger/assembling-burger'
 import burgerConstructorStyles from '../burger-constructor.module.css'
 import { IIngredient } from '../../../utils/types'
@@ -38,7 +39,7 @@ export const IngredientsList = React.memo(
         })
 
         return (
-            <div ref={dropMains}>
+            <div ref={dropMains} data-test="constructor-drop-target-notBun">
                 {ingredients.length > 0 ? (
                     <ul
                         className={cn(

@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect } from 'react'
 import * as H from 'history'
 import { Route, Routes, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import { HomePage } from './pages/home-page/home-page'
 import { Login } from './pages/login/login'
 import { Register } from './pages/register/register'
@@ -25,7 +26,6 @@ import { getBurgerIngredients } from './services/actions/ingredients-action/ingr
 export const App = React.memo((): ReactElement => {
     const dispatch = useDispatch()
     const location = useLocation()
-    // const { pathname } = useLocation()
 
     const state = location.state as { background?: H.Location }
 
@@ -82,48 +82,51 @@ export const App = React.memo((): ReactElement => {
                 />
                 <Route path="*" element={<HomePage />} />
             </Routes>
-            {background && (
-                <Routes>
-                    <Route
-                        path={paths.ingredientDetails}
-                        element={
-                            <Modal>
-                                <IngredientDetails newPage />
-                            </Modal>
-                        }
-                    />
-                </Routes>
-            )}
 
-            {background && (
-                <Routes>
-                    <Route
-                        path={`${paths.feed}${paths.orderDetails}`}
-                        element={
-                            <Modal>
-                                <OrderInfo newPage />
-                            </Modal>
-                        }
-                    />
-                </Routes>
-            )}
+            <AnimatePresence>
+                {background && (
+                    <Routes>
+                        <Route
+                            path={paths.ingredientDetails}
+                            element={
+                                <Modal>
+                                    <IngredientDetails newPage />
+                                </Modal>
+                            }
+                        />
+                    </Routes>
+                )}
 
-            {background && (
-                <Routes>
-                    <Route
-                        path={`${paths.orders}${paths.orderDetails}`}
-                        element={
-                            <OnlyAuth
-                                component={
-                                    <Modal>
-                                        <OrderInfo newPage />
-                                    </Modal>
-                                }
-                            />
-                        }
-                    />
-                </Routes>
-            )}
+                {background && (
+                    <Routes>
+                        <Route
+                            path={`${paths.feed}${paths.orderDetails}`}
+                            element={
+                                <Modal>
+                                    <OrderInfo newPage />
+                                </Modal>
+                            }
+                        />
+                    </Routes>
+                )}
+
+                {background && (
+                    <Routes>
+                        <Route
+                            path={`${paths.orders}${paths.orderDetails}`}
+                            element={
+                                <OnlyAuth
+                                    component={
+                                        <Modal>
+                                            <OrderInfo newPage />
+                                        </Modal>
+                                    }
+                                />
+                            }
+                        />
+                    </Routes>
+                )}
+            </AnimatePresence>
         </>
     )
 })

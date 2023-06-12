@@ -67,6 +67,18 @@
     letter-spacing: 2px;
 }
 
+.loading {
+    position: relative;
+    display: flex;
+    margin: auto;
+    width: 320px;
+    height: 200px;
+    margin-bottom: 20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
 .startOrder,
 .isLoadingP {
     font-family: 'JetBrains Mono';
@@ -76,10 +88,15 @@
     line-height: 24px;
     height: 24px;
     letter-spacing: 2px;
+    margin-top: 32px;
+}
+
+.startOrder {
+    margin-top: 40px;
 }
 
 .isLoadingP {
     font-size: 40px;
-    margin-top: calc(50% - 40px);
+    margin-top: calc(40% - 40px);
     margin-bottom: 30px;
 }

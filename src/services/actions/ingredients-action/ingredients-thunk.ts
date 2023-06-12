@@ -6,11 +6,11 @@ import {
     GET_INGREDIENTS_SUCCESS,
 } from './ingredients-action'
 
-export const getBurgerIngredients = () => (dispatch: AppDispatch) => {
+export const getBurgerIngredients = () => async (dispatch: AppDispatch) => {
     dispatch({
         type: GET_INGREDIENTS_REQUEST,
     })
-    getIngredients()
+    await getIngredients()
         .then((res) => {
             if (res && res.success)
                 dispatch({

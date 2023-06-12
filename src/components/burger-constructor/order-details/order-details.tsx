@@ -1,7 +1,9 @@
-import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import {
+    CloseIcon,
+    Logo,
+} from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames'
 import React, { ReactElement } from 'react'
-import img from '../../../images/done.png'
 import detailsStyles from './order-details.module.css'
 import { ORDER_DETAILS_CLOSE } from '../../../services/actions/modal-details'
 import { RESET_NUMBER_OF_ORDER } from '../../../services/actions/order-action/order-action'
@@ -11,6 +13,7 @@ import {
 } from '../../../services/actions/burger-constructor-action'
 import { RESET_COUNTS_OF_INGREDIENTS } from '../../../services/actions/ingredients-action/ingredients-action'
 import { useDispatch, useSelector } from '../../../store'
+import { AnimatedLoading } from '../../animated-loading/animated-loading'
 
 type TOrderDetailsProps = {
     isLoading: boolean
@@ -35,7 +38,10 @@ export const OrderDetails = React.memo(
         const { numberOfOrder } = useSelector((store) => store.orderReducer)
 
         return (
-            <div className={detailsStyles.container}>
+            <div
+                className={detailsStyles.container}
+                data-test="placed-order-number"
+            >
                 <h1 className="mb-4 mt-20 text text_type_digits-large">
                     {numberOfOrder}
                 </h1>
@@ -43,13 +49,14 @@ export const OrderDetails = React.memo(
                     className={detailsStyles.closeButton}
                     type="button"
                     onClick={closeModal}
+                    data-test="modal-close-icon"
                 >
-                    <CloseIcon type="primary" />
+                    {!isLoading && <CloseIcon type="primary" />}
                 </button>
                 {!isLoading && (
                     <h2
                         className={cn(
-                            'mb-15 mt-8 text text_type_main-default',
+                            'mb-7 mt-8 text text_type_main-default',
                             detailsStyles.identity
                         )}
                     >
@@ -57,16 +64,25 @@ export const OrderDetails = React.memo(
                     </h2>
                 )}
 
-                {!isLoading && <img className="mb-15" src={img} alt="done" />}
+                {!isLoading && (
+                    <div className={detailsStyles.loading}>
+                        <Logo />
+                    </div>
+                )}
                 {isLoading ? (
-                    <p
-                        className={cn(
-                            'mb-2 text text_type_main-small',
-                            detailsStyles.isLoadingP
-                        )}
-                    >
-                        Ваш заказ обрабатывается
-                    </p>
+                    <>
+                        <p
+                            className={cn(
+                                'mb-2 text text_type_main-small',
+                                detailsStyles.isLoadingP
+                            )}
+                        >
+                            Ваш заказ обрабатывается
+                        </p>
+                        <div className={detailsStyles.loading}>
+                            <AnimatedLoading />
+                        </div>
+                    </>
                 ) : (
                     <p
                         className={cn(

@@ -36,7 +36,11 @@ export const Bun = React.memo(
             },
         })
         return (
-            <div ref={dropBuns} className="pl-20 ml-1">
+            <div
+                ref={dropBuns}
+                className="pl-20 ml-1"
+                data-test="constructor-drop-target-bun"
+            >
                 {bun ? (
                     <ConstructorElement
                         type={coordinate}

@@ -1,7 +1,7 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate, useParams } from 'react-router-dom'
 import React, { ReactElement } from 'react'
-// eslint-disable-next-line import/no-extraneous-dependencies
+import { motion } from 'framer-motion'
 import Loader from 'react-spinners/ClipLoader'
 import detailsStyles from './ingredient-details.module.css'
 import { IIngredient } from '../../../utils/types'
@@ -93,16 +93,25 @@ export const IngredientDetails = React.memo(
                                 className={detailsStyles.closeButton}
                                 type="button"
                                 onClick={closeModal}
+                                data-test="modal-close-icon"
                             >
                                 {newPage ? <CloseIcon type="primary" /> : null}
                             </button>
                         </h1>
 
                         {(
-                            <img
-                                className={detailsStyles.image}
-                                src={image_large}
+                            <motion.img
                                 alt={name}
+                                src={image_large}
+                                initial={{ rotate: -2 }}
+                                animate={{ rotate: 2 }}
+                                transition={{
+                                    duration: 1,
+                                    ease: 'easeInOut',
+                                    repeat: Infinity,
+                                    repeatType: 'mirror',
+                                }}
+                                className={detailsStyles.image}
                             />
                         ) || <Loader />}
                         <h2 className={detailsStyles.name}>{name}</h2>

@@ -16,7 +16,7 @@ export function OrdersBoard({
     totalToday,
 }: TOrdersBoardProps): ReactElement {
     return (
-        <div className={stylesOrdersBoard.ordersBoardContainer}>
+        <>
             <div className={stylesOrdersBoard.currentOrders}>
                 <div className={stylesOrdersBoard.doneOrdersContainer}>
                     <h3 className={stylesOrdersBoard.doneOrdersHeader}>
@@ -39,24 +39,25 @@ export function OrdersBoard({
                         В процессе:
                     </h3>
                     <ul className={stylesOrdersBoard.inProcessOrdersList}>
-                        {pendingOrders.length > 0 ? (
-                            pendingOrders.map((numberOfOrder) => (
-                                <li
-                                    key={numberOfOrder._id}
-                                    className={
-                                        stylesOrdersBoard.pendingOrderNumber
-                                    }
-                                >
-                                    {numberOfOrder.number}
-                                </li>
-                            ))
-                        ) : (
-                            <span
-                                className={stylesOrdersBoard.pendingOrderNumber}
-                            >
-                                Мы успели приготовить все заказы!
-                            </span>
-                        )}
+                        {pendingOrders.length > 0
+                            ? pendingOrders.map((numberOfOrder) => (
+                                  <li
+                                      key={numberOfOrder._id}
+                                      className={
+                                          stylesOrdersBoard.pendingOrderNumber
+                                      }
+                                  >
+                                      {numberOfOrder.number}
+                                  </li>
+                              ))
+                            : // (
+                              //     <span
+                              //         className={stylesOrdersBoard.pendingOrderNumber}
+                              //     >
+                              //         Мы успели приготовить все заказы!
+                              //     </span>
+                              // )
+                              null}
                     </ul>
                 </div>
             </div>
@@ -78,6 +79,6 @@ export function OrdersBoard({
                     {totalToday || 0}
                 </h3>
             </div>
-        </div>
+        </>
     )
 }
