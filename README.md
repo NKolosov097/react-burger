@@ -45,7 +45,7 @@
     </li>
     <li>
       <h4>Install all dependencies:</h4>
-      <code>````npm i````</code>
+      <code>``npm i``</code>
       or
       <code>yarn add</code>
     </li>
