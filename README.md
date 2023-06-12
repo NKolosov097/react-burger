@@ -79,9 +79,9 @@
       </li>
       <li>
         <h4>Create <code>login.json</code> with following content:</h4>
-        <code>{
-          "email": "email@gmail.com",
-          "password": "password"
+        <code>{<Br>
+          "email": "email@gmail.com",<Br>
+          "password": "password"<Br>
         }</code>
       </li>
       <li>
