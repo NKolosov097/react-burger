@@ -41,9 +41,7 @@
   <ol>
     <li>
       <h4>Clone the repository:</h4>
-`
-        git@github.com:NKolosov097/react-burger.git 
-`
+`git@github.com:NKolosov097/react-burger.git`
     </li>
     <li>
       <h4>Install all dependencies:</h4>
