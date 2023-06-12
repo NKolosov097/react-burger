@@ -50,6 +50,10 @@
       ```
         npm i 
       ```
+      or
+      ```
+        yarn add 
+      ```
     </li>
     <li>
       <h4>Start the application:</h4>
