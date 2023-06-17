@@ -1,5 +1,6 @@
 .modalOverlay__wrapper {
     background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
     position: fixed;
     display: flex;
     justify-content: center;
