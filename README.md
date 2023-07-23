@@ -1,4 +1,10 @@
 <h1 align="center"><a href="https://nkolosov097.github.io/react-burger" target="_blank">Stellar Burger</a></h1>
+
+<br />
+[React burger](https://nkolosov097.github.io/react-burger)
+
+<br />
+
 <h3 align="start">Used stack</h3>
 <h4>
   <ul>
